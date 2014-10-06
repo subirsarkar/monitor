@@ -1,0 +1,40 @@
+[% BLOCK header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>[% batch %] Monitoring at [% site %]</title>
+    <meta http-equiv="refresh" content="900" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link type="text/css" rel="stylesheet" href="ext/resources/css/ext-all.css" />
+    <link type="text/css" rel="stylesheet" href="css/appExt.css" />
+    <link type="text/css" rel="stylesheet" href="css/accounting.css" />
+    <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="ext/ext-all.js"></script>
+    <script type="text/javascript" src="js/appExt.js"></script>
+    <script type="text/javascript" src="js/qtips.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/overview.js"></script>
+    <script type="text/javascript" src="js/queueview.js"></script>
+[%~ END ~%]
+[% BLOCK open_tabview %]
+    <h1>[% batch %] Monitoring at [% site %]</h1>
+    <div id="tabs1">
+      <div id="status" class="x-hide-display atab">
+        <div id="overview"></div>
+      </div>
+      <div id="qstatus" class="x-hide-display atab">
+        <div id="qoverview"></div>
+      </div>
+[%~ END ~%]
+[% BLOCK open_tab %]
+      <div id="[% tabid %]" class="x-hide-display atab">
+[% END ~%]
+[% BLOCK close_tab %]
+      </div>
+[% END ~%]
+[% BLOCK close_tabview %]
+    </div>
+[% END ~%]

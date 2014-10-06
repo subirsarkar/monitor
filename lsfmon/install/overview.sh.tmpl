@@ -1,0 +1,24 @@
+#!/bin/sh
+#set -o nounset
+
+appdir=BASE_DIR
+webdir=WEB_DIR
+
+source $appdir/bin/setup_lsfmon
+
+[ -e /etc/profile.d/lsf.sh ] && source /etc/profile.d/lsf.sh
+
+cd $appdir/bin || { echo cannot cd to $appdir/bin; exit 1; }
+perl -w overview.pl
+
+[ -d $webdir ] || { echo $webdir not found locally!; exit 2; }
+echo -- copy over to the web server
+cp $appdir/html/OVERVIEW_FILE.html $webdir/
+mkdir -p $webdir/images
+cp $appdir/images/rrd/*.png $webdir/images/
+
+[ -e $appdir/html/OVERVIEW_FILE.xml ]  && cp $appdir/html/OVERVIEW_FILE.xml  $webdir/
+[ -e $appdir/html/OVERVIEW_FILE.json ] && cp $appdir/html/OVERVIEW_FILE.json $webdir/
+[ -e $appdir/html/HAPPYFACE_FILE.xml ] && cp $appdir/html/HAPPYFACE_FILE.xml $webdir/
+
+exit 0

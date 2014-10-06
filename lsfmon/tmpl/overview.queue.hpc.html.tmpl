@@ -1,0 +1,205 @@
+[% BLOCK page_header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="300" />
+    <link rel="stylesheet" type="text/css" href="css/overview.css" />
+    <script type="text/javascript" src="js/queueview.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <title>[% site %] [% batch %] Farm Queue Overview</title>
+  </head>
+  <body>
+    <div class="information">
+      <div style="clear:both;">
+        <div class="jobflow">
+          <label><b>JobFlow</b>: (Submitted|Dispatched|Completed) Last Hour</label>
+        </div>
+        <div class="timestamp">
+          <label>Last updated on [% date %]</label>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK jobslots_header %]
+      <div style="clear:both;margin-top:1em;">
+        <div class="panel-left">
+          <div id="job-panel" class="para job-panel">
+            <h2 class="narrow">Jobs Slots</h2>
+            <table id="slots-table">
+              <thead>
+                <tr>
+                  <th>Maximum</th>
+                  <th>Available</th>
+                  <th>Used</th>
+                  <th>Free</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK jobslots_row %]
+                <tr>
+                  <td>[% max %]</td>
+                  <td>[% available %]</td>
+                  <td>[% used %]</td>
+                  <td>[% free %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK jobslots_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK jobs_header %]
+          <div id="job-panel" class="para job-panel">
+            <h2 class="narrow">Jobs</h2>
+            <table id="jobs-table">
+              <thead>
+                <tr>
+                  <th>Queues</th>
+                  <th>Total</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>Slots</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff<10%)</th>
+                  <th>JobFlow</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK jobs_row %]
+                  <tr>
+                    <td>[% queues %]</td>
+                    <td>[% jobs %]</td>
+                    <td>[% running %]</td>
+                    <td>[% pending %]</td>
+                    <td>[% held %]</td>
+                    <td>[% cores %]</td>
+                    <td>[% cpueff %]</td>
+                    <td>[% ratio10 %]</td>
+                    <td>[% jobflow %]</td>
+                  </tr>
+[%~ END %]
+[% BLOCK jobs_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK queue_header %]
+          <div id="queue-panel" class="para queue-panel">
+            <h2 class="narrow">Queues</h2>
+            <table id="queue-table" class="sortable">
+              <thead>
+                <tr>
+                  <th>Queue</th>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>Slots</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff<10%)</th>
+                  <th>Walltime Share(%)</th>
+                  <th>JobFlow</th>
+                </tr>
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK queue_row %]
+                <tr>
+                  <td>[% queue %]</td>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cores %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                  <td>[% walltime_share %]</td>
+                  <td>[% jobflow %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK queue_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK image_block %]
+        </div>
+        <div class="panel-right">
+          <form id="form2" action="javascript:void%200">
+            <div id="image-panel">
+              <label id="site-samname" style="display:none;">[% samname %]</label>
+              <div class="canvas_box">
+                <img id="canvas-slotusage" src="" alt="Graph - Slot Usage"></img>
+                <div class="graph_options"> 
+                  <span>  
+                    <input type="radio" name="slot" value="hour" onclick="QueueView.setSlotImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>  
+                    <input type="radio" name="slot" value="day" onclick="QueueView.setSlotImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="slot" value="week" onclick="QueueView.setSlotImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="slot" value="month" onclick="QueueView.setSlotImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="slot" value="year" onclick="QueueView.setSlotImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+              </div>
+              <div class="canvas_box">
+                <img id="canvas-qjobusage" src="" alt="Graph - Jobs per queue Usage"></img>
+                <div class="graph_options">
+                  <span>
+                    <input type="radio" name="job" value="hour" onclick="QueueView.setJobImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="day" onclick="QueueView.setJobImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="week" onclick="QueueView.setJobImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="month" onclick="QueueView.setJobImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="year" onclick="QueueView.setJobImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+                <div class="selectqueue">
+                  <label>Select Queue:</label>
+                  <select id="select-queue">
+                     [% options %]
+                   </select>
+                   <input value="Show" type="submit" onclick="QueueView.setJobImage();"></input>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK page_footer %]
+      <script type="text/javascript">
+        window.onload = QueueView.init();
+      </script>    
+    </div>
+  </body>
+</html>
+[% END %]

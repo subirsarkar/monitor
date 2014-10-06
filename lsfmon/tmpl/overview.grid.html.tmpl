@@ -1,0 +1,330 @@
+[% BLOCK page_header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="300" />
+    <link rel="stylesheet" type="text/css" href="css/overview.css" />
+    <script type="text/javascript" src="js/overview.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <title>[% site %] [% batch %] Farm Job Overview</title>
+  </head>
+  <body>
+    <div class="information">
+      <div style="clear:both;">
+        <div class="jobflow">
+          <label><b>JobFlow</b>: (Submitted|Dispatched|Completed) Last Hour</label>
+        </div>
+        <div class="timestamp">
+          <label>Last updated on [% date %]</label>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK cpuslots_header %]
+      <div style="clear:both;margin-top:1em;">
+        <div class="panel-left">
+          <div id="cpu-panel" class="para cpu-panel">
+            <h2 class="narrow">CPU Slots</h2>
+            <table id="cpu-table">
+              <thead>
+                <tr>
+                  <th>Maximum Seen</th>
+                  <th>Current Max</th>
+                  <th>Available</th>
+                  <th>Occupied</th>
+                  <th>Free</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK cpuslots_row %]
+                <tr>
+                  <td>[% maxever %]</td>
+                  <td>[% max %]</td>
+                  <td>[% available %]</td>
+                  <td>[% running %]</td>
+                  <td>[% free %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK cpuslots_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK jobs_header %]
+          <div id="job-panel" class="para job-panel">
+            <h2 class="narrow">Jobs</h2>
+            <table id="jobs-table">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>Slots</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff<10%)</th>
+                  <th>JobFlow</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK jobs_row %]
+                  <tr>
+                    <td>[% jobs %]</td>
+                    <td>[% running %]</td>
+                    <td>[% pending %]</td>
+                    <td>[% held %]</td>
+                    <td>[% cores %]</td>
+                    <td>[% cpueff %]</td>
+                    <td>[% ratio10 %]</td>
+                    <td>[% jobflow %]</td>
+                  </tr>
+[%~ END %]
+[% BLOCK jobs_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK group_header %]
+          <div id="group-panel" class="para group-panel">
+            <h2 class="narrow">VO/Accounting Groups</h2>
+            <table id="group-table" class="sortable">
+              <thead>
+                <tr>
+                  <th>Group</th>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>Slots</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff<10%)</th>
+                  <th>Walltime Share(%)</th>
+                  <th>JobFlow</th>
+                </tr>
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK group_row %]
+                <tr>
+                  <td>[% group %]</td>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cores %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                  <td>[% walltime_share %]</td>
+                  <td>[% jobflow %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK group_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK ui_header %]
+          <div id="ui-panel" class="para ui-panel">
+            <h2 class="narrow">Computing Elements</h2>
+            <table id="ui-table" class="sortable">
+              <thead>
+                <tr>
+                  <th>CE/UI</th>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>Slots</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff<10%)</th>
+                  <th>JobFlow</th>
+                </tr>
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK ui_row %]
+                <tr>
+                  <td>[% ui %]</td>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cores %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                  <td>[% jobflow %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK ui_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK image_block %]
+        </div>
+        <div class="panel-right">
+          <form id="form1" action="javascript:void%200">
+            <div id="image-panel">
+              <label id="site-samname" style="display:none;">[% samname %]</label>
+              <div class="canvas_box">
+                <img id="canvas-cpuusage" src="" alt="Graph - CPU Usage"></img>
+                <div class="graph_options"> 
+                  <span>  
+                    <input type="radio" name="cpu" value="hour"  onclick="JobView.setCPUImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>  
+                    <input type="radio" name="cpu" value="day"   onclick="JobView.setCPUImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="week"  onclick="JobView.setCPUImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="month" onclick="JobView.setCPUImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="year"  onclick="JobView.setCPUImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+              </div>
+              <div class="canvas_box">
+                <img id="canvas-jobusage" src="" alt="Graph - Job Usage"></img>
+                <div class="graph_options">
+                  <span>
+                    <input type="radio" name="job" value="hour" onclick="JobView.setJobImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="day" onclick="JobView.setJobImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="week" onclick="JobView.setJobImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="month" onclick="JobView.setJobImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="year" onclick="JobView.setJobImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+                <div class="selectgroup">
+                  <label>Select Group:</label>
+                  <select id="select-group">
+                     [% options %]
+                   </select>
+                   <input value="Show" type="submit" onclick="JobView.setJobImage();"></input>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK dn_header %]
+      <div id="dn-panel" class="para dn-panel">
+        <h2 class="wide">User DN</h2>
+        <table id="dn-table" class="sortable">
+          <thead>
+            <tr>
+              <th>Group</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>Slots</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs(Eff<10%)</th>
+              <th>JobFlow</th>
+              <th>DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK dn_row %]
+            <tr>
+              <td>[% group %]</td>
+              <td>[% jobs %]</td>
+              <td>[% running %]</td>
+              <td>[% pending %]</td>
+              <td>[% held %]</td>
+              <td>[% cores %]</td>
+              <td>[% cpueff %]</td>
+              <td>[% ratio10 %]</td>
+              <td>[% jobflow %]</td>
+              <td style="text-align:left;">[% dn %]</td>
+            </tr>
+[%~ END %]
+[% BLOCK dn_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK user_header %]
+      <div id="user-panel" class="para user-panel">
+        <h2 class="wide">Users</h2>
+        <table id="user-table" class="sortable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Group</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>Slots</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs(Eff<10%)</th>
+              <th>JobFlow</th>
+              <th>CE/UI</th>
+              <th style="text-align:center;">DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK user_row %]
+            <tr>
+              <td>[% user %]</td>
+              <td>[% group %]</td>
+              <td>[% jobs %]</td>
+              <td>[% running %]</td>
+              <td>[% pending %]</td>
+              <td>[% held %]</td>
+              <td>[% cores %]</td>
+              <td>[% cpueff %]</td>
+              <td>[% ratio10 %]</td>
+              <td>[% jobflow %]</td>
+              <td>[% ui %]</td>
+              <td style="text-align:left;">[% dn %]</td>
+            </tr>
+[%~ END %]
+[% BLOCK user_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK fairshare %]
+      <div id="share-panel" class="para share-panel">
+        <h2 class="narrow">VO/Group Fair Share</h2>
+        <pre>[% groupshare %]</pre>
+      </div>
+[%~ END %]
+[% BLOCK page_footer %]
+      <script type="text/javascript">
+        window.onload = JobView.init();
+      </script>    
+    </div>
+  </body>
+</html>
+[% END %]

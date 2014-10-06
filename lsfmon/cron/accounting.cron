@@ -1,0 +1,2 @@
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+05 */1 * * * root /afs/pi.infn.it/user/sarkar/public/lsfmon/lsfmon_v1.9.0/bin/launch_accounting.sh >> /tmp/cron_accounting.log 2>&1

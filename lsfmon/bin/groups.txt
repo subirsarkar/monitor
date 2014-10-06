@@ -1,0 +1,82 @@
+GROUP_NAME    USERS                     
+cmsit        cmsit01 cmsit02 cmsit03 cmsit04 cmsit05 cmsit06 cmsit07 cmsit08 cmsit10 cmsit09 
+cmsprt       cmsprt12 cmsprt13 cmsprt14 cmsprt15 cmsprt16 cmsprt17 cmsprt18 cmsprt20 cmsprt19 cmsprt01 cmsprt21 cmsprt02 cmsprt22 cmsprt03 cmsprt23 cmsprt04 cmsprt24 cmsprt05 cmsprt25 cmsprt06 cmsprt07 cmsprt08 cmsprt10 cmsprt09 cmsprt11 
+cmspilot     cmsplt17 cmsplt18 cmsplt20 cmsplt19 cmsplt01 cmsplt02 cmsplt03 cmsplt04 cmsplt05 cmsplt06 cmsplt07 cmsplt08 cmsplt10 cmsplt09 cmsplt11 cmsplt12 cmsplt13 cmsplt14 cmsplt15 cmsplt16 
+cmsusers     cms048 cms049 cms080 cms081 cms082 cms110 cms083 cms111 cms084 cms112 cms085 cms113 cms086 cms114 cms087 cms115 cms088 cms116 cms089 cms117 cms118 cms119 cms030 cms031 cms032 cms033 cms034 cms035 cms036 cms037 cms038 cms039 cms150 cms070 cms071 cms072 cms100 cms073 cms101 cms074 cms102 cms075 cms103 cms076 cms104 cms077 cms105 cms078 cms106 cms079 cms107 cms108 cms020 cms109 cms021 cms022 cms023 cms024 cms025 cms026 cms027 cms028 cms029 cms140 cms141 cms142 cms143 cms144 cms145 cms146 cms147 cms148 cms149 cms060 cms061 cms062 cms063 cms064 cms065 cms066 cms067 cms068 cms069 cms010 cms011 cms012 cms013 cms014 cms015 cms016 cms017 cms018 cms019 cms130 cms131 cms132 cms133 cms134 cms135 cms136 cms137 cms138 cms139 cms050 cms051 cms052 cms053 cms054 cms055 cms056 cms057 cms058 cms059 cms001 cms002 cms003 cms004 cms005 cms006 cms007 cms008 cms009 cms090 cms091 cms092 cms120 cms093 cms121 cms094 cms122 cms095 cms123 cms096 cms124 cms097 cms125 cms098 cms126 cms099 cms127 cms128 cms129 cms040 cms041 cms042 cms043 cms044 cms045 cms046 cms047 
+cmsstd       cmsit/ cmsusers/ cmsprt/ 
+cmsvo        cmsprd cmssgm cmsstd/ cmspilot/ 
+atlaspilot   atlasplt01 atlasplt02 atlasplt03 atlasplt04 atlasplt05 atlasplt06 atlasplt07 atlasplt08 
+atlasusers   atlas019 atlas040 atlas041 atlas042 atlas043 atlas020 atlas044 atlas021 atlas045 atlas022 atlas046 atlas023 atlas047 atlas024 atlas001 atlas048 atlas025 atlas002 atlas049 atlas026 atlas003 atlas027 atlas004 atlas028 atlas005 atlas029 atlas006 atlas007 atlas008 atlas009 atlas050 atlas030 atlas031 atlas032 atlas033 atlas010 atlas034 atlas011 atlas035 atlas012 atlas036 atlas013 atlas037 atlas014 atlas038 atlas015 atlas039 atlas016 atlas017 atlas018 
+atlasvo      atlasprd atlassgm atlasusers/ atlaspilot/ 
+lhcbpilot    lhcbplt06 lhcbplt07 lhcbplt08 lhcbplt01 lhcbplt02 lhcbplt03 lhcbplt04 lhcbplt05 
+lhcbusers    lhcb038 lhcb015 lhcb039 lhcb016 lhcb017 lhcb018 lhcb019 lhcb040 lhcb041 lhcb042 lhcb043 lhcb020 lhcb044 lhcb021 lhcb045 lhcb022 lhcb046 lhcb023 lhcb047 lhcb024 lhcb001 lhcb048 lhcb025 lhcb002 lhcb049 lhcb026 lhcb003 lhcb027 lhcb004 lhcb028 lhcb005 lhcb029 lhcb006 lhcb007 lhcb008 lhcb009 lhcb050 lhcb030 lhcb031 lhcb032 lhcb033 lhcb010 lhcb034 lhcb011 lhcb035 lhcb012 lhcb036 lhcb013 lhcb037 lhcb014 
+lhcbvo       lhcbprd lhcbsgm lhcbusers/ lhcbpilot/ 
+glastvo      glast028 glast005 glast029 glast006 glast007 glast008 glastsgm glast009 glast030 glast010 glast011 glast013 glast014 glast015 glast016 glast017 glast018 glast019 glast020 atlas012 glast021 glast022 glast023 glast001 glast024 glast002 glast025 glast026 glast003 glast027 glast004 
+virgovo      virgo017 virgosgm virgo018 virgo020 virgo019 virgo001 virgo002 virgo003 virgo004 virgo005 virgo006 virgo007 virgo008 virgo010 virgo009 virgo011 virgo012 virgo013 virgo014 virgo015 virgo016 
+babarvo      babar013 babar014 babar015 babar016 babar017 babarsgm babar018 babar020 babar019 babar001 babar002 babar003 babar004 babar005 babar006 babar007 babar008 babar010 babar009 babar011 babar012 
+griditvo     gridit019 gridit040 gridit041 gridit042 gridit043 gridit020 gridit044 gridit021 gridit045 gridit022 gridit046 gridit023 gridit047 gridit024 gridit001 gridit048 gridit025 gridit002 gridit049 gridit026 gridit003 gridit027 gridit004 gridit028 gridit005 gridit029 gridit006 gridit007 gridit008 gridit009 griditsgm gridit050 gridit030 gridit031 gridit032 gridit033 gridit010 gridit034 gridit011 gridit035 gridit012 gridit036 gridit013 gridit037 gridit014 gridit038 gridit015 gridit039 gridit016 gridit017 gridit018 
+biovo        bio003 bio004 bio005 bio006 bio007 bio008 bio010 bio009 bio011 bio012 bio013 bio014 bio015 bio016 bio017 biosgm bio018 bio020 bio019 bio001 bio002 
+ingvvo       ingv010 ingv009 ingv011 ingv012 ingv013 ingv014 ingv015 ingv016 ingv017 ingvsgm ingv018 ingv020 ingv019 ingv001 ingv002 ingv003 ingv004 ingv005 ingv006 ingv007 ingv008 
+inafvo       inaf005 inaf006 inaf007 inaf008 inaf010 inaf009 inaf011 inaf012 inaf013 inaf014 inaf015 inaf016 inaf017 inafsgm inaf018 inaf020 inaf019 inaf001 inaf002 inaf003 inaf004 
+infngridvo   infngrid012 infngrid013 infngrid014 infngrid015 infngrid016 infngrid017 infngridsgm infngrid018 infngrid020 infngrid019 infngrid001 infngrid002 infngrid003 infngrid004 infngrid005 infngrid006 infngrid007 infngrid008 infngrid010 infngrid009 infngrid011 
+libivo       libi006 libi007 libi008 libi010 libi009 libi011 libi012 libi013 libi014 libi015 libi016 libi017 libisgm libi018 libi020 libi019 libi001 libi002 libi003 libi004 libi005 
+eneavo       enea016 enea017 eneasgm enea018 enea020 enea019 enea001 enea002 enea003 enea004 enea005 enea006 enea007 enea008 enea010 enea009 enea011 enea012 enea013 enea014 enea015 
+cdfvo        cdf006 cdf007 cdf008 cdf010 cdf009 cdf011 cdf012 cdf013 cdf014 cdf015 cdf016 cdf017 cdfsgm cdf018 cdf020 cdf019 cdf001 cdf002 cdf003 cdf004 cdf005 
+biomedvo     biomed004 biomed005 biomed006 biomed007 biomed008 biomed010 biomed009 biomed011 biomed012 biomed013 biomed014 biomed015 biomed016 biomed017 biomedprd biomedsgm biomed018 biomed020 biomed019 biomed001 biomed002 biomed003 
+theophysvo   theophys012 theophys013 theophys014 theophys015 theophys016 theophys017 theophyssgm theophys018 theophys020 theophys019 theophys001 theophys002 theophys003 theophys004 theophys005 theophys006 theophys007 theophys008 theophys010 theophys009 theophys011 
+theodip      theodip05 theodip06 theodip07 theodip08 theodip10 theodip09 theodip01 theodip02 theodip03 theodip04 
+theoinfn     theoinfn03 theoinfn04 theoinfn05 theoinfn06 theoinfn07 theoinfn08 theoinfn10 theoinfn09 theoinfn01 theoinfn02 
+theolong     collura theolong02 theolong03 theolong04 theolong05 theolong06 theolong07 theolong08 alles vicari theolong10 theolong09 jnespolo torrero giacecca theolong01 
+theompi      theompi18 theompi00 theompi19 theompi01 theompi02 theompi03 theompi04 theompi05 theompi06 theompi07 theompi08 theompi10 theompi09 theompi11 theompi12 theompi13 theompi14 theompi15 theompi16 theompi17 
+thad31       thadca06 thadca07 thadca08 thadca10 thadca09 thadca11 thadca12 thadca13 thadca14 thadca15 thadca16 thadca17 thadca18 thadca00 thadca19 thadca01 thadca02 thadca03 thadca04 thadca05 
+thba21       thbaba11 thbaba12 thbaba13 thbaba14 thbaba15 thbaba16 thbaba17 thbaba18 thbaba00 thbaba19 thbaba01 thbaba02 thbaba03 thbaba04 thbaba05 thbaba06 thbaba07 thbaba08 thbaba10 thbaba09 
+thct31       thctca06 thctca07 thctca08 thctca10 thctca09 thctca11 thctca12 thctca13 thctca14 thctca15 thctca16 thctca17 thctca18 thctca00 thctca19 thctca01 thctca02 thctca03 thctca04 thctca05 
+thmb31       thmbca11 thmbca12 thmbca13 thmbca14 thmbca15 thmbca16 thmbca17 thmbca18 thmbca00 thmbca19 thmbca01 thmbca02 thmbca03 thmbca04 thmbca05 thmbca06 thmbca07 thmbca08 thmbca10 thmbca09 
+thmi41       thmida02 thmida03 thmida04 thmida05 thmida06 thmida07 thmida08 thmida10 thmida09 thmida11 thmida12 thmida13 thmida14 thmida15 thmida16 thmida17 thmida18 thmida00 thmida19 thmida01 
+thna12       thnaab19 thnaab01 thnaab02 thnaab03 thnaab04 thnaab05 thnaab06 thnaab07 thnaab08 thnaab10 thnaab09 thnaab11 thnaab12 thnaab13 thnaab14 thnaab15 thnaab16 thnaab17 thnaab18 thnaab00 
+thog51       thogea03 thogea04 thogea05 thogea06 thogea07 thogea08 thogea10 thogea09 thogea11 thogea12 thogea13 thogea14 thogea15 thogea16 thogea17 thogea18 thogea00 thogea19 thogea01 thogea02 
+thpi11       thpiaa06 thpiaa07 thpiaa08 thpiaa10 thpiaa09 thpiaa11 thpiaa12 thpiaa13 thpiaa14 thpiaa15 thpiaa16 thpiaa17 thpiaa18 thpiaa00 thpiaa19 thpiaa01 thpiaa02 thpiaa03 thpiaa04 thpiaa05 
+thpi12       thpiab11 thpiab12 thpiab13 thpiab14 thpiab15 thpiab16 thpiab17 thpiab18 thpiab00 thpiab19 thpiab01 thpiab02 thpiab03 thpiab04 thpiab05 thpiab06 thpiab07 thpiab08 thpiab10 thpiab09 
+thpr21       thprba18 thprba00 thprba19 thprba01 thprba02 thprba03 thprba04 thprba05 thprba06 thprba07 thprba08 thprba10 thprba09 thprba11 thprba12 thprba13 thprba14 thprba15 thprba16 thprba17 
+thrm31       thrmca16 thrmca17 thrmca18 thrmca00 thrmca19 thrmca01 thrmca02 thrmca03 thrmca04 thrmca05 thrmca06 thrmca07 thrmca08 thrmca10 thrmca09 thrmca11 thrmca12 thrmca13 thrmca14 thrmca15 
+thto61       thtofa07 thtofa08 thtofa10 thtofa09 thtofa11 thtofa12 thtofa13 thtofa14 thtofa15 thtofa16 thtofa17 thtofa18 thtofa00 thtofa19 thtofa01 thtofa02 thtofa03 thtofa04 thtofa05 thtofa06 
+thtv62       thtvfb19 thtvfb01 thtvfb02 thtvfb03 thtvfb04 thtvfb05 thtvfb06 thtvfb07 thtvfb08 thtvfb10 thtvfb09 thtvfb11 thtvfb12 thtvfb13 thtvfb14 thtvfb15 thtvfb16 thtvfb17 thtvfb18 thtvfb00 
+thfa51       thfaea19 thfaea01 thfaea02 thfaea03 thfaea04 thfaea05 thfaea06 thfaea07 thfaea08 thfaea10 thfaea09 thfaea11 thfaea12 thfaea13 thfaea14 thfaea15 thfaea16 thfaea17 thfaea18 thfaea00 
+thge41       thgeda13 thgeda14 thgeda15 thgeda16 thgeda17 thgeda18 thgeda00 thgeda19 thgeda01 thgeda02 thgeda03 thgeda04 thgeda05 thgeda06 thgeda07 thgeda08 thgeda10 thgeda09 thgeda11 thgeda12 
+thmi11       thmiaa14 thmiaa15 thmiaa16 thmiaa17 thmiaa18 thmiaa00 thmiaa19 thmiaa01 thmiaa02 thmiaa03 thmiaa04 thmiaa05 thmiaa06 thmiaa07 thmiaa08 thmiaa10 thmiaa09 thmiaa11 thmiaa12 thmiaa13 
+sissa        sissa07 sissa08 sissa10 sissa09 sissa11 sissa12 sissa13 sissa14 sissa15 sissa16 sissa17 sissa18 sissa00 sissa19 sissa01 sissa02 sissa03 sissa04 sissa05 sissa06 
+csn4         ape thad31/ thba21/ thct31/ thmb31/ thmi41/ thna12/ thog51/ thpi11/ thpi12/ thpr21/ thrm31/ thto61/ thtv62/ thfa51/ thge41/ thmi11/ sissa/ 
+theopisa     theodip/ theoinfn/ theolong/ 
+magicvo      magic014 magic015 magic016 magic017 magicsgm magic018 magic020 magic019 magic001 magic002 magic003 magic004 magic005 magic006 magic007 magic008 magic010 magic009 magic011 magic012 magic013 
+compchemvo   compchem010 compchem009 compchem011 compchem012 compchem013 compchem014 compchem015 compchem016 compchem017 compchemsgm compchem018 compchem020 compchem019 compchem001 compchem002 compchem003 compchem004 compchem005 compchem006 compchem007 compchem008 
+planckvo     planck011 planck012 planck013 planck014 planck015 planck016 planck017 plancksgm planck018 planck020 planck019 planck001 planck002 planck003 planck004 planck005 planck006 planck007 planck008 planck010 planck009 
+esrvo        esr013 esr014 esr015 esr016 esr017 esrsgm esr018 esr020 esr019 esr001 esr002 esr003 esr004 esr005 esr006 esr007 esr008 esr010 esr009 esr011 esr012 
+alicepilot   aliceplt08 aliceplt01 aliceplt02 aliceplt03 aliceplt04 aliceplt05 aliceplt06 aliceplt07 
+aliceusers   alice031 alice032 alice033 alice010 alice034 alice011 alice035 alice012 alice036 alice013 alice037 alice014 alice038 alice015 alice039 alice016 alice017 alice018 alice019 alice040 alice041 alice042 alice043 alice020 alice044 alice021 alice045 alice022 alice046 alice023 alice047 alice024 alice001 alice048 alice025 alice002 alice049 alice026 alice003 alice027 alice004 alice028 alice005 alice029 alice006 alice007 alice008 alice009 alice050 alice030 
+alicevo      aliceprd alicesgm aliceusers/ alicepilot/ 
+argovo       argo013 argo014 argo015 argo016 argo017 argosgm argo018 argo020 argo019 argo001 argo002 argo003 argo004 argo005 argo006 argo007 argo008 argo010 argo009 argo011 argo012 
+pamelavo     pamela012 pamela013 pamela014 pamela015 pamela016 pamela017 pamelasgm pamela018 pamela020 pamela019 pamela001 pamela002 pamela003 pamela004 pamela005 pamela006 pamela007 pamela008 pamela010 pamela009 pamela011 
+dteampilot   dteamplt01 dteamplt02 dteamplt03 dteamplt04 dteamplt05 dteamplt06 dteamplt07 dteamplt08 
+dteamusers   dteam040 dteam041 dteam042 dteam043 dteam020 dteam044 dteam021 dteam045 dteam022 dteam046 dteam023 dteam047 dteam024 dteam001 dteam048 dteam025 dteam002 dteam049 dteam026 dteam003 dteam027 dteam004 dteam028 dteam005 dteam029 dteam006 dteam007 dteam008 dteam009 dteam050 dteam030 dteam031 dteam032 dteam033 dteam010 dteam034 dteam011 dteam035 dteam012 dteam036 dteam013 dteam037 dteam014 dteam038 dteam015 dteam039 dteam016 dteam017 dteam018 dteam019 
+dteamvo      dteamprd dteamsgm dteampilot/ dteamusers/ 
+opspilot     opsplt01 opsplt02 opsplt03 opsplt04 opsplt05 opsplt06 opsplt07 opsplt08 
+opsusers     ops017 ops018 ops020 ops019 ops001 ops002 ops003 ops004 ops005 ops006 ops007 ops008 ops010 ops009 ops011 ops012 ops013 ops014 ops015 ops016 
+opsvo        opssgm opspilot/ opsusers/ 
+na48vo       na48042 na48043 na48020 na48044 na48021 na48045 na48022 na48046 na48023 na48047 na48001 na48024 na48048 na48002 na48025 na48049 na48026 na48003 na48027 na48004 na48028 na48005 na48029 na48006 na48007 na48008 na48sgm na48009 na48050 na48030 na48031 na48032 na48033 na48010 na48034 na48011 na48035 na48012 na48036 na48013 na48037 na48014 na48038 na48015 na48039 na48016 na48017 na48018 na48019 na48040 na48041 
+superbvo     superb030 superb010 superb011 superb012 superb013 superb014 superb015 superb016 superb017 superb018 superb019 superb020 superb021 superb022 superb023 superb024 superb001 superb025 superb002 superb026 superb003 superb027 superb004 sgmsuperb001 superb028 superb005 sgmsuperb002 superb029 superb006 sgmsuperb003 superb007 superb008 superb009 
+eumedvo      eumed020 eumed019 eumed001 eumed002 eumed003 eumed004 eumed005 eumed006 eumed007 eumed008 eumed010 eumed009 eumed011 eumed012 eumed013 eumed014 eumed015 eumed016 eumedsgm eumed017 eumed018 
+euchinavo    euchina020 euchina019 euchina001 euchina002 euchina003 euchina004 euchina005 euchina006 euchina007 euchina008 euchina010 euchina009 euchina011 euchina012 euchina013 euchina014 euchina015 euchina016 euchinasgm euchina017 euchina018 
+bellevo      belle017 belle018 belle019 belle020 belle021 belle022 belle023 belle001 belle024 belle025 belle002 belle026 belle003 belle027 belle004 belle028 belle005 belle029 belle006 belle007 belle008 bellesgm belle009 belle030 belle010 belle011 belle012 belle013 belle014 belle015 belleprd belle016 
+teorici      marcucci incardo rosati kormos bonacco nuclear francia barbi gbranca parisen grasso sarti degironc ravinder ohya kannike straub brandi taronna puosi manfredi gmancini bimbi gdepalma elena alistar tubiana salvion meineri pieroni gunduc collura vinci giacecca fujimori paolet basile martell anrosa76 evslin orsucci lombardo lucini picasso mktchyan haris chulkin torrero muia calabres jnespolo salvio pradam papa giardino folga ciuffoli lacagnin sgiacom paffuti anza mcipri lbracci fabro maggiore sicuro mfarina feo michelin zhuridov viviani fsala varrato foffa lodone gladich mariti ciriglia bombaci cipriani corcella alba anselmi leoni martin erika bonati digiaco rahman alles shore carnimeo gatto sanfilip astrumia gudnason mgiordan jiang pizza illario mesiti cicogna tesi dorigoni agostini vignolo tesi1 cossu alvarez stoppini yokoi leonema rtorre valdinfn rfrances campo kievsky califano joung mdelia rychkov marcods christ ligorini delia pmazza rferrari konishi licari sotiriad strocchi girlanda cella chandre blanchon holt fnegro maann nicolis porrati vicari menotti etrinche mintchev marcoce fbigazzi carmona lbuccia 
+thnucpi      marcucci gatto viviani kievsky cella 
+thnucct      mbaldo burgio 
+thnucrm1     salmeg 
+thnucna      itaco agargano coraggio holt 
+thnuctn      pederiva leideman orlandin 
+thnucmi      avogadro vigezzi colo 
+thnuclns     mcolonna greco74 
+staff        dario mazzoni tania carusog vaglini terreni ciampa piras gtoraldo service toor lsfadmin silvia giannini flavia helpdesk 
+thnucfe      schifano 
+thnucle      enrico 
+fluent       fanteria nanni 
+abacus       ciampa fanteria acarboni nanni 

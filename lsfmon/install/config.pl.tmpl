@@ -1,0 +1,232 @@
+#!/usr/bin/env perl
+# ------------------------------------------------------------------
+# Configuration file written in Perl itself
+# Adjust parameters in app.cfg
+#
+# version 1.3 31/12/2013
+# author: S. Sarkar - INFN-Pisa
+# ------------------------------------------------------------------
+
+use strict;
+use warnings;
+
+use constant MINUTE => 60; # seconds
+use constant HOUR   => 60 * MINUTE;
+use constant DAY    => 24 * HOUR;
+
+# -----------------
+# Section [general]
+# -----------------
+our $config = 
+{ 
+         verbose => 0,
+         baseDir => q|BASE_DIR|,                 # installtion dir
+            site => q|SITE|, 
+         samname => q|SAM_NAME|,                 # well, essentially a more qualified name
+         lcgname => q|LCG_NAME|,                 # what's in a name? CMS uses this convention
+           batch => q|LSF|,                      # batch information
+   batch_version => q|BATCH_VERSION|,
+     use_bugroup => 0,                            # use bgroup to map user -> group (default: 0)
+  show_cmd_error => 1,                            # show shell command execution error (default: /dev/null)
+        time_cmd => 1,                            # check certain command execution timing
+   queues_toskip => ['diagnosis', 'test4', 'test10gbit'], # exclude from accounting
+    cluster_type => q|CLUSTER_TYPE|,
+  lsfmon_version => q|1.9.0|,
+      lsfmon_doc => q|http://sarkar.web.cern.ch/sarkar/doc/lsfmon.html|
+};
+
+# ------------------
+# Section [overview]
+# ------------------
+$config->{overview} = 
+{
+       verbose => 0,
+       infoDir => q|LSF_JOB_DIR|,  # needed to find user DN
+  max_file_age => 7,
+      template => qq|$config->{baseDir}/tmpl/overview.html.tmpl|, # INPUT template file, should not be changed
+        # if you change name of any of the 4 files, please update bin/overview.sh accordingly
+          html => qq|$config->{baseDir}/html/OVERVIEW_FILE.html|,      # always create the html 
+           xml => {                             # optionally create xml and json also
+                  save => 1, 
+                  file => qq|$config->{baseDir}/html/OVERVIEW_FILE.xml|
+                },
+        xml_hf => {                           # HappyFace compatible XML
+                  save => 1, 
+                  file => qq|$config->{baseDir}/html/HAPPYFACE_FILE.xml|
+                },
+          json => {
+                  save => 1, 
+                  file => qq|$config->{baseDir}/html/OVERVIEW_FILE.json|
+                },
+        dbFile => qq|$config->{baseDir}/db/dnmap.db|, # cache for the JID -> User DN mapping
+        slotDB => qq|$config->{baseDir}/db/slots.db|, # store max slots ever seen
+         bjobs => {                                                  
+               # use cached info from last iteration if the current one fails.
+              dbfile => qq|$config->{baseDir}/db/bjobs.db|,
+           max_jobs  => 2000      # for an enormous farm, do _not_ try bjobs -r -l on all the
+                                  #  jobs at once; do it in steps of max_jobs jobs. experimental
+         },
+  hosts_toskip => [         # these hosts are shown by bhosts but they are not WNs
+                  ],
+    show_table => {         # show/hide certain tables
+              group => 1,
+                 ui => 1,
+             userdn => 1,
+               user => 1,
+          fairshare => 1,
+          localuser => 1 
+    },
+  privacy_enforced => 0,        # privacy options, if enabled DN of only groups_dnshown groups shown
+    groups_dnshown => ['cms', 'theophys', 'theoinfn', 'theodip'],  ### set
+         filter_ui => 0,        # optionally exclude some UI/CEs
+      ui_whitelist => [],
+  min_walltime_reqd => 10 # mins; required for inclusion in CPU efficiency calculation
+};
+
+# ------------------
+# Section [jobflow]
+# ------------------
+$config->{jobflow} = 
+{
+  verbose => 0,
+   period => 3600               # extending the period will involve LSF reconfig
+};
+
+# --------------------
+# Section [RRD]
+# --------------------
+$config->{rrd} = 
+{
+           verbose => 0, 
+           enabled => 1,                          # redundant, not used yet
+          location => qq|$config->{baseDir}/db|,
+                db => q|filen.rrd|,               # for global parameters
+              step => 180,                        # update frequency
+             width => 300,                        # image width and height
+            height => 100,
+           comment => $config->{samname},
+      enableCPUEff => 1,                          # old installation do not have cpuEfficiency
+        timeSlices =>                             # time period -> seconds map
+        [
+          { ptag => q|lhour|,  period =>      HOUR },
+          { ptag => q|lday|,   period =>       DAY },
+          { ptag => q|lweek|,  period =>   7 * DAY },
+          { ptag => q|lmonth|, period =>  30 * DAY },
+          { ptag => q|lyear|,  period => 365 * DAY }
+        ],
+   supportedGroups => [ 
+     q|alice|,
+     q|atlas|,
+     q|babar|,
+     q|cdf|,
+     q|cms|
+   ]
+};
+
+# --------------------
+# Section [accounting]
+# --------------------
+$config->{accounting} = 
+{
+          verbose => 0,
+            debug => { enabled => 0, max_files => 4 }, # if enabled, reads only the last max_files 
+                                            # accounting files used to debug new feature, bug fixes
+      infoDirList => # LSF accounting directories
+      [
+        qq|LSF_ACCT_DIR|
+      ],
+         htmlFile => qq|$config->{baseDir}/html/accounting.html|,       # output html
+  template_period => qq|$config->{baseDir}/tmpl/acct_period.html.tmpl|, # template files
+    template_full => qq|$config->{baseDir}/tmpl/acct_overall.html.tmpl|,
+         save_xml => 1,
+        skip_root => 1,                                        # exclude jobs run as root 
+         read_all => 1,   # read all the lsb.acct.* files each time
+           dbFile => qq|$config->{baseDir}/db/acctinfo.db|,
+     sortby_field => q|walltime|, # sort the tables by this 'column'
+                                  # possible values: 'jobs', 'sjobs', 'success_rate',
+                                  # 'walltime', 'cputime', 'cpueff', 'walltime_share', 'avgwait'
+       timeSlices => 
+       [
+         { ptag => q|l3hour|,  period =>    3 * HOUR, label => q|last 3 hours|,   minJobs =>   1 },
+         { ptag => q|l6hour|,  period =>    6 * HOUR, label => q|last 6 hours|,   minJobs =>   1 },
+         { ptag => q|l12hour|, period =>   12 * HOUR, label => q|last 12 hours|,  minJobs =>   2 },
+         { ptag => q|lday|,    period =>         DAY, label => q|last 24 hours|,  minJobs =>  10 },
+         { ptag => q|lweek|,   period =>     7 * DAY, label => q|last week|,      minJobs =>  20 },
+         { ptag => q|lmonth|,  period =>    30 * DAY, label => q|last month|,     minJobs =>  50 },
+         { ptag => q|l3month|, period =>    90 * DAY, label => q|last 3 months|,  minJobs => 100 },
+         { ptag => q|l6month|, period =>   180 * DAY, label => q|last 6 months|,  minJobs => 300 },
+         { ptag => q|lyear|,   period =>   365 * DAY, label => q|last year|,      minJobs => 500 },
+         { ptag => q|lfull|,   period => 99999 * DAY, label => q|full period|,    minJobs => 500 }
+       ]
+};
+
+# --------------------
+# Section [plotcreator]
+# --------------------
+$config->{plotcreator} = 
+{
+   # We assign colors statically for major VOs/Groups. The fleeting groups 
+   # are assigned color randomly in each iteration from a pool of 256 colors 
+   colorDict =>
+   {
+         alice => q|#ee9572|,
+          argo => q|#52a489|,
+         atlas => q|#9745ab|,
+         babar => q|#0000ff|,
+           bio => q|#5580d5|,
+        biomed => q|#b84c82|,
+           cdf => q|#31627b|,
+           cms => q|#30a051|
+   },
+   defaultColor => q|#ca940c|, # in case a VO/group still does not have a color assigned
+   image =>                    # Image properties
+   {
+          pie => { 
+                verbose => 0, 
+                  width => 200, # width and height of the resulting image
+                 height => 180, 
+            max_entries => 10   # max number of entries to be shown
+          },
+          bar => { 
+                  verbose => 0, 
+                    width => 210, 
+                   height => 180, 
+              max_entries => 12,  # max number of entries to be shown
+               axis_space => -40, # even if we opt not to show the axis labels, 
+                                  # space is reserved and axis title is placed beyond that
+                                  # default 8, adjust to bring the title back closer to the axis
+               text_space => 4,   # space between axis and title
+            max_label_len => 8    # truncate long groupname to max_label_len 
+                                  # chacracters (although labels are not shown)
+          },
+      legends => { 
+        verbose => 0, 
+          width => 520, 
+         height =>  80, 
+         max_re => 4,   # Maximum number of entries per row   
+          xstep => 105, # adjust in order to prevent a groupname overlap with the next entry
+          ystep => 18   # crucial for long group names
+      }
+   },
+   font => {                # for historical reason, we use an external font (default: arial)
+         dir => qq|$config->{baseDir}/fonts|, 
+       names => [
+                 q|LiberationSerif-Regular.ttf|, 
+                 q|arial.ttf|,
+                 q|Vera.ttf|
+               ],
+     default => 1 # index (of arial.ttf)
+   },
+   minReq =>      # VOs/Groups not satisfying the condition(s) are clubbed as 'others' (in %)
+   {
+         common => 1, 
+       jobShare => 1, 
+     wtimeShare => 1, 
+         cpuEff => 10, 
+        avgWait => 0.05 # > 5% of the maximum shown
+   }
+};
+
+# Must return the reference
+$config;
+__END__

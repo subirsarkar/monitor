@@ -1,0 +1,92 @@
+[% BLOCK header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>[% batch %] Monitoring at [% site %]</title>
+    <meta http-equiv="refresh" content="900" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link type="text/css" rel="stylesheet" href="ext/resources/css/ext-all.css" />
+    <link type="text/css" rel="stylesheet" href="css/accounting.css" />  
+    <script type="text/javascript" src="ext/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="ext/ext-all.js"></script>
+    <script type="text/javascript" src="js/qtips.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+[% END %]
+[% BLOCK style %]
+  </head>
+  <body>
+  <div>
+[%~ END ~%]
+[% BLOCK table_header %]
+        <h2>Jobs completed during the [% period %]</h2>
+        <div class="col1">
+          <table class="sortable"> 
+            <thead>
+              <tr>
+                 <th>AcctGroup</th>
+                 <th>Total<br />Jobs</th>
+                 <th>Succ<br />Jobs</th>
+                 <th>Succ<br />Rate(%)</th>
+                 <th>Slots</th>
+                 <th>Walltime<br />(sec)</th>
+                 <th>CPU Time<br />(sec)</th>
+                 <th>CPU<br />Eff(%)</th>
+                 <th>Walltime<br />Share(%)</th>
+                 <th>Avg Wait<br />(sec)</th>
+              </tr>
+            </thead>
+            <tbody>
+[%~ END ~%]
+[% BLOCK table_row %]
+              <tr>
+                <td><span style="color:[% color %];"><b>[% group %]</b></span></td>
+                <td>[% jobs %]</td>
+                <td>[% sjobs %]</td>
+                <td>[% success_rate %]</td>
+                <td>[% cores %]</td>
+                <td>[% walltime %]</td>
+                <td>[% cputime %]</td>
+                <td>[% cpueff %]</td>
+                <td>[% walltime_share %]</td>
+                <td>[% avgwait %]</td>
+              </tr>
+[%~ END ~%]
+[% BLOCK images %]
+            </tbody>
+          </table>
+        </div>
+        <div class="col2">
+          <div> 
+            <img src="images/[% timespan %]_jobshare.png" alt="Job share pie"></img>
+            <img src="images/[% timespan %]_cpueff.png" alt="CPU efficiency histogram"></img>
+          </div>
+          <div>
+            <img src="images/[% timespan %]_wtshare.png" alt="Walltime share pie"></img>
+            <img src="images/[% timespan %]_avgwait.png" alt="Average wait histogram"></img>
+          </div>
+          <div>
+            <img src="images/[% timespan %]_legends.png" alt="Legends"></img>
+          </div>
+        </div>
+[%~ END ~%]
+[% BLOCK footer %]
+   </div>
+   <div class="signature">
+     <span>
+       <label style="float:left;">lsfmon release: [%lsfmon_version%]</label> |
+       <label>
+         <a class="link" href="[%lsfmon_doc%]">Documentation</a>
+         <img class="elink" src="icons/external.png" alt="external link" />
+       </label> |
+       <label id="ajax-tip" class="tip-target">Developers</label>
+     </span> 
+     <span>
+       <label style="float:right;">Last updated on [% date %]</label>
+     </span>
+   </div>
+</body>
+</html>
+[% END %]

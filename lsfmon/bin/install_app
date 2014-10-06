@@ -1,0 +1,2 @@
+echo gcc user_group.c -o user_group.exe -I/usr/local/lsf/9.1/include -L/usr/local/lsf/9.1/linux2.6-glibc2.3-x86_64/lib/ -lbat -llsf -lnsl -lm -lnsl -ldl
+gcc user_group.c -o user_group.exe -I/usr/local/lsf/9.1/include -L/usr/local/lsf/9.1/linux2.6-glibc2.3-x86_64/lib/ -lbat -llsf -lnsl -lm -lnsl -ldl

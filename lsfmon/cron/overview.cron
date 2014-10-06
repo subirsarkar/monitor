@@ -1,0 +1,2 @@
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+*/3 * * * * root /afs/pi.infn.it/user/sarkar/public/lsfmon/lsfmon_v1.9.0/bin/launch_overview.sh >> /tmp/cron_overview.log 2>&1
