@@ -1,0 +1,3 @@
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=CRON_EMAIL
+00-59/3 * * * * root BASE_DIR/bin/launch_overview.sh >> /tmp/cron_overview.log 2>&1

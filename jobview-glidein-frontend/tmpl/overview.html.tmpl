@@ -1,0 +1,251 @@
+[% BLOCK page_header ~%]
+<html>
+  <head>
+    <meta http-equiv="refresh" content="360" />
+    <link rel="stylesheet" href="jquery/css/custom-theme/jquery-ui-1.8.1.custom.css" type="text/css"></link>
+    <link rel="stylesheet" href="jquery/dataTables/media/css/demo_table.css" type="text/css"></link>
+    <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+    <script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery-ui-1.8.1.custom.min.js"></script> 
+    <script type="text/javascript" src="jquery/dataTables/media/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/overview.js"></script>
+    <title>[% crabserver %] Job Overview</title>
+  </head>
+  <body>
+    <div align="center">
+      <h1>[%crabserver%] Job Overview</h1>
+    </div>
+    <div id="tabpanel-a">
+      <ul>
+[%~ END %]
+[% BLOCK tabview_row %]
+        <li><a href="#tab-[%label%]"><span>[%name%]</span></a></li>
+[%~ END %]
+[% BLOCK cpuslots %]
+      </ul>
+      <div id="tab-[%label%]">
+        <div style="width:90%;">
+          <div align="center" style="float:left;width:50%;">
+            <div>
+              <h2>[% title %]</h2>
+              <table id="table-cpuslot" style="width:80%;">
+                <thead><tr>
+                  <th>Max</th>
+                  <th>Available</th>
+                  <th>Occupied</th>
+                  <th>Free</th>
+                </tr></thead>
+                <tbody><tr><td>[% max %]</td><td>[% available %]</td><td>[% running %]</td><td>[% free %]</td></tr></tbody>
+              </table>
+            </div>
+[%~ END %]
+[% BLOCK jobs %]
+            <div style="clear:both;margin-top:10px;">
+              <h2>[% title %]</h2>
+              <table id="table-jobs" style="width:80%;">
+                <thead><tr>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff&lt;10%)</th>
+                </tr></thead>
+                <tbody><tr><td>[% total %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr></tbody>
+              </table>
+            </div>
+[%~ END %]
+[% BLOCK image_block %]
+          </div>
+          <div id="image-panel" style="float:right;width:40%;margin-top: 20px;">
+            <form name="form1" action="javascript:void%200">
+              <div>
+                <img id="canvas-cpuusage"></img>
+                <div style="margin-top:10px;">
+                  <span style="margin-left:10%;">
+                    <input type="radio" name="cpu" value="hour"  onclick="JobView.setCPUImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="cpu" value="day"   onclick="JobView.setCPUImage();" checked></input>
+                    <label>Daily</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="cpu" value="week"  onclick="JobView.setCPUImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="cpu" value="month" onclick="JobView.setCPUImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="cpu" value="year"  onclick="JobView.setCPUImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+              </div>
+              <div style="margin-top:20px;">
+                <img id="canvas-jobusage"></img>
+                <div style="margin-top:10px;">
+                  <span style="margin-left:10%;">
+                    <input type="radio" name="job" value="hour"  onclick="JobView.setJobImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="job" value="day"   onclick="JobView.setJobImage();" checked></input>
+                    <label>Daily</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="job" value="week"  onclick="JobView.setJobImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="job" value="month" onclick="JobView.setJobImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span style="margin-left:5px;">
+                    <input type="radio" name="job" value="year"  onclick="JobView.setJobImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK ce_header %]
+      <div id="tab-[%label%]">
+          <div align="center">
+            <h2>Computing Element</h2>
+          </div>
+          <table id="table-ce" class="display" style="width:80%;">
+            <thead>
+              <tr>
+                <th>CE</th>
+                <th>Site</th>
+                <th>Jobs</th>
+                <th>Running</th>
+                <th>Pending</th>
+                <th>Held</th>
+                <th>CPU Eff(%)</th>
+                <th>Jobs(Eff&lt;10%)</th>
+              </tr> 
+            </thead>
+            <tbody>
+[%~ END %]
+[% BLOCK ce_row %]
+              <tr><td>[% ce %]</td><td>[% site %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
+[%~ END %]
+[% BLOCK ce_footer %]
+            </tbody>
+          </table>
+      </div>
+[%~ END %]
+[% BLOCK dn_header %]
+      <div id="tab-[%label%]">
+        <div align="center">
+          <h2>User DN</h2>
+        </div>
+        <table id="table-dn" class="display" style="width:99%;">
+          <thead>
+            <tr>
+              <th>Local User</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs<br/>(Eff&lt;10%)</th>
+              <th style="text-align: center;">DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK dn_row %]
+            <tr><td>[% localuser %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td style="text-align: left;">[% dn %]</td></tr>
+[%~ END %]
+[% BLOCK dn_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK usersite_header %]
+      <div id="tab-[%label%]">
+        <div align="center">
+          <h2>User At Site</h2>
+        </div>
+        <table id="table-usersite" class="display" style="width:99%;">
+          <thead>
+            <tr>
+              <th>Local User</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs<br/>(Eff&lt;10%)</th>
+              <th>Site</th>
+              <th style="text-align: center;">DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK usersite_row %]
+            <tr><td>[% localuser %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td>[% site %]</td><td style="text-align: left;">[% dn %]</td></tr>
+[%~ END %]
+[% BLOCK usersite_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK userce_header %]
+      <div id="tab-[%label%]">
+        <div align="center">
+          <h2>User At Site CE</h2>
+        </div>
+        <table id="table-userce" class="display" style="width:99%;">
+          <thead>
+            <tr>
+              <th>Local User</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs<br/>(Eff&lt;10%)</th>
+              <th>CE</th>
+              <th style="text-align: center;">DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK userce_row %]
+            <tr><td>[% localuser %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td>[% ce %]</td><td style="text-align: left;">[% dn %]</td></tr>
+[%~ END %]
+[% BLOCK userce_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK priority %]
+      <div id="tab-[%label%]">
+        <div align="center">
+          <h2>User/Group Priority</h2>
+          <pre>[% priority %]</pre>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK page_footer %]
+    </div>
+    <div class="footer">
+      <div style="float:left;margin-left:6px;">
+        <label style="float:left;">Last updated at: [% timestamp %]</label>
+      </div>
+      <div style="float:right;margin-right:6px;">
+        <label style="float:right;">Developed by: Subir Sarkar - SINP, Kolkata</label>
+      </div>
+    </div>
+  </body>
+</html>
+[% END %]

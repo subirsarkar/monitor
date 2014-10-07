@@ -1,0 +1,12 @@
+condor_q -pool osg-gw-1.t2.ucsd.edu \
+      -format "ClusterId:=%d!" ClusterId \
+      -format "ProcId:=%d!" ProcId \
+      -format "JobStatus:=%d!" JobStatus \
+      -format "Owner:=%s!" Owner \
+      -format "GlobalJobId:=%s!" GlobalJobId \
+      -format "QDate:=%d!" QDate \
+      -format "AccountingGroup:=%V!" AccountingGroup \
+      -format "x509UserProxyFQAN:=%V!" x509UserProxyFQAN \
+      -format "x509userproxysubject:=%V\n" x509userproxysubject \
+      -constraint 'jobstatus == 1 || jobstatus == 5' \
+ -constraint 'SleepSlot =!= TRUE' -global

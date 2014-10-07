@@ -1,0 +1,10 @@
+# if condor is installed in a non-standard place
+#export PATH=/opt/condor/sbin:/opt/condor/bin:$PATH
+#export CONDOR_CONFIG=/opt/condor/etc/condor_config
+
+appdir=/opt/jobview_t2
+if [ -z PERL5LIB ]; then
+  export PERL5LIB=$appdir/lib:$PERL5LIB
+else
+  export PERL5LIB=$appdir/lib
+fi
