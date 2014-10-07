@@ -1,0 +1,284 @@
+[% BLOCK page_header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="120" />
+    <link rel="stylesheet" type="text/css" href="css/overview.css" />
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/overview.js"></script>
+    <title>[% site %] [% batch %] Farm Job Overview</title>
+  </head>
+  <body>
+    <div id="content">
+      <div>
+        <div class="timestamp">
+          <label>Last updated at [% date %]</label>
+        </div>
+      </div>
+      <div>
+        <h1>[% site %] Job Overview</h1>
+      </div>
+[%~ END %]
+[% BLOCK cpuslots_header %]
+      <div>
+        <div class="panel-left">
+          <div id="cpu-panel" class="cpu-panel para">
+            <h2 class="narrow">[% title %]</h2>
+            <table id="cpu-table">
+              <thead>
+                <tr>
+                  <th>Maximum Seen</th>
+                  <th>Max</th>
+                  <th>Available</th>
+                  <th>Occupied</th>
+                  <th>Free</th>
+                </tr>
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK cpuslots_row %]
+                <tr>
+                  <td>[% maxever %]</td>
+                  <td>[% max %]</td>
+                  <td>[% available %]</td>
+                  <td>[% running %]</td>
+                  <td>[% free %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK cpuslots_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK jobs_header %]
+          <div id="job-panel" class="para job-panel">
+            <h2 class="narrow">[% title %]</h2>
+            <table id="jobs-table">
+              <thead>
+                <tr>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff&lt;10%)</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK jobs_row %]
+                <tr>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK jobs_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK group_header %]
+          <div id="vo-panel" class="para vo-panel">
+            <h2 class="narrow">[% title %]</h2>
+            <table id="vo-table" class="sortable">
+              <thead>
+                <tr>
+                  <th>Group</th>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff&lt;10%)</th>
+                  <th>Walltime Share(%)</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK group_row %]
+                <tr>
+                  <td>[% group %]</td>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                  <td>[% walltime_share %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK group_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK ce_header %]
+          <div id="ce-panel" class="para ce-panel">
+            <h2 class="narrow">[% title %]</h2>
+            <table id="ce-table" class="sortable">
+              <thead>
+                <tr>
+                  <th>CE</th>
+                  <th>Jobs</th>
+                  <th>Running</th>
+                  <th>Pending</th>
+                  <th>Held</th>
+                  <th>CPU Eff(%)</th>
+                  <th>Jobs(Eff&lt;10%)</th>
+                </tr> 
+              </thead>
+              <tbody>
+[%~ END %]
+[% BLOCK ce_row %]
+                <tr>
+                  <td>[% ce %]</td>
+                  <td>[% jobs %]</td>
+                  <td>[% running %]</td>
+                  <td>[% pending %]</td>
+                  <td>[% held %]</td>
+                  <td>[% cpueff %]</td>
+                  <td>[% ratio10 %]</td>
+                </tr>
+[%~ END %]
+[% BLOCK ce_footer %]
+              </tbody>
+            </table>
+          </div>
+[%~ END %]
+[% BLOCK image_block %]
+        </div>
+        <div class="panel-right">
+          <form id="form1" action="javascript:void%200">
+            <div id="image-panel">
+              <div class="canvas_box">
+                <img id="canvas-cpuusage" src="" alt="Graph - CPU Usage"></img>
+                <div class="graph_options">
+                  <span>
+                    <input type="radio" name="cpu" value="hour" onclick="JobView.setCPUImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="day" onclick="JobView.setCPUImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="week" onclick="JobView.setCPUImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="month" onclick="JobView.setCPUImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="cpu" value="year" onclick="JobView.setCPUImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+              </div>
+              <div class="canvas_box">
+                <img id="canvas-jobusage" src="" alt="Graph - Job Usage"></img>
+                <div class="graph_options">
+                  <span>
+                    <input type="radio" name="job" value="hour" onclick="JobView.setJobImage();"></input>
+                    <label>Hourly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="day" onclick="JobView.setJobImage();" checked="checked"></input>
+                    <label>Daily</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="week" onclick="JobView.setJobImage();"></input>
+                    <label>Weekly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="month" onclick="JobView.setJobImage();"></input>
+                    <label>Monthly</label>
+                  </span>
+                  <span>
+                    <input type="radio" name="job" value="year" onclick="JobView.setJobImage();"></input>
+                    <label>Yearly</label>
+                  </span>
+                </div>
+                <div class="selectgroup">
+                  <label>Select Group:</label>
+                  <select id="select-group">
+                     [% options %]
+                  </select>
+                  <input value="Show" type="submit" onclick="JobView.setJobImage();"></input>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>  
+      </div>
+[%~ END %]
+[% BLOCK dn_header %]
+      <div id="dn-panel" class="para dn-panel">
+        <h2 class="wide">[% title %]</h2>
+        <table id="dn-table" class="sortable">
+          <thead>
+            <tr>
+              <th>Local User</th>
+              <th>Group</th>
+              <th>Jobs</th>
+              <th>Running</th>
+              <th>Pending</th>
+              <th>Held</th>
+              <th>CPU Eff(%)</th>
+              <th>Jobs(Eff&lt;10%)</th>
+              <th>DN</th>
+            </tr>
+          </thead>
+          <tbody>
+[%~ END %]
+[% BLOCK dn_row %]
+            <tr>
+              <td>[% localuser %]</td>
+              <td>[% group %]</td>
+              <td>[% jobs %]</td>
+              <td>[% running %]</td>
+              <td>[% pending %]</td>
+              <td>[% held %]</td>
+              <td>[% cpueff %]</td>
+              <td>[% ratio10 %]</td>
+              <td class="dn">[% dn %]</td>
+            </tr>
+[%~ END %]
+[% BLOCK dn_footer %]
+          </tbody>
+        </table>
+      </div>
+[%~ END %]
+[% BLOCK priority %]
+      <div id="share-panel" class="para share-panel">
+        <h2 class="narrow">User/Group Priority</h2>
+        <pre>[% priority %]</pre>
+      </div>
+[%~ END %]
+[% BLOCK page_footer %]
+    </div>
+    <div class="signature">
+      <span>
+        <label style="float:left;">jobview release: [%jobview_version%]</label> |
+        <label>
+          <a class="link" href="[%doc%]">Documentation</a>
+          <img class="elink" src="icons/external.png" alt="external link" />
+        </label>
+      </span> 
+      <span>
+        <label title="subir.sarkar@SPAMNOTcern.ch" style="float:right;">Developed by: Subir Sarkar - INFN-Pisa</label>
+      </span>
+    </div>
+    <script type="text/javascript">
+      window.onload = JobView.init();
+    </script>
+  </body>
+</html>
+[% END %]

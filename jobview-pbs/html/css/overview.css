@@ -1,0 +1,96 @@
+body,div,label,span,th,td {
+  font-family:Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+  font-weight:normal;
+  font-size:1em;
+}
+body {background-color:#fff;position:relative;}
+p,h1,h2 {font-family:Arial,sans-serif;font-weight:normal;}
+div {display:block;overflow:auto;}
+pre {font-family:monospace;font-size:.9em;}
+h1 {
+  color:#000;
+  background-color:#fff;
+  margin:auto auto;
+  width:35%;
+  text-align:center;
+  padding:.23em 0;
+  border:solid #97abd2;
+  border-top-style:dotted;
+  border-bottom-style:dotted;
+  border-width:.05em .1em .05em 1em;
+  font-size:1.5em;
+}
+h2 {
+  color:#000;
+  background-color:#fff;
+  padding:.25em 0;
+  text-align:center;
+  border:solid #bdbdd5;
+  font-size:1.1em;
+  width:35%;
+  margin:1em auto;
+  border-top-style:dotted;
+  border-bottom-style:dotted;
+  border-width:.1em .1em .1em .5em;
+}
+table {
+  border:0 solid #aaa;
+  border-collapse:separate;
+  border-spacing:1px;
+  background-color:#92a4d2;
+  margin-left:.2em;
+  width:95%;
+}
+tr {text-align:right;}
+th {
+  color:#fff;
+  padding:.3em .1em;
+  text-align:center;
+  font-weight:normal;
+  background-image:url('../icons/bg_th.png');
+  background-repeat:repeat-x;
+}
+td {
+  background-color:#fff;
+  border:solid #000;
+  border-width:0;
+  padding:.4em .1em;
+  font-size:.9em;
+}
+td.dn {min-width: 50%;text-align:left;}
+/* Sortable tables */
+table.sortable thead {
+  background-color:#eee;
+  color:#666;
+  font-weight:normal;
+  cursor:default;
+}
+div.timestamp {
+  border:dotted #000;
+  border-width:.1em 0;
+  padding:.2em .2em;
+  margin-right:.6em;
+  float:right;
+}
+div.timestamp label {color:MidnightBlue;font-size:.9em;}
+div.para {clear:both;margin-top:1.2em;}
+h2.narrow {min-width: 10em;}
+h2.wide {width:25%;}
+div.panel-left {float:left;width:48%;}
+div.panel-right {float:right;width:46%;margin-top:4em;}
+div.canvas_box {margin-top:1em;}
+div.graph_options {width:70%;text-align:center;font-size:.9em;padding-top:.5em;}
+div.selectgroup {width:70%;text-align:center;margin-top:1em;font-size:.9em;}
+div.signature {
+  color: #fff;
+  margin-top: .8em;
+  padding: .5em .4em;
+  font-size: .9em;
+  background-image:url('../icons/bg_th.png');
+  background-repeat:repeat-x;
+}
+table#dn-table {width:99%;}
+a.link {color: #fff;text-decoration: none; !important}
+a.link:hover {color: #0010c5;text-decoration: underline; !important}
+img.elink {margin-bottom:-.27em;}
+div.signature span {padding: 0 0.5em;}
