@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+   "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head>
+    <title>SITENAME Farm Job Monitor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <meta http-equiv="Content-Style-Type" content="text/css"></meta>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"></meta>
+    <link rel="stylesheet" href="jquery/css/custom-theme/jquery-ui-1.8.1.custom.css" type="text/css"></link>
+    <link rel="stylesheet" href="jquery/css/jquery.cluetip.css" type="text/css"></link>
+    <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+    <script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery-ui-1.8.1.custom.min.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.dimensions.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.getUrlParam.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.blockUI.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.hoverIntent.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.cluetip.min.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.printf.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.quicksearch.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/jobmon.js"></script> 
+  </head>
+  <body>
+    <form method="GET" name="Form1" action="javascript:void%200;">
+      <div class="panel-header">
+        <div id="panel-auth" style="float:left;width:72%;">
+          <img id="image-dn" class="wlabel" src="images/vote-user-red.gif"></img>
+          <label class="noal" style="text-align:right;">Identity:</label>
+          <label class="noal" id="label-auth"></label>
+        </div>
+        <div id="panel-progress" style="float:right;width:26%;">
+          <span>
+            <img id="img-loading" src="images/wait.gif"></img>
+            <label id="label-datatype" style="margin-left:4px;"></label>
+          </span>
+        </div>
+      </div>
+      <div id="panel-north" style="clear:both;margin-top:2px;height:532px;">
+        <div id="tabpanel-a">
+          <ul>
+            <li><a href="#tab-a1"><span>Summary</span></a></li>
+            <li><a href="#tab-a2"><span>Detail</span></a></li>
+          </ul>
+          <div id="tab-a1">
+            <div style="height:497px;overflow:auto;">
+              <div class="searchPanel">
+                <span style="float:left;">
+                  <label>Quick Search:</label>
+                  <input type="text" name="search" value="" id="id_search" class="searchInput" />
+                </span>
+                <span style="float:right;" class="loading">Loading...</span>
+              </div>
+              <div id="summary-panel" style="width:100%"></div>
+            </div>
+          </div>
+          <div id="tab-a2">
+            <div style="float:left;width:29.8%;">
+              <div id="tabpanel-b">
+                <ul>
+                  <li><a href="#tab-b1"><span>ListBox</span></a></li>
+                  <li><a href="#tab-b2"><span>Text</span></a></li>
+                </ul>
+                <div id="tab-b1">
+                  <select id="select-jid" size=30 style="width:100%;height:435px;"></select>
+                </div>
+                <div id="tab-b2">
+                  <textarea id="logger-gid" style="width:100%;height:431px;" 
+                            readonly="readonly" wrap="off"></textarea>
+                </div>
+              </div>
+              <div style="margin-top:4px;">
+                <div style="float:left;">
+                  <span>
+                    <label style="margin-left:4px;">Show</label>
+                    <select id="select-jidtype">
+                      <option value="gridid">Grid ID</option>
+                      <option value="localid">Local ID</option>
+                    </select>
+                  </span>
+                </div>
+                <div id="div-entry" style="float:right;margin-top:2px;">
+                  <label id="label-entries" style="text-align:right;margin-right:6px;"></label>
+                </div>
+              </div> 
+            </div>
+            <div style="float:right;width:70%;">
+              <div id="detail-panel" style="clear:both">
+                <div id="tabpanel-c">
+                  <ul>
+                    <li><a href="#tab-c1"><span>Job Summary</span></a></li>
+                    <li><a href="#tab-c2"><span>Job ps</span></a></li>
+                    <li><a href="#tab-c3"><span>WN top</span></a></li>
+                    <li><a href="#tab-c4"><span>Work Dir</span></a></li>
+                    <li><a href="#tab-c5"><span>Job Dir</span></a></li>
+                    <li><a href="#tab-c6"><span>Job Output</span></a></li>
+                    <li><a href="#tab-c7"><span>Job Error</span></a></li>
+                  </ul>
+                  <div id="tab-c1">
+                    <div id="panel-summary">
+                        <div>
+                          <div id="div-table-1" style="width:36.8%;float:left;">
+                            <table id="table-jobinfo" style="width:100%;">
+                              <tr>
+                                <td class="tdl">Local JobID</td>
+                                <td class="tdr" id="td-jobid"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Status</td>
+                                <td class="tdr" id="td-status"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Local User <img class="info"></img></td>
+                                <td class="tdr" id="td-user"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Queue <img class="info"></img></td>
+                                <td class="tdr" id="td-queue"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Submitted at</td>
+                                <td class="tdr" id="td-submitted"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Started at</td>
+                                <td class="tdr" id="td-started"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Finished at</td>
+                                <td class="tdr" id="td-finished"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Exit Status <img class="info"></img></td>
+                                <td class="tdr" id="td-exitstatus"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">CPU Time</td>
+                                <td class="tdr" id="td-cputime"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Wall Time</td>
+                                <td class="tdr" id="td-walltime"></td>
+                              </tr>
+                              <tr>
+                                <td class="tdl">Host <img class="info" /></td>
+                                <td class="tdr" id="td-exechost"></td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div id="div-img" style="margin-left:0.05%;width:63%;float:right;">
+                            <img src="images/cpuload.png" class="canvas" width="100%" height="136px" name="load" />
+                            <img src="images/memused.png" class="canvas" width="100%" height="136px" name="mem" />
+                          </div>
+                        </div>
+                        <div style="margin-top:1px;">
+                          <table id="table-admin" style="width:100%;">
+                            <tr>
+                              <td class="tdl2">Grid JobID</td>
+                              <td class="tdr2" id="td-gridid"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">CE ID <img class="info"></img></td>
+                              <td class="tdr2" id="td-ceid"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">RB/WMS <img class="info"></img></td>
+                              <td class="tdr2" id="td-rb"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">Subject <img class="info"></img></td>
+                              <td class="tdr2" id="td-subject"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">Proxy Validity</td>
+                              <td class="tdr2" id="td-timeleft"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">Role</td>
+                              <td class="tdr2" id="td-role"></td>
+                            </tr>
+                            <tr>
+                              <td class="tdl2">Description</td>
+                              <td class="tdr2" id="td-jobdesc"></td>
+                            </tr>
+                          </table>
+                        </div>
+                    </div>
+                  </div>
+                  <div id="tab-c2">
+                    <p id="p-ps"></p>
+                  </div>
+                  <div id="tab-c3">
+                    <p id="p-top"></p>
+                  </div>
+                  <div id="tab-c4">
+                    <p id="p-workdir"></p>
+                  </div>
+                  <div id="tab-c5">
+                    <p id="p-jobdir"></p>
+                  </div>
+                  <div id="tab-c6">
+                    <p id="p-log"></p>
+                  </div>
+                  <div id="tab-c7">
+                    <p id="p-error"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="panel-south" style="margin-top:2px;">
+         <div style="float:left;width:29.8%;">
+            <div id="tabpanel-d"> 
+              <ul>
+                <li><a href="#tab-d1"><span>State</span></a></li>
+                <li><a href="#tab-d2"><span>Selection</span></a></li>
+                <li><a href="#tab-d3"><span>Diagnosis</span></a></li>
+                <li><a href="#tab-d4"><span>Query Builder</span></a></li>
+              </ul>
+              <div id="tab-d1">
+                <div style="margin-left:4px;margin-top:2px;">
+                  <span> 
+                    <input type="radio" name="jobstate" value="running" checked></input>
+                    <label>Running</label>
+	  	  
+                    <input type="radio" name="jobstate" value="queued"></input>
+                    <label>Queued</label>
+	  	  
+                    <input type="radio" name="jobstate" value="held"></input>
+                    <label>Held</label>
+                  </span>
+                  <hr />
+                  <span> 
+                    <input type="radio" name="jobstate" value="completed"></input>
+                    <label>Completed</label>
+		  
+                    <input type="radio" name="jobstate" value="unknown"></input>
+                    <label>Unknown</label>
+                  </span>
+                </div>
+                <div style="margin-top:6px;">
+                  <div>
+                    <label class="fg-input-label">From</label>
+                    <input type="text" id="input-from" style="width:200px;"></input>
+                  </div>
+                  <div style="margin-top:4px;">
+                    <label class="fg-input-label">To</label>
+                    <input type="text" id="input-to" style="width:200px;"></input>
+                  </div>
+                </div>
+              </div>
+              <div id="tab-d2">
+                <span>
+                  <select style="width:100%;" id="select-filter">
+                    <option value="all">All</option>
+                    <option value="subject">Subject</option>
+                    <option value="queue">Queue</option>
+                    <option value="user">Local User</option>
+                    <option value="rb">RB/WMS</option>
+                    <option value="grid_id">LB</option>
+                    <option value="ceid">CEId</option>
+                    <option value="exec_host">WN</option>
+                    <option value="qtime">Submitted on</option>
+                    <option value="start">Started on</option>
+                    <option value="ex_st">Exit Code</option>
+                  </select>
+                </span>
+                <div id="div-tagid" style="overflow:auto;width:100%;">
+                  <select size=4 style="height:62px;width:100%;" id="select-tag"></select>
+                </div>
+                <div style="margin-top:2px;">
+                  <input type="checkbox" disabled id="check-extrafilter"></input>
+                  <label style="margin-left:4px;">Additional selection from Query Builder</label>
+                </div>
+              </div>
+              <div id="tab-d3">
+                <div>
+                  <select size=4 style="width:100%;" id="select-diagnose">
+                    <option title="CPU Time/Walltime(%)" value="cpu0">CPU=0</option>
+                    <option title="CPU Time/Walltime(%)" value="cpu10">0=&lt;CPU&lt;10</option>
+                    <option title="CPU Time/Walltime(%)" value="cpu30">10=&lt;CPU&lt;30</option>
+                    <option title="CPU Time/Walltime(%)" value="cpuok">CPU&gt;=30</option>
+                    <option title="Physical memory used by the job &gt; 2GB" value="hmem">mem&gt;2GB</option>
+                    <option title="Virtual memory used by the job &gt; 4GB" value="hvmem">vmem&gt;4GB</option>
+                    <option title="Disk space used by the job &gt; 6GB" value="hdiskusage">space&gt;6GB</option>
+                    <option title="No load on WN due to this job" value="load0">Load=0</option>
+                    <option title="High load on WN due to this job" value="load1">Load&gt;1</option>
+                    <option title="Grid proxy is about to expire" value="noproxy">Proxy Expiring</option>
+                    <option title="Same Grid ID for many jobs, indicates malfunctioning of the RB/WMS!" 
+                            value="duplicateid">Duplicate Grid ID</option>
+                  </select>
+                </div>
+                <div style="margin-top:4px;">
+                  <label>JID</label>
+                  <input type="text" title="Please enter a grid/local jobid" id="jidvalue" 
+                        style="width:75%;font-size:small;"></input>
+                  <input value="Show" title="Show detail for the adjacent grid/local jobid" type="submit"></input>
+                </div>
+              </div>
+              <div id="tab-d4">
+                <div style="width:100%;">
+                  <span>
+                    <label class="fg-select-label">Queue</label>
+                    <select style="width:45%;" id="select-queue"></select>
+                    <input value="LoadAll" title="Load currently available values for all the tags" 
+                           type="submit"></input>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">CEId</label>
+                    <select id="select-ce" class="fg-combobox"></select>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">RB</label>
+                    <select id="select-rb" class="fg-combobox"></select>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">WN</label>
+                    <select id="select-wn" class="fg-combobox"></select>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">Subject</label>
+                    <select id="select-subject" class="fg-combobox"></select>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">Submitted on</label>
+                    <select id="select-submitted" class="fg-combobox"></select>
+                  </span>
+                  <span style="margin-top:1px;">
+                    <label class="fg-select-label">Started on</label>
+                    <select id="select-started" class="fg-combobox"></select>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div id="button-panel" style="margin-top:5px;">
+              <div style="float:right;">
+                 <input title="Update the jobid list using the current setting"
+                        value="Update List" style="width:auto;" type="submit"></input>
+                 <input title="Reset selection and show all the jobs"
+                        value="Reset Selection" style="width:auto;" type="submit"></input>
+              </div>
+            </div>
+          </div>
+          <div style="float:right;width:70%;">
+            <div id="tabpanel-e">
+              <ul>
+                <li><a href="#tab-e1"><span>Event Logger</span></a></li>
+                <li><a href="#tab-e2"><span>Error Logger</span></a></li>
+                <li><a href="#tab-e3"><span>Debug Logger</span></a></li>
+                <li><a href="#tab-e4"><span>Configuration</span></a></li>
+              </ul>
+              <div id="tab-e1">
+                 <textarea id="logger-event" readonly="readonly"></textarea>
+              </div>
+              <div id="tab-e2">
+                 <textarea id="logger-error" readonly="readonly"></textarea>
+              </div>
+              <div id="tab-e3">
+                 <textarea id="logger-debug" readonly="readonly"></textarea>
+              </div>
+              <div id="tab-e4">
+                <div class="logger-option">
+                  <div style="width:48%;float:left;">
+                    <fieldset>
+                      <legend>Job Option</legend>
+                      <div>
+                        <input type="checkbox" id="check-showdetail" name="showdetail"
+                              title="Toggle summary/detailed information retrieval for a job"></input>
+                        <label for="showdetail">Enable Job detail Tabs</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="check-myjobs" name="myjobs"></input>
+                        <label for="myjobs">Show Jobs from my VO(s)</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" 
+                               id="check-autoupdate" name="autoupdate"
+                            title="Toggle automatic update of information for the selected JID at regular intervals"></input>
+                        <label for="autoupdate">Auto update Job information</label>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div style="float:right;width:48%;">
+                    <fieldset>
+                      <legend>Logger Option</legend>
+                      <div>
+                        <input type="checkbox" id="check-logevent" name="logevent"></input>
+                        <label for="logevent">Log Event</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="check-logdebug" name="logdebug"></input>
+                        <label for="logdebug">Log Debug</label>
+                      </div>
+                      <input value="Clear Log" style="margin-top:4px;" type="submit"></input>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="panel-header" style="margin-top:2px;">
+        <div style="float:left;">
+          <img src="images/user-group2.gif" class="wlabel"></img>
+          <span>
+            <a class="dtips link" href="developers.html" rel="developers.html" title="Developers">Developers</a>&nbsp;|
+            <a class="htips link" href="help.html" rel="help.html" title="Brief Help">Help</a>
+          </span>
+        </div>
+        <div style="float:right;">
+          <label>Powered by <a class="link" href="http://jquery.com">jQuery</a></label>
+        </div>
+      </div>
+      <div id="panel-message-blockui" class="ui-helper-hidden">
+        <h2><img src="images/wait.gif"></img> Please wait ...</h2>
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use constant MINUTE => 60;
+use constant HOUR   => 60 * MINUTE;
+
+our $cfg = 
+{
+         baseDir => q|BASEDIR|,                                              # Software installation directory
+           debug => 0,                                                       # debug option
+         verbose => 0,                                                       # verbosity
+            site => q|SITE|,                                                 #
+          domain => q|DOMAIN|,                                               # 
+            lrms => q|LRMS|,                                                 # batch system
+    lrms_version => q|RELEASE|,                                              # batch version
+          jobDir => q|JOBDIR|,                                               # Job information directory (batch system)
+         acctDir => q|ACCOUNTING_DIR|,                                       # accounting directory      (batch system)
+        nodeinfo => {nlines => 1000},                                        # last lines of stdout, stderr to be stored
+     ce_required => 0,                                                       # set 0 on the CEs if you have local jobs5D
+         site_ce => {                                                        # GRID CEs, ones that run jobsensor 
+            list => [LIST_OF_CE],
+          master => q|MASTER_CE|
+        },
+     query_cache => {
+           file => q|/tmp/qstat_f.list|,
+       lifetime => 3 * MINUTE
+    },
+    max_file_age => 10, # days
+       cachelife => {jobinfo  =>  3 * MINUTE,  gridinfo => 15 * MINUTE},     # cache validity time period
+      nodesensor => {interval => 10 * MINUTE, randomize => 40 },             # Node daemon collection interval
+       jobsensor => {interval => 10 * MINUTE},                               # CE daemon collection interval
+    jobinfoCache => {interval =>  3 * MINUTE},                               # CE jobinfo cache interval
+   gridinfoCache => {interval => 15 * MINUTE,   timeout => 15 * MINUTE},     # CE gridinfo cache interval
+  show_cmd_error => 0,
+   queues_toskip => [],                                                      # local queues to be skipped
+   storageinfo  =>                                                           # presently, must be configured _manually_
+   {                                                                         # if info available, must have valid type/url
+     available => 0,
+          type => q|dcache|,
+           url => q|http://cmsdcache:2288/context/transfers.html|
+   },
+   voattr => 
+   {                                                                # in case stdout, stderr are special
+        babar => {log => q|simu(?:.*?).log|,  error => q|simu(?:.*?).batchout|},
+          cdf => {log => q|job(?:.*?).out|,   error => q|job(?:.*?).err|},
+     theophys => {log => q|runQ.out|,         error => q|runQ.err|}   
+   }
+};
+$cfg->{dbcfg}      = qq|$cfg->{baseDir}/jobmon/etc/.my.cnf|;                   # mysql login detail
+$cfg->{xmldir}     = qq|$cfg->{baseDir}/jobmon/data|;                          # cache store for CE, xml location for WN         
+$cfg->{logfile}    = qq|$cfg->{baseDir}/jobmon/log/qstat_mon.log|;             # logdir contains daemon logs
+$cfg->{jidmap}     = qq|$cfg->{baseDir}/jobmon/data/gridmap.db|; 
+$cfg->{gridmapDir} = q|GRIDMAP_DIR|;                                           # LCG and Cream CE has a different places
+
+$cfg;
+__END__

@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>Job Monitor Tips</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <meta http-equiv="Content-Style-Type" content="text/css"></meta>
+    <link rel="stylesheet" type="text/css" href="css/style.css"></link>
+  </head>
+  <body>
+   <p style="margin-top:-5px;">This page discusses a few finer points that make the monitor useful. 
+     <ul>
+       <li> Progress of any action is reported at the top right corner.</li> 
+       <li> On user action control panels are momentarily disabled to 
+            avoid accidental operations that may confuse the browser.</li>
+       <li><b>Job Summary</b> Table
+         <ul>
+           <li> sort the table rows by clicking on the column headers</li> 
+           <li> use quick-search to filter out unwanted entries</li> 
+           <li> double-click a gridid to find the job detail</li>
+         </ul>
+         Note that a long table takes a while to load and customise. Please be patient.
+       </li>
+       <li><b>Job detail</b> Tab, which in turn contains other tabbed views
+         <ul>
+           <li> only basic information about a job is shown by default. You will notice that certain tabs are inactive.
+                Check 'Enable Job detail Tabs' in case you want to know more. uncheck the same to know less.</li>
+           <li> by default only jobs belonging to the DN are shown, check 'Show jobs from my VO(s)' if you want to
+                see jobs from your collaborators. However, note that you won't be able to see private information</li> 
+           <li> checking auto-update will keep on updating information about the selected job every 10 minutes.</li> 
+         </ul>
+       </li>
+       <li>Control, configuration and logging
+         <ul>
+           <li><b>Selection</b> panel mostly useful for the site admis; select jobs belonging to a 
+               (a) queue (e.g cms, cdf), (b)local user (e.g cmsprd, babarsgm),
+               (c) subject or certificate DN,
+               (d) Resource Broker / WMS,
+               (e) batch Worder Node,
+               (f) date when certain jobs got submitted / queued<,
+               (g) date when certain jobs started
+           </li>
+           <li><b>Diagnosis</b>, look for mis-behaving jobs in this tab, 
+               (a) Load=0 - the job does not add any load to the node,
+               (b) Load&lt;30 - CPU time &lt; 30% of Real time,
+               (c) Load&gt;=30 - CPU time &gt;= 30% of Real Time, i.e well behaved jobs,
+               (d) CPU=0 - no CPU time being consumed by the job, waiting for data? stuck for some reason?,
+               (e) proxy expired - user proxy for the job expired, stage-out will eventually fail,
+               (f) high mem/vmem jobs
+           </li>
+           <li>various logger areas. When an error occurs you will be automatically directed to the 'Error Logger'.
+               In case you are curious to know the requests that are sent to the server, you may turn on the
+               'Log Event' option. Turning on 'Log Debug' be best avoided.</li>
+           <li>Configuration panel that contains the checkboxes mentioned above as well as logging options.</li>
+         </ul>
+       </li>
+       <li>Different ways of accessing the web-based monitor (Pisa used as an example):
+         <ul>
+           <li>https://gridse.sns.it/jobmon/pisa/jobmon.html, the first job in the list is shown.</li>
+           <li>for a single Grid jobid: https://gridse.sns.it/jobmon/pisa/jobmon.html?gridid=ACTUAL_GRID_JOBID</li>
+           <li>a single job from another web page: https://gridse.sns.it/jobmon/pisa/jobinfo.html?gridid=ACTUAL_GRID_JOBID</li>
+         </ul>
+       </li>
+     </ul>
+   </p>
+   <p style="margin-bottom:-8px;">Please refer to 
+      <a href="https://twiki.cern.ch/twiki/bin/view/CMS/ItalianT2ToolsJobMonitor">https://twiki.cern.ch/twiki/bin/view/CMS/ItalianT2ToolsJobMonitor</a> 
+      for more detail.
+   </p>
+  </body>
+</html>

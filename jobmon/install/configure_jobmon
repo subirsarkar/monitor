@@ -1,0 +1,199 @@
+#!/bin/sh
+set -o nounset
+
+# Configure jobmon
+# v1.1 11/07/2009 - Subir Sarkar
+
+PROGNAME=$(basename $0)
+DIRNAME=$(dirname $0)
+
+source $DIRNAME/common.sh
+
+function usage
+{
+  cat <<EOF
+Usage: $PROGNAME installtype <options>
+installtype: db,ce,wn,webservice - must be specified
+
+where options are:
+  -b|--basedir       Base directory(D=/opt)
+  -s|--startd        Optionally start the daemon(D=false)
+  -v|--verbose       Turn on debug statements (D=false)
+  -d|--dryrun        Show the steps but do not take the action (D=false)
+  -h|--help          This message
+
+  example: $PROGNAME webservice --dryrun
+EOF
+
+  exit 1
+}
+
+[ $# -gt 0 ] || usage
+
+# Initialise, get the disk name
+installtype=$1
+shift
+
+echo $installtype | grep "^-" >/dev/null
+[ $? -gt 0 ] || usage
+
+basedir=/opt
+let "startd = 0"
+let "verbose = 0"
+let "dryrun = 0"
+while [ $# -gt 0 ]; do
+  case $1 in
+    -b | --basedir )        shift
+                            basedir=$1
+                            ;;
+    -s | --startd )         let "startd = 1"
+                            ;;
+    -v | --verbose )        let "verbose = 1"
+                            ;;
+    -d | --dryrun )         let "dryrun = 1"
+                            ;;
+    -h | --help )           usage
+                            ;;
+     * )                    usage
+                            ;;
+  esac
+  shift
+done
+
+# Form appdir and make sure that the runtime folders do exist
+appdir=$basedir/jobmon
+mkdir -p $appdir/sql  \
+         $appdir/etc  \
+         $appdir/data \
+         $appdir/log  \
+         $appdir/run
+
+function configure_mysql
+{
+  # create the database and the tables, assign proper permission
+  SQL_SCRIPT=$appdir/sql/createDB.sql
+  $DIRNAME/prepare_sql.sh > $SQL_SCRIPT
+  perl -pi -e 's#Enter password:\n##g' $SQL_SCRIPT
+  mysql -u root -p < $SQL_SCRIPT
+
+  # now create .my.cnf from template
+  local user=; parseConfig ADMIN_USER $basedir user
+  local pass=; parseConfig ADMIN_PASSWORD $basedir pass
+  [ "$pass" != "" ] || readPassword pass
+  my_cnf $basedir $user $pass
+}
+
+function configure_ce
+{
+  # create .my.cnf from template
+  local user=; parseConfig CE_USER $basedir user
+  local pass=; parseConfig CE_PASSWORD $basedir pass
+  [ "$pass" != "" ] || readPassword pass
+  my_cnf $basedir $user $pass
+
+  # Start the sensors
+  if [ $startd -gt 0 ]; then
+    $appdir/bin/jobsensor start
+    $appdir/bin/jobinfoCache start
+    $appdir/bin/gridinfoCache start
+  fi
+}
+
+function configure_wn
+{
+  # create .my.cnf from template
+  local user=; parseConfig WN_USER $basedir user
+  local pass=; parseConfig WN_PASSWORD $basedir pass
+  [ "$pass" != "" ] || readPassword pass
+  my_cnf $basedir $user $pass
+
+  # start the sensor
+  [ $startd -gt 0 ] && $appdir/bin/nodesensor start
+}
+
+function configure_https
+{
+  # in case you do not have a secured server at your disposal
+  # get a self signed host certificate
+
+  # first of all back up the configuration 
+  cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.ORIG
+
+  # prepare the secure server related portion to httpd.conf
+  local domain=; parseConfig DOMAIN     $basedir domain
+  local server=; parseConfig WEB_SERVER $basedir server
+  local  admin=; parseConfig WEB_ADMIN  $basedir admin
+  sed -e "s/DOMAIN/$domain/g"   \
+      -e "s/WEBSERVER/$server/" \
+      -e "s/WEBADMIN/$admin/"   \
+       $appdir/install/secure.conf.tmpl > $appdir/install/secure.conf
+
+  # append to the original configuration
+  cat $appdir/install/secure.conf >> /etc/httpd/conf/httpd.conf 
+
+  # create the 'monitor' user
+  grep monitor /etc/passwd > /dev/null
+  if [ $? -ne 0 ]; then
+    echo -- creating the jobmon monitoring user
+    useradd -m -c 'jobmon user' -d /home/monitor -g apache -s /bin/bash monitor
+    [ $? -eq 0 ] || { echo Failed to create user monitor; return 1; }
+    echo set password for monitor.apache
+    passwd monitor  # set password
+  fi
+
+  perl -pi -e 's#User apache#User monitor#' /etc/httpd/conf/httpd.conf
+
+  # now restart the web server
+  service httpd restart
+}
+
+# This could just be a guideline only as your choice may differ
+function configure_webservice
+{
+  sitename=; parseConfig SITE $basedir sitename
+  site=$(toLower $sitename)
+
+  # install html/Javascript
+  HTML_DIR=/var/www/html/jobmon/$site
+  mkdir -p $HTML_DIR
+  cd $HTML_DIR
+  [ $? -eq 0 ] || { echo Failed to change directory to $HTML_DIR; exit 1; }
+  tar zxvf $appdir/html/code.tgz 
+  perl -pi -e "s/SITENAME/$sitename/" jobmon.html jobinfo.html
+  perl -pi -e "s/SITENAME/$site/" js/jobmon.js js/jobinfo.js
+
+  # install the CGI
+  CGI_DIR=/var/www/cgi-bin/jobmon/$site
+  mkdir -p $CGI_DIR
+  cp $appdir/bin/monitor.cgi $CGI_DIR/
+  chown -R monitor.apache $CGI_DIR/monitor.cgi
+  cp $appdir/lib/WebService/config.pl $CGI_DIR/
+
+  # create .my.cnf from template, no password is used
+  # in case we run the webserver (as a normal user, e.g monitor) 
+  local user=; parseConfig MONITOR_USER $basedir user
+  local pass=; parseConfig MONITOR_PASSWORD $basedir pass
+  [ "$pass" != "" ] || readPassword pass
+  my_cnf $basedir $user $pass
+}
+
+# create the scripts
+[[ ( $installtype == "ce" ) || ( $installtype == "wn" ) ]] && \
+   $DIRNAME/prepare_sensors.sh $installtype --basedir $basedir
+
+# deploy config.pl for Collector/WebService
+[ $installtype != "db" ] && $DIRNAME/appconfig.sh $installtype --basedir $basedir
+
+# All the options are set
+if [ $installtype == "webservice" ]; then
+  configure_https
+  configure_webservice
+elif [ $installtype == "db" ]; then
+  configure_mysql
+elif [ $installtype == "ce" ]; then
+  configure_ce
+elif [ $installtype == "wn" ]; then
+  configure_wn
+fi
+
+exit 0

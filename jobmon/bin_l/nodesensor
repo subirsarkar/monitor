@@ -1,0 +1,90 @@
+#!/bin/sh -l
+set -o nounset
+
+program=/opt/jobmon/bin/nodesensor_daemon.sh
+pid_file=/opt/jobmon/run/nodesensor_daemon.pid
+
+# define functionality
+function start
+{
+  # check status and if it is already running exit peacefully
+  status
+  [[ ( $? -eq 0 ) || ( $? -eq 3 ) ]] && return 1
+
+  # does the executable exist?
+  [ -x $program ] || { echo "ERROR. $program not found!"; return 2; } 
+
+  # all set
+  echo "INFO. starting nodesensor"
+  exec $program
+  return $?
+}
+
+function stop
+{
+  # check status and if it is already stopped exit peacefully
+  status
+  [ $? -eq 0 ] || return 1
+
+  if [ -r $pid_file ]; then 
+    pid=$(cat $pid_file)
+    [ "$pid" != "" ] || return 2
+    echo -n "INFO. shutting down nodesensor, PID=$pid "
+    kill -KILL $pid
+
+    # make sure that the process stops
+    while true; do
+      kill -0 $pid > /dev/null 2>&1
+      [ $? -gt 0 ] && break
+      echo -n "."; sleep 1
+    done
+    echo " stopped. removing $pid_file"
+    rm -f $pid_file
+  fi 
+  return $?
+}
+
+function status
+{
+  [ -e $pid_file ] || { echo "INFO. nodesensor not running";  return 1; }
+
+  pid=$(cat $pid_file)
+  [ "$pid" != "" ] || { echo "INFO. $pid_file empty!";  return 2; }
+
+  kill -0 $pid > /dev/null 2>&1
+  [ $? -ne 0 ] && { echo "INFO. nodesensor not running but $pid_file exists!, probably a defunct process, PID=$pid"; \
+                    return 2; }
+  
+  command=$(ps --no-headers -o cmd -p $pid | awk '{print $NF}')
+  bcmd=
+  [ "$command" != "" ] && bcmd=$(basename $command)
+  if [ "$bcmd" == 'nodesensor_daemon.pl' ]; then
+    echo "INFO. nodesensor already running, PID=$pid, $pid_file"
+    return 0 
+  else  
+    echo "WARN. nodesensor not running, PID $pid may point to a different process!"
+    echo "Please check and remove $pid_file manually"
+    return 3
+  fi
+}
+
+# now the main
+case $1 in 
+   start) 
+      start
+      ;; 
+   stop) 
+      stop
+      ;; 
+   restart) 
+      stop; sleep 2; start 
+      ;; 
+   status) 
+      status 
+      ;; 
+   *) 
+      echo "Usage: $0 {start|stop|restart|status}"
+      ;; 
+esac 
+
+exit $?
