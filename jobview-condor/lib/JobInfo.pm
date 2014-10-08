@@ -213,7 +213,7 @@ sub pendingJobs
   my $collector = $config->{collector};
   my $slist = '';
   my $scheddList = $config->{schedd_list} || [];
-  $slist = qq| -name $_| for (@$scheddList);
+  $slist .= qq| -name $_| for (@$scheddList);
   my $verbose = $config->{verbose} || 0;
 
   my $command = <<"END";
@@ -246,7 +246,7 @@ sub runningJobs
   my $collector = $config->{collector};
   my $slist = '';
   my $scheddList = $config->{schedd_list} || [];
-  $slist = qq| -name $_| for (@$scheddList);
+  $slist .= qq| -name $_| for (@$scheddList);
   my $verbose = $config->{verbose} || 0;
 
   my $command = <<"END";
