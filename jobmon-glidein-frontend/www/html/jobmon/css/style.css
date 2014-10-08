@@ -1,0 +1,61 @@
+div {display: block;overflow: hidden;}
+label {text-align: left;}
+.panel-header label {font-weight: normal;}
+label.progress {font-size: 0.7em;}
+fieldset {border: 1px solid #444444;}
+fieldset.option {border: 1px solid #333;}
+legend {padding: 0px 1px;}
+br {clear: both;}
+table {border-collapse: separate;border-spacing: 1px;text-align: left;background-color: #d0d0d0;}
+table caption {text-align: center;clear: both;border: 1px solid #a7a7bc;}
+table thead tr,
+table tfoot tr {background: #c9d7df;text-align: center;}
+table tbody tr {background-color: #f2f5f7;}
+tr {height: 24px;clear: both;}
+th {padding: 0px 3px;}
+td {border: solid #aaa;border-width: 0px;padding: 0px 3px;color: #000;text-align: right;}
+td.tdl {width: 32%;text-align: right;background-color: #f2f5f7;}
+td.tdr {text-align: left;background-color: #fff;}
+td.tdl2 {width: 11.8%;text-align: right;background-color: #f2f5f7;}
+td.tdr2 {text-align: left;background-color: #fff;}
+.fg-infoarea {width:100%;outline:0;color:#000;background:#fff;margin: 0 0;padding: 0 0;overflow:auto;font-family:monospace;white-space:pre;min-height:453px;height: 453px;}
+.fg-select-label {float: left;margin-right: 1%;width: 32%;text-align: right;}
+.fg-input-label {float: left; margin-right: 4px; width: 15%; text-align: right;}
+.fg-logger {width: 100%;min-height: 130px;height: 130px;overflow: auto;background: #fff;color: #000;}
+div.logger-option {width: 100%;min-height: 135px;height: 135px;}
+a.link {color: #0010c5;text-decoration: none; !important}
+a.link:hover {color: #008000;text-decoration: underline; !important}
+.panel-header a {font-weight: normal;}
+div.panel-header {height: 20px;padding: 4px 6px 0px 6px;clear: both;} 
+div#panel-message-blockui label {margin-left: 10px;font-size: 2em;}
+.fg-button {outline:0;margin: 0 4px 0 0;padding: .3em 0.4em;text-decoration:none !important;cursor:pointer;position:relative;text-align:center;zoom:1;}
+
+// DataTable options
+table.dataTable thead th {
+  padding-left: 2px;
+  padding-right: 5px;
+}
+table.dataTable tbody td {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+table.dataTable tr.odd {
+  background-color: #fcfcfc;
+}
+.dataTables_info {
+  margin: 3px 4px;
+}
+.dataTables_paginate {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+}
+table.dataTable tr.odd td.sorting_1 { background-color: #f3f8f4; }
+table.dataTable tr.even td.sorting_1 { background-color: #fcfcfc; }
+
+table#userview thead th, table#taskview thead th {
+  background-color: #ecf4ff;
+  border-bottom: 0px solid black;
+  font-weight: normal;
+}
+

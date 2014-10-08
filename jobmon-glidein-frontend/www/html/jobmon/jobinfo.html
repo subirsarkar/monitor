@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+   "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head>
+    <title>Glidein Frontend Job Monitor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    <meta http-equiv="Content-Style-Type" content="text/css"></meta>
+    <meta http-equiv="Content-Script-Type" content="text/javascript"></meta>
+    <link rel="stylesheet" href="jquery/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.8.1.custom.css" type="text/css"></link>
+    <link rel="stylesheet" href="jquery/css/jquery.cluetip.css" type="text/css"></link>
+    <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+    <script type="text/javascript" src="jquery/js/jquery-1.9.1.min.js"></script> 
+    <script type="text/javascript" src="jquery/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.dimensions.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.getUrlParam.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.cluetip.min.js"></script> 
+    <script type="text/javascript" src="js/jobinfo.js"></script> 
+  </head>
+  <body>
+    <div style="width:924px;">
+      <div class="panel-header" style="margin-bottom:2px;">
+        <div id="panel-auth" style="float:left;width:72%;">
+          <img id="image-dn" class="wlabel" src="images/vote-user-red.gif"></img>
+          <label style="text-align:right;">Identity:</label>
+          <label id="label-auth"></label>
+        </div>
+        <div id="panel-progress" style="float:right;width:26%;">
+          <span>
+            <img id="img-loading" src="images/wait.gif"></img>
+            <label id="label-datatype" style="margin-left:4px;"></label>
+          </span>
+        </div>
+      </div>
+      <div id="tabpanel-a">
+        <ul>
+          <li><a href="#tab-a1"><span>Job Summary</span></a></li>
+        </ul>
+        <div id="tab-a1">
+          <div>
+              <div id="div-table-1" style="width:37.8%;float:left;">
+                <table id="table-jobinfo" style="width:100%;" >
+                  <tr>
+                    <td class="tdl">Local JobID</td>
+                    <td class="tdr" id="td-jobid"></td>
+                  </tr>
+                  <tr>
+                    <td class="tdl">Status</td>
+                    <td class="tdr" id="td-status"></td>
+                  </tr>
+                  <tr>
+                    <td class="tdl">Local User</td>
+                    <td class="tdr" id="td-user"></td></tr>
+                  <tr>
+                    <td class="tdl">AcctGroup</td>
+                    <td class="tdr" id="td-acctgroup"></td></tr>
+                  <tr>
+                    <td class="tdl">Submitted at</td>
+                    <td class="tdr" id="td-submitted"></td></tr>
+                  <tr>
+                    <td class="tdl">Started at</td>
+                    <td class="tdr" id="td-started"></td></tr>
+                  <tr>
+                    <td class="tdl">Finished at</td>
+                    <td class="tdr" id="td-finished"></td></tr>
+                  <tr>
+                    <td class="tdl">Exit Status</td>
+                    <td class="tdr" id="td-exitstatus"></td></tr>
+                  <tr>
+                    <td class="tdl">CPU Time</td>
+                    <td class="tdr" id="td-cputime"></td></tr>
+                  <tr>
+                    <td class="tdl">Wall Time</td>
+                    <td class="tdr" id="td-walltime"></td>
+                  </tr>
+                  <tr>
+                    <td class="tdl">Host</td>
+                    <td class="tdr" id="td-exechost"></td>
+                  </tr>
+                </table>
+              </div>
+              <div id="div-img" style="margin-left:0.02%;width:62%;float:right;">
+                <img src="images/cpuload.png" 
+                   width="100%"  height="136px" class="canvas" name="load">
+                </img>
+                <img src="images/memused.png" 
+                   width="100%"  height="136px" class="canvas" name="mem">
+                </img>
+              </div>
+          </div> 
+          <div style="margin-top:1px;">
+              <table id="table-admin" style="width:100%;">
+                <tr>
+                  <td class="tdl2">Grid JobID</td>
+                  <td class="tdr2" id="td-gridid"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">CE ID</td>
+                  <td class="tdr2" id="td-ceid"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">WMS</td>
+                  <td class="tdr2" id="td-rb"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">Subject</td>
+                  <td class="tdr2" id="td-subject"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">Proxy Validity</td>
+                  <td class="tdr2" id="td-timeleft"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">Role</td>
+                  <td class="tdr2" id="td-role"></td>
+                </tr>
+                <tr>
+                  <td class="tdl2">TaskID</td>
+                  <td class="tdr2" id="td-taskid"></td>
+                </tr>
+              </table>
+          </div>
+        </div>
+      </div>
+      <div id="tabpanel-b" style="margin-top:2px;">
+        <ul>
+          <li><a href="#tab-b1"><span>Event Logger</span></a></li>
+          <li><a href="#tab-b2"><span>Error Logger</span></a></li>
+        </ul>
+        <div id="tab-b1">
+          <textarea id="logger-event" readonly="readonly"></textarea>
+        </div>
+        <div id="tab-b2">
+          <textarea id="logger-error" readonly="readonly"></textarea>
+        </div>
+      </div> 
+      <div style="width:100%;margin-top:4px;">
+         <div style="width:100%;">
+            <input value="Update" style="float:right;width:100px;" type="submit"></input>
+         </div>
+      </div>
+      <div class="panel-header" style="margin-top:4px;">
+        <div style="float:left;">
+          <img src="images/user-group2.gif" class="wlabel"></img>
+          <a class="tips link" href="developers.html" rel="developers.html" title="Developers">Developers</a>
+        </div>
+        <div style="float:right;">
+          <label>Powered by <a class="link" href="http://jquery.com">jQuery</a></label>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

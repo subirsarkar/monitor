@@ -1,0 +1,59 @@
+#!/bin/sh
+set -o nounset
+
+# Install the jobmon package, common for all the services
+# v0.7 17/10/2007 - Subir
+
+PROGNAME=$(basename $0)
+
+function usage
+{
+  cat <<EOF
+Usage: $PROGNAME <options>
+
+where options are:
+  -i|--installdir    Base directory for jobmon installation(D=/opt/jobmon)
+  -v|--verbose       Turn on debug statements (D=false)
+  -d|--dryrun        Show the steps but do not take the action (D=false)
+  -h|--help          This message
+
+  example: $PROGNAME --installdir /opt --dryrun
+EOF
+
+  exit 1
+}
+
+installdir=/opt/jobmon
+let "verbose = 0"
+let "dryrun = 0"
+while [ $# -gt 0 ]; do
+  case $1 in
+    -i | --installdir )     shift
+                            installdir=$1
+                            ;;
+    -v | --verbose )        let "verbose = 1"
+                            ;;
+    -d | --dryrun )         let "dryrun = 1"
+                            ;;
+    -h | --help )           usage
+                            ;;
+     * )                    usage
+                            ;;
+  esac
+  shift
+done
+
+# Does the install dir exist
+[ -d $installdir ] || { echo -- $installdir does not exist!; exit 1; }
+[ -d $installdir ] && { echo -- $installdir already exists! not overwriting; exit 2; }
+
+# All the options are set
+cd /tmp || { echo -- Cannot cd to /tmp; exit 3; }
+wget -q -o jobmon.tgz http://sarkar.web.cern.ch/jobmon.tgz 
+[ $? -eq 0 ] || { echo -- Could not download the package; exit 4; }
+
+tar zxvf jobmon.tgz
+cp -r jobmon $installdir/
+
+# that's it
+exit $?

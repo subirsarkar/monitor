@@ -1,0 +1,23 @@
+[% BLOCK summary_header %]
+  <table id="userview" class="dataTable" style="width:99%;">
+    <thead>
+    <tr>
+      <th>TaskId</th>
+      <th>Jobs</th>
+      <th>Running</th>
+      <th>Pending</th>
+      <th>Held</th>
+      <th>Completed</th>
+      <th>CPU Eff(%)</th>
+      <th>Jobs (Eff&lt;10%)</th>
+    </tr> 
+    </thead>
+    <tbody>
+[%~ END %]
+[% BLOCK summary_row %]
+    <tr><td>[% task %]</td><td>[% total %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% ended %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
+[%~ END %]
+[% BLOCK summary_footer %]
+    </tbody>
+  </table>
+[% END %]

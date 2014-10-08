@@ -1,0 +1,5 @@
+[client]
+user=root
+password=sandhi
+database=monitor
+host=localhost

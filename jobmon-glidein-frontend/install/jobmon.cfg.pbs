@@ -1,0 +1,47 @@
+# site, domain
+SITE = SNS
+DOMAIN = sns.it
+
+# batch system
+LRMS = pbs
+LRMS_VERSION = X.Y
+
+# PBS 
+#[CE] JOB_DIR=/var/spool/pbs/server_priv/jobs
+#[WN] JOB_DIR=/var/spool/pbs/mom_priv/jobs
+JOB_DIR = /var/spool/pbs/server_priv/jobs
+ACCOUNTING_DIR = /var/spool/pbs/server_priv/accounting
+
+# mysql server
+DB_SERVER = gridse
+
+# web server
+WEB_SERVER = gridse
+WEB_ADMIN = federico.calzolari
+
+# worker Node name pattern, comma separated list
+WN_PATTERN = pbs,cray,chem
+
+# computing elements, comma separated list
+CE_LIST = gridce
+# for a single CE no real need to specify MASTER_CE
+#MASTER_CE = gridce
+
+# LCG and Cream CE have different location
+# Cream CE: 
+#GRIDMAP_DIR = /opt/glite/var/log/accounting
+GRIDMAP_DIR = /opt/edg/var/gatekeeper
+
+# who run the daemon processes for different services and connect to mysql
+CE_USER = root
+WN_USER = root
+ADMIN_USER = root
+MONITOR_USER = monitor
+
+# set password as insert/update privileges are allowed
+# If values missing prompts on the terminal
+CE_PASSWORD = lqsym
+WN_PASSWORD = lqsym
+ADMIN_PASSWORD = lqsym
+
+JOB_PRIORITY = 1

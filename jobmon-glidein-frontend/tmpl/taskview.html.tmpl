@@ -1,0 +1,32 @@
+[% BLOCK taskview_header %]
+  <table id="taskview" class="dataTable" style="width:99%;">
+    <thead>
+    <tr>
+      <th rowspan="2">JobID</th>
+      <th rowspan="2">Status</th>
+      <th rowspan="2">User</th>
+      <th rowspan="2">Site</th>
+      <th colspan="3">Scheduling [GMT]</th> 
+      <th rowspan="2">Exit<br/>Status</th>
+      <th colspan="2">Timing [hrs]</th>
+      <th colspan="2">Memory [MB]</th>
+    </tr> 
+    <tr>
+      <th>Queued</th>
+      <th>Started</th>
+      <th>Finished</th>
+      <th>Wall</th>
+      <th>CPU</th>
+      <th>Mem</th>
+      <th>VMem</th>
+    </tr>
+    </thead>
+    <tbody>
+[%~ END %]
+[% BLOCK taskview_row %]
+    <tr><td>[% grid_id %]</td><td>[% status %]</td><td>[% user %]</td><td>[% site %]</td><td>[% queue_time %]</td><td>[%start_time %]</td><td>[% end_time %]</td><td>[% ex_st %]</td><td>[% walltime %]</td><td>[% cputime %]</td><td>[% mem %]</td><td>[% vmem %]</td></tr>
+[%~ END %]
+[% BLOCK taskview_footer %]
+    </tbody>
+  </table>
+[% END %]

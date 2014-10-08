@@ -1,0 +1,45 @@
+# site, domain
+SITE = Pisa
+DOMAIN = pi.infn.it
+
+# batch system
+LRMS = lsf
+LRMS_VERSION = 6.2
+
+# batch system detail
+# LSF
+JOB_DIR = /usr/local/lsf/work/infn-pisa/logdir/info
+ACCOUNTING_DIR = /usr/local/lsf/work/infn-pisa/logdir 
+
+# mysql server
+DB_SERVER = cmsvirtual2
+
+# web server
+WEB_SERVER = cmsvirtual2
+WEB_ADMIN = subir.sarkar
+
+# worker node pattern
+WN_PATTERN = gridwn,node,theown
+
+# computing elements that run jobsensor
+CE_LIST = gridce0,gridce1,gridce2
+MASTER_CE = gridce1
+
+# LCG and Cream CE have different location
+# Cream CE: 
+#GRIDMAP_DIR = /opt/glite/var/log/accounting
+GRIDMAP_DIR = /opt/edg/var/gatekeeper
+
+# who run the daemon processes for different services and connect to mysql
+CE_USER = root
+WN_USER = root
+ADMIN_USER = root
+MONITOR_USER = monitor
+
+# set password as insert/update privileges are allowed
+# If values missing prompts on the terminal
+CE_PASSWORD = lqsym
+WN_PASSWORD = lqsym
+ADMIN_PASSWORD = lqsym
+
+JOB_PRIORITY = 0
