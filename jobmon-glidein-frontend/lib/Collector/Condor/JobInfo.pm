@@ -188,7 +188,7 @@ sub pendingJobs
   my $config = Collector::ConfigReader->instance()->config;
   my $slist = '';
   my $scheddList = $config->{schedd_list} || [];
-  $slist = qq| -name $_| for (@$scheddList);
+  $slist .= qq| -name $_| for (@$scheddList);
 
   my $cmdPart = _buildCmd;
   my $command = <<"END";
@@ -210,7 +210,7 @@ sub runningJobs
   my $config = Collector::ConfigReader->instance()->config;
   my $slist = '';
   my $scheddList = $config->{schedd_list} || [];
-  $slist = qq| -name $_| for (@$scheddList);
+  $slist .= qq| -name $_| for (@$scheddList);
 
   my $cmdPart = _buildCmd;
   my $command = <<"END";
@@ -244,7 +244,7 @@ sub clusteridCmd
   my $collector = $config->{collector};
   my $slist = '';
   my $scheddList = $config->{schedd_list} || [];
-  $slist = qq| -name $_| for (@$scheddList);
+  $slist .= qq| -name $_| for (@$scheddList);
 
   my $command = <<"END";
 condor_q -pool $collector \\
