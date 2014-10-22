@@ -17,7 +17,7 @@ sub new
   my $dsn = qq|DBI:mysql:monitor;mysql_read_default_file=$config->{dbcfg};mysql_compression=1|;
   show_message $dsn;
   bless { 
-    _dbh => DBI->connect($dsn, q||, q||, {PrintError => 1, RaiseError => 0}) 
+    _dbh => DBI->connect($dsn, q||, q||, {PrintError => 1, RaiseError => 1}) 
   }, $class; 
 }
 sub dbh

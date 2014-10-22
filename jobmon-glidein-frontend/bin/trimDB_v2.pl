@@ -59,7 +59,12 @@ sub main {
   $nlim = 10000 unless defined $nlim;
   $verbose = 1 unless defined $verbose;
 
-  my $dbconn = Collector::DBHandle->new;
+  my $dbconn;
+  eval {
+    $dbconn = Collector::DBHandle->new;
+  };
+  $@ and die q|Failed to get a DB handle!|;
+
   my $dbh = $dbconn->dbh;
   my $query = buildQuery({query_header => q|SELECT DISTINCT(task_id) FROM jobinfo_summary WHERE status IN (|,
                                   list => ['R', 'Q'], 
