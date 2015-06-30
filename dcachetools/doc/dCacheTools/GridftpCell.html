@@ -1,0 +1,183 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::GridftpCell - A wrapper for a Gridftp cell</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::GridftpCell - A wrapper for a Gridftp cell</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::GridftpCell;
+  
+  my @objectList = ();
+  my $lb = dCacheTools::Cell-&gt;new({ name =&gt; q|LoginBroker| });
+  my @gftpList = grep {/GFTP/} $lb-&gt;exec({ command =&gt; q|ls| });
+  die q|LoginBroker cell dead! stopped| unless $lb-&gt;alive;</pre>
+<pre>
+  for (@gftpList) {
+    my $cell = (split /;/)[0];
+    my $obj = dCacheTools::GridftpCell-&gt;new({ name =&gt; $cell });
+    next unless $obj-&gt;alive;
+    push @objectList, $obj;
+  }
+  # First the logins
+  dCacheTools::GridftpCell-&gt;header;
+  for my $obj (@objectList) {
+    $obj-&gt;showLogin;
+  }
+  # Now the children
+  for my $obj (@objectList) {
+    $obj-&gt;showChildren;
+  }</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  BaseTools::Util
+  dCacheTools::Cell
+  dCacheTools::GridftpTransfer</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<pre>
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>dCacheTools::GridftpCell</code> is a simple wrapper over a single Gridftp Cell and holds
+summary as well as detailed information about all the children doors.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor.</p>
+<pre>
+    $attr-&gt;{name}  - the Gridftp cell name generally of the form GFTP-cmsdcache5@gridftp-cmsdcache5Domain [obligatory]</pre>
+</li>
+<li><strong><a name="item_info">info (None): None</a></strong>
+
+<p>Return the underlying data structure which is a hash reference. If appropriate, gathers the information
+before sending back. Here is an example of the content of the hash:</p>
+<pre>
+    $info = {
+          'logins_denied' =&gt; '0',
+          'logins_max' =&gt; '100',
+          'logins_active' =&gt; '12',
+          'logins_failed' =&gt; '0',
+          'children' =&gt; [
+                          'GFTP-cmsdcache10-Unknown-1782',
+                          'GFTP-cmsdcache10-Unknown-1815',
+                          'GFTP-cmsdcache10-Unknown-1819',
+                          'GFTP-cmsdcache10-Unknown-1777',
+                          'GFTP-cmsdcache10-Unknown-1816',
+                          'GFTP-cmsdcache10-Unknown-1817',
+                          'GFTP-cmsdcache10-Unknown-1814',
+                          'GFTP-cmsdcache10-Unknown-1770',
+                          'GFTP-cmsdcache10-Unknown-1818',
+                          'GFTP-cmsdcache10-Unknown-1780',
+                          'GFTP-cmsdcache10-Unknown-1820',
+                          'GFTP-cmsdcache10-Unknown-1813'
+                        ],
+          'logins_created' =&gt; '1719'
+      };</pre>
+</li>
+<li><strong><a name="item_showlogin">showLogin (None): None</a></strong>
+
+<p>Display client login information as shown below</p>
+<pre>
+  ------------------------
+        Logins
+  ------------------------
+            Domain Created Failed Denied Active    Max
+   GFTP-cmsdcache5    1664      0      0      2    100</pre>
+</li>
+<li><strong><a name="item_header">header (None): None</a></strong>
+
+<p>A static method that provides a header for <em>showLogin</em></p>
+</li>
+<li><strong><a name="item_showchildren">showChildren (None): None</a></strong>
+
+<p>Loops over the Children <strong>GridftpTransfer</strong> doors and calls the child show method</p>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Show both login information and transfer details of the children</p>
+</li>
+<li><strong><a name="item_children">children (None): @list</a></strong>
+
+<p>Return a list of children door names</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::GridftpTransfer</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<pre>
+  Sonia Taneja (sonia.taneja@pi.infn.it)
+  Subir Sarkar (subir.sarkar@cern.ch)</pre>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: GridftpCell.pm,v 1.3 2008/12/11 14:00:00 sarkar Exp $</p>
+
+</body>
+
+</html>

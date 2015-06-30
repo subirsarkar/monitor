@@ -1,0 +1,133 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>C&lt;BaseTools::ConfigReader&gt; - A singleton object that makes it easy for other 
+classes to access the application wide configuration.</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p><code>BaseTools::ConfigReader</code> - A singleton object that makes it easy for other 
+classes to access the application wide configuration.</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use BaseTools::ConfigReader;
+  my $reader = BaseTools::ConfigReader-&gt;instance();
+  my $admin_node = $reader-&gt;{config}{admin}{node};
+  # show the content
+  $reader-&gt;show;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<p>Data::Dumper</p>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>BaseTools::ConfigReader</code> is a singleton class that reads the application wide 
+configuration file which is written in Perl itself and holds the hash reference 
+that contains the configuraiton information. The configuration file should return 
+the hash reference as the last line like in the following example,</p>
+<pre>
+  our $cfg =
+  {
+      admin =&gt; {
+                 node =&gt; qq|cmsdcache|,
+              timeout =&gt; 300,
+                debug =&gt; 0,
+                delay =&gt; 2000,
+        discard_error =&gt; 1
+      }
+  };
+  $cfg-&gt;{PoolManager} =
+  {
+    activityMarker =&gt; 1000
+  };
+  $cfg;</pre>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_instance">instance (None): object reference</a></strong>
+
+<p>Access the singleton object reference using this static (package level) method. The 
+first time it is accessed in an application the object is created and subsequently 
+the same object is accessed. Since it is supposed to be a read-only object even 
+simultaneous access does not require any special requirement.</p>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Dump the configuration information.</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p><a href="/dCacheTools/Admin.html">the dCacheTools::Admin manpage</a>, <a href="/dCacheTools/PoolManager.html">the dCacheTools::PoolManager manpage</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: ConfigReader.pm,v1.3 2008/12/11 14:03:19 sarkar Exp $</p>
+
+</body>
+
+</html>

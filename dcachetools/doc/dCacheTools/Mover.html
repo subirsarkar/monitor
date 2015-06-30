@@ -1,0 +1,150 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::Mover - Parses the Pool C&lt;mover ls&gt; output for a single C&lt;pnfsid&gt;</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::Mover - Parses the Pool <code>mover ls</code> output for a single <a href="#item_pnfsid"><code>pnfsid</code></a></p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::Mover;
+  my $input = q|11561 A H {GFTP-cmsdcache7-Unknown-109@gridftp-cmsdcache7Domain:10007} 000800000000000001F79888 h={SU=1682243584;SA=1730150400;S=None} bytes=1680146432 time/sec=6224 LM=0|;
+  my $obj = dCacheTools::Mover-&gt;new($input);
+  $obj-&gt;show;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  Data::Dumper
+  BaseTools::Util</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>dCacheTools::Mover is there for convenience. It parses the Pool <strong>mover ls</strong> command output
+and provides setter methods to get individual fields. All the accesssor are AUTOLOADed.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($input): object reference</a></strong>
+
+<p>Class constructor.</p>
+<pre>
+    $input - mover ls output for for each mover (C&lt;pnfsid&gt;)</pre>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Display the information.</p>
+<pre>
+  print Data::Dumper-&gt;Dump([$info], [qw/info/]);</pre>
+<pre>
+  $info = {
+           'bytes' =&gt; 1680146432,
+           'lm' =&gt; 0,
+           'duration' =&gt; 6224,
+           'pnfsid' =&gt; '000800000000000001F79888',
+           'seqid' =&gt; '10007',
+           'rate' =&gt; '263.619537275064',
+           'id' =&gt; '11561',
+           'domain' =&gt; 'gridftp-cmsdcache7Domain',
+           'status2' =&gt; 'H',
+           'door' =&gt; 'GFTP-cmsdcache7-Unknown-109',
+           'status1' =&gt; 'A'
+        };</pre>
+</li>
+<li><strong><a name="item_id">id (None): $id</a></strong>
+
+<li><strong><a name="item_pnfsid">pnfsid (None): $pnfsid</a></strong>
+
+<li><strong><a name="item_bytes">bytes (None): $bytes</a></strong>
+
+<li><strong><a name="item_lm">lm (None): $lm</a></strong>
+
+<li><strong><a name="item_duration">duration (None): $duration</a></strong>
+
+<li><strong><a name="item_rate">rate (None): $rate</a></strong>
+
+<li><strong><a name="item_door">door (None): $door</a></strong>
+
+<li><strong><a name="item_domain">domain (None): $domain</a></strong>
+
+<li><strong><a name="item_seqid">seqid (None): $seqid</a></strong>
+
+<li><strong><a name="item_status1">status1 (None): $status</a></strong>
+
+<li><strong><a name="item_status2">status2 (None): $status</a></strong>
+
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::TransferStatus</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: Mover.pm,v 1.0 2008/06/19 14:03:00 sarkar Exp $</p>
+
+</body>
+
+</html>

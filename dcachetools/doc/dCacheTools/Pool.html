@@ -1,0 +1,239 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::Pool - provides information about a single pool and allows execution of pool commands</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+		<li><a href="#private_methods">Private methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::Pool - provides information about a single pool and allows execution of pool commands</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::Pool;</pre>
+<pre>
+  my $pool = dCacheTools::Pool-&gt;new({ name =&gt; q|cmsdcache1_2| });
+  die q|Pool disabled! stopped| unless $pool-&gt;enabled;
+  $pool-&gt;exec({ command =&gt; q|info -l| });</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  BaseTools::Util qw/trim/
+  dCacheTools::PoolManager
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<pre>
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>dCacheTools::Pool</code> provides information about a single pool and a hook for pool command
+execution. The class uses the information gathered by <code>dCacheTools::PoolManager</code> and provides
+an OO interface. For example, the Pool object itself knows if it is enabled and active in
+the PoolManager, which are the various movers associated to this Pool, space and performance
+costs etc.</p>
+<p>Immediately after executing a pool command one can check if the command failed because
+the pool was temporarily unavailable, due to exception etc. All the methods are
+described in some detail in the corresponding sections.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor. Requires a hash reference that must contain</p>
+<pre>
+  $attr-&gt;{name} - name of the pool</pre>
+</li>
+<li><strong><a name="item_info">info</a></strong>
+
+<p>Parses the pool <code>info -l</code> command output and adds the information to the object itself
+for further processing. Much of the information obtained this way overlap
+with those obtained through the PoolManager.</p>
+<p>Access the information as a hash reference as</p>
+<pre>
+  my $info = $pool-&gt;{info}</pre>
+</li>
+<li><strong><a name="item_exec">exec ($params): @output</a></strong>
+
+<p>Overrides the parent method so that pool commands are not retried by default.</p>
+</li>
+<li><strong><a name="item_summary">summary ([@options]): @list</a></strong>
+
+<p>Prepares a summary line for this pool. If separate queues are defined for
+dcap and gridftp transfers, the input array reference should provide the names
+of the queues.</p>
+<p>Returns an array that contains formatted strings and values which can just be
+fed to a <code>printf</code>.</p>
+</li>
+<li><strong><a name="item_mode">mode (None): $mode</a></strong>
+
+<p>Returns a string saying if a pool is enabled/disabled</p>
+</li>
+<li><strong><a name="item_status">status (None): $status</a></strong>
+
+<p>Returns a string saying if a pool is read-only/read-write</p>
+</li>
+<li><strong><a name="item_enabled">enabled (None): boolean</a></strong>
+
+<p>Returns true if this pool is enabled in the PoolManager, false otherwise.</p>
+</li>
+<li><strong><a name="item_active">active (None): boolean</a></strong>
+
+<p>Returns true if this pool is active in the PoolManager, false otherwise.</p>
+</li>
+<li><strong><a name="item_readonly">readonly (None): boolean</a></strong>
+
+<p>Returns true if this pool is read-only in the PoolManager, false otherwise.</p>
+</li>
+<li><strong><a name="item_host">host (None): $host</a></strong>
+
+<p>Returns the nodename that hosts this pool.</p>
+</li>
+<li><strong><a name="item_space_cost">space_cost (None): $cost</a></strong>
+
+<p>Returns the current space cost for this pool as calculated by the Cost Module</p>
+</li>
+<li><strong><a name="item_perf_cost">perf_cost (None): $cost</a></strong>
+
+<p>Returns the current performance cost for this pool as calculated by the Cost Module</p>
+</li>
+<li><strong><a name="item_space_info">space_info (None): $info</a></strong>
+
+<p>Return the space info about this pool which is known to the PoolManager.</p>
+<pre>
+  my $info = $pool-&gt;space_info;
+  print Data::Dumper-&gt;Dump([$info], [qw/space/]);
+  $space = {
+            'gap' =&gt; '4294967296',
+        'lru_age' =&gt; '24046913',
+           'free' =&gt; '1544911672697',
+      'breakeven' =&gt; '0.7',
+       'precious' =&gt; '1989824403616',
+          'total' =&gt; '3543348019200',
+    'recoverable' =&gt; '8611942887'
+  };</pre>
+</li>
+<li><strong><a name="item_mover_info">mover_info ($type): $info</a></strong>
+
+<p>Return a reference to a hash that contains mover information for a certain type.</p>
+<pre>
+  my $info = $pool-&gt;mover_info('movers');
+  print Data::Dumper-&gt;Dump([$info], [qw/movers/]);
+  $movers = 
+  {
+       'max' =&gt; '8',
+    'active' =&gt; '0',
+    'queued' =&gt; '0'
+  };</pre>
+<p>Available mover types are: 'movers', 'p2p_server', 'p2p_client', 'restore', 'store', 'client_movers'.
+If you have separate mover queues for dcap, gridftp etc. <code>$pool-</code>mover_info('client_movers')&gt;
+will return a structure like the following,</p>
+<pre>
+  $client_movers = 
+  {
+      'default' =&gt; {
+            'max' =&gt; '4',
+         'active' =&gt; '0',
+         'queued' =&gt; '0'
+      },
+      'wan' =&gt; {
+            'max' =&gt; '4',
+         'active' =&gt; '0',
+         'queued' =&gt; '0'
+      }
+  };</pre>
+</li>
+<li><strong><a name="item_path">path (None): $path</a></strong>
+
+<p>Returns the base directory for the pool. The pool command <code>info -l</code> is parsed on demand.</p>
+</li>
+<li><strong><a name="item_filesize">filesize ($pnfsid): tuple</a></strong>
+
+<p>Returns the (status, replica size) tuple for a pnfsid.  
+The size is available only if the status is valid.</p>
+</li>
+<li><strong><a name="item_precious">precious ($pnfsid, $set): boolean</a></strong>
+
+<p>Either set pnfsid as precious or check if a pnfsid is precious</p>
+</li>
+</ul>
+<p>
+</p>
+<h2><a name="private_methods">Private methods</a></h2>
+<ul>
+<li><strong><a name="item__movers">_movers</a></strong>
+
+<p>Extracts mover info from 'info -l' output</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::PoolManager</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: Pool.pm,v1.3 2008/12/11 16:00:00 sarkar Exp $</p>
+
+</body>
+
+</html>

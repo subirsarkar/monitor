@@ -1,0 +1,146 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>WebTools::PhedexSvc - Queries the PhEDEx data service to prepare a list of blocks/files PhEDEx believes a site should have</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>WebTools::PhedexSvc - Queries the PhEDEx data service to prepare a list of blocks/files PhEDEx believes a site should have</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  my $svc = WebTools::PhedexSvc-&gt;new({ verbose =&gt; 0 });
+  $svc-&gt;query({ se =&gt; qq|cmsdcache.pi.infn.it| });
+  my $files = $svc-&gt;files(&quot;/W5jet_0ptw100-alpgen/CMSSW_1_5_2-CSA07-2224/GEN-SIM-DIGI-RECO&quot;);
+  print join (&quot;\n&quot;, sort keys %$files), &quot;\n&quot;;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  LWP::UserAgent
+  URI::Escape
+  Data::Dumper</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>The PhEDEx data service allows one to find all the dataset block and file replicas for each site
+that should be available at the site according to PhEDEx. WebTools::PhedexSvc fetches all such information and 
+prepares its own data structure with the list of filename as key and blockname, filesize etc. as values for 
+each file found on PhEDEx.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor.</p>
+<pre>
+  $attr-&gt;{verbose}  - debug flag</pre>
+</li>
+<li><strong><a name="item_query">query ($attr): None</a></strong>
+
+<p>Prepare the query string</p>
+<pre>
+  $attr-&gt;{node}     - storage name (e.g T2_IT_Pisa)
+  $attr-&gt;{se}       - storage name (e.g cmsdcache.pi.infn.it)
+  $attr-&gt;{complete} - if enabled, looks for completed blocks only (values: y|n|na)</pre>
+</li>
+<li><strong><a name="item_files">files ($dataset): $files hash</a></strong>
+
+<p>Returns a list of files belonging to &lt;code&gt;$dataset&lt;/code&gt; that could also be a block.
+If the method is called without specifying the dataset name, all the datasets are fetched.
+  $files = {
+     '/store/mc/2007/9/26/CSA07-W5jet_0ptw100-alpgen-2224/0000/7839E239-E76C-DC11-A55F-000423D6A7C4.root' =&gt; {
+              'dataset' =&gt; '/W5jet_0ptw100-alpgen/CMSSW_1_5_2-CSA07-2224/GEN-SIM-DIGI-RECO',
+                'block' =&gt; 'dea8e81b-308c-4d53-8c67-838c178ae26b',
+                 'size' =&gt; '1388531076'
+     },
+     ....
+  };</p>
+</li>
+<li><strong><a name="item_blocks">blocks ($dataset): $blocks hash</a></strong>
+
+<p>Returns a list of datablocks belonging to &lt;code&gt;$dataset&lt;/code&gt;.
+If the method is called without specifying the dataset name, all the datasets are fetched.</p>
+<pre>
+   $blocks = {
+        '/W5jet_0ptw100-alpgen/CMSSW_1_5_2-CSA07-2224/GEN-SIM-DIGI-RECO#bd121198-c1c3-4da2-b970-9a1da97eb08d' =&gt; {
+            blocks =&gt; '23',
+             bytes =&gt; '32272734172',
+             etc.
+         },</pre>
+<pre>
+   };</pre>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::PhedexComparison</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: PhedexSvc.pm,v 1.0 2008/07/26 12:10:00 sarkar Exp $</p>
+
+</body>
+
+</html>

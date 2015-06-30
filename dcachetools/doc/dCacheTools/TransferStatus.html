@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::TransferStatus - Summarises status of each type of transfer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::TransferStatus - Summarises status of each type of transfer</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::TransferStaaus;
+  my $transferType = shift || q|dcap-cmsdcdcap|;
+  my $obj = dCacheTools::TransferStatus-&gt;new({ type =&gt; $transferType });
+  $obj-&gt;show;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  BaseTools::MyStore
+  dCacheTools::PoolManager
+  dCacheTools::Pool
+  dCacheTools::PnfsManager</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>dCacheTool::TransferStatus</code> loops of over all the pools, executes <strong>mover ls</strong> and
+collects information for a type of transfer, namely dcap, gridftp, RemoteGsiftpTransfer
+etc. The information collected here should be combined with that found in individual
+doors in case we want to prepare a comprehensive report similar to what is found
+on the dCache monitor.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor.</p>
+<pre>
+    $attr-&gt;{type}  - type of transfer; Options: dcap, gridftp, RemoteGsiftpTransfer [obligatory]
+    $attr-&gt;{dbfile} - a cache of pnfsid-&gt;pfn mapping</pre>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Display the information.</p>
+</li>
+<li><strong><a name="item_moverid">moverid($pnfsid): $moverid</a></strong>
+
+<li><strong><a name="item_status1">status1($pnfsid): $status1</a></strong>
+
+<li><strong><a name="item_status2">status2($pnfsid): $status2</a></strong>
+
+<li><strong><a name="item_pool">pool($pnfsid): $pool</a></strong>
+
+<li><strong><a name="item_cell">cell($pnfsid): $cell</a></strong>
+
+<li><strong><a name="item_domain">domain($pnfsid): $domain</a></strong>
+
+<li><strong><a name="item_seqid">seqid($pnfsid): $seqid</a></strong>
+
+<li><strong><a name="item_bytes">bytes($pnfsid): $bytes</a></strong>
+
+<li><strong><a name="item_duration">duration($pnfsid): $duration</a></strong>
+
+<li><strong><a name="item_lm">lm($pnfsid): $lm</a></strong>
+
+<li><strong><a name="item_filename">filename($pnfsid): $filename</a></strong>
+
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: TransferStatus.pm,v1.3 2008/12/11 14:03:19 sarkar Exp $</p>
+
+</body>
+
+</html>

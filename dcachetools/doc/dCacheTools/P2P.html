@@ -1,0 +1,200 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::P2P - Parses the Pool C&lt;p2p ls&gt; and C&lt;pp ls&gt; output and combines them for a single P2P process</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::P2P - Parses the Pool <code>p2p ls</code> and <code>pp ls</code> output and combines them for a single P2P process</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::P2P;
+  my $input = q|2122 W H {cmsdcache3_1@cmsdcache3Domain:0} 000800000000000001EB36A0 h={SM=null;S=None} bytes=-1 time/sec=0 LM=0|;
+  my $obj = dCacheTools::P2P-&gt;new($input);
+  $obj-&gt;show;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  Data::Dumper
+  BaseTools::Util
+  dCacheTools::Pool</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>dCacheTools::P2P</code> parses the Pool <strong>p2p ls</strong> command output. It optionally
+parses the client pool <strong>pp ls</strong> output as well in order to associate 
+transfers id on the server pool with that on the client pool. One can
+then look at the information stored to decide if a P2P transfer is
+(1) yet to start (2) going as expected (3) stuck and take an action
+accordingly. All the accesssors are AUTOLOADed.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor. There are two different sets of input that may be used to create an object. 
+The first set is
+</p>
+<pre>
+
+    $attr-&gt;{input}  - p2p ls output for each transfer
+    $attr-&gt;{server} - reference to the server pool object. Required if you want to stop a P2P process</pre>
+<p>while the second one is
+</p>
+<pre>
+
+    $attr-&gt;{pnfsid} - pnfsid of the file involved in the p2p transfer
+    $attr-&gt;{server} - reference to the server pool object
+    $attr-&gt;{client} - reference to the client pool object</pre>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Display the information.</p>
+<pre>
+  print Data::Dumper-&gt;Dump([$info], [qw/info/]);</pre>
+<pre>
+  $info = {
+          'lm' =&gt; 0,
+          'duration' =&gt; 0,
+          'pnfsid' =&gt; '000800000000000001EB36A0',
+          'rate' =&gt; '0',
+          'clientid' =&gt; -1,
+          'serverid' =&gt; '2122',
+          'clientpool' =&gt; 'cmsdcache3_1',
+          'bytes_transferred' =&gt; -1,
+          'status1' =&gt; 'W'
+        };</pre>
+</li>
+<li><strong><a name="item_waiting">waiting (None): boolean</a></strong>
+
+<p>Return true if the transfer is yet to start, false otherwise</p>
+</li>
+<li><strong><a name="item_stuck">stuck (None): boolean</a></strong>
+
+<p>Return true if the transfer started but did not manage to move data, false otherwise</p>
+</li>
+<li><strong><a name="item_cancel">cancel (None): None</a></strong>
+
+<p>Cancel the p2p transfer from both server and client sides</p>
+</li>
+<li><strong><a name="item_stop">stop (None): None</a></strong>
+
+<p>An alias to <a href="#item_cancel"><code>cancel</code></a> (for compatibility)</p>
+</li>
+<li><strong><a name="item_serverid">serverid (None): $id</a></strong>
+
+<li><strong><a name="item_clientid">clientid (None): $id</a></strong>
+
+<li><strong><a name="item_pnfsid">pnfsid (None): $pnfsid</a></strong>
+
+<li><strong><a name="item_bytes_transferred">bytes_transferred (None): $bytes</a></strong>
+
+<p>Bytes transferred so far.</p>
+</li>
+<li><strong><a name="item_lm">lm (None): $lm</a></strong>
+
+<li><strong><a name="item_duration">duration (None): $duration</a></strong>
+
+<p>The time span the transfer is on.</p>
+</li>
+<li><strong><a name="item_rate">rate (None): $rate</a></strong>
+
+<p>Transfer rate in KB/s.</p>
+</li>
+<li><strong><a name="item_status1">status1 (None): $status</a></strong>
+
+<li><strong><a name="item_status2">status2 (None): $status</a></strong>
+
+<li><strong><a name="item_clientpool">clientpool (None): $poolname</a></strong>
+
+<p>Client pool name</p>
+</li>
+<li><strong><a name="item_filesize">Filesize (None): $size</a></strong>
+
+<p>File size at the source pool</p>
+</li>
+<li><strong><a name="item_bytes_left">bytes_left (None): $bytes</a></strong>
+
+<p>Bytes still left to be transferred</p>
+</li>
+<li><strong><a name="item_time_left">time_left (None): $time</a></strong>
+
+<p>Time left to completion of the transfer</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::Mover</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: P2P.pm,v 1.3 2008/12/11 14:00:00 sarkar Exp $
+
+</p>
+
+</body>
+
+</html>

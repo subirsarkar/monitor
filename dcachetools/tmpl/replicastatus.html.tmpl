@@ -1,0 +1,141 @@
+[% BLOCK header ~%]
+<html>
+<head>
+<meta http-equiv="refresh" content="600" />
+<title>[% site %] [% storage %] Monitor</title>
+<script src="js/sorttable.js"></script>
+<style>
+body,th,caption,td,div,p,a,font,span,input,select {
+  font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+}
+caption,th {
+  color: #fff;
+  background-color: #607b8b;
+}
+body {
+  padding: 0.0%;
+  background-color: #fff;
+  font-size: 11pt;
+}
+table {
+  border: 0px solid #bdbdd5;
+  border-collapse: separate;
+  border-spacing: 1px; 
+  background-color: #bbb;
+}
+caption {
+  color: #000;
+  text-align: center;
+  clear: both;
+  border: 1px solid #a7a7bc;
+  font-weight: normal;
+  padding: 4px 2px;
+}
+tr {
+  text-align: right;
+}
+th {
+  font-weight: normal;
+  font-size: 10pt;
+  text-align: center;
+  padding: 4px 2px;
+}
+td {
+  color: #000;
+  background-color: #eee;
+  border: solid #000;
+  border-width: 0px;
+  padding: 3px 3px;
+  font-family: monospace;
+  font-size: 9pt;
+}
+td.default {
+  background-color: #eee;
+}
+td.green {
+  background-color: #00cd00;
+}
+td.yellow {
+  color: #999999;
+  background-color: #fff1a8;
+}
+td.grey {
+  color: #999999;
+  background-color: #ddd;
+}
+td.red {
+  color: #fff;
+  background-color: #b22222;
+}
+td.orange {
+  background-color: #ee7942;
+}
+td.multicol {
+  text-align: left;
+}
+td.la {
+  background-color: #eee;
+  text-align: left;
+}
+td.ra {
+  background-color: #eee;
+  text-align: right;
+}
+a {
+  color: #0010c5; text-decoration: none; decoration: none
+}
+a:hover {
+  color: #008000; text-decoration: underline; decoration: underline
+}
+a.r3 {
+  color: #000000; text-decoration: none; decoration: none
+}
+a.r3:hover {
+  color: #008000; text-decoration: none; decoration: none
+}
+.signature {
+  width: 80%;
+  height: 20px;
+  margin-top: 8px;
+  color: #fff;
+  background-color: #000;
+  padding: 4px 4px;
+  font-size: 10pt;
+}
+</style>
+</head>
+<body>
+[%~ END %]
+
+[% BLOCK table_start %]
+  <div style="margin-top: 1%;">
+    <table class="sortable" style="width:100%;">
+      <tr>
+        <th>File</th>
+        <th>pnfsid</th>
+        <th>Replica</th>
+        <th>Status</th>
+        <th>Pool:Size</th>
+      </tr>
+[%~ END %]
+
+[% BLOCK table_row %]
+      <tr>
+        <td class=default>[% file %]</td>
+        <td class=la>[% pnfsid %]</td>
+        <td class=[% replica_class %]>[% replica %]</td>
+        <td class=[% status_class %]>[% status %]</td>
+        <td class=la>[% size %]</td>
+      </tr>
+[%~ END %]
+[% BLOCK table_end %]
+    </table>
+  </div>
+[%~ END %]
+[% BLOCK footer %]
+  <div class="signature">
+     <label style="float:left;">Last updated at [% timestamp %]</label>
+  </div>
+</body>
+</html>
+[% END %]

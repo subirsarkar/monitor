@@ -1,0 +1,159 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>BaseTools::Util - A collection of utility functions.</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>BaseTools::Util - A collection of utility functions.</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use BaseTools::Util qw/trim readFile/;
+  my $content = readFile($infile);
+  my @list    = readFile($infile); # wantarray</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  File::Find
+  File::Copy
+  Net::Domain
+  POSIX
+  Term::ANSIColor</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<pre>
+  trim  
+  getTime 
+  debug 
+  getCommandOutput
+  readFile
+  getHostname
+  message
+  writeHTML
+  readDir
+  traverseDir</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>A collection of utility functions.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_trim">trim ($str): $str</a></strong>
+
+<p>Remove leading and trailing spaces of a string and returns the modified string</p>
+</li>
+<li><strong><a name="item_gettime">getTime($time): $fmt_timestamp</a></strong>
+
+<p>Converts a long integer into a formatted string</p>
+</li>
+<li><strong><a name="item_debug">debug ($arg): None</a></strong>
+
+<p>Prints a debug string by appending $arg</p>
+</li>
+<li><strong><a name="item_getcommandoutput">getCommandOutput ($command): $content [@content]</a></strong>
+
+<p>Executes a command and returns the output either as a scalar string or as an array of output lines
+depending on the context (caller)</p>
+</li>
+<li><strong><a name="item_readfile">readFile  ($filename): $content [@content]</a></strong>
+
+<p>Read a file and returns the content either as a single string or as an array of output lines
+depending on the context (caller)</p>
+</li>
+<li><strong><a name="item_gethostname">getHostname (None): $hostname</a></strong>
+
+<p>Executes Net::Domain::hostname and returns the <strong>hostname -s</strong></p>
+</li>
+<li><strong><a name="item_message">message ($color, $text): None</a></strong>
+
+<p>Print a message string preceded by a time stamp that used Term::ANSIColor</p>
+<pre>
+    $color - Color of the time stamp that hints at the status (GREEN, RED, BLUE etc.)
+    $text  - The message string</pre>
+</li>
+<li><strong><a name="item_writehtml">writeHTML ($filename, $content): None</a></strong>
+
+<p>Save the HTML content in a file</p>
+<pre>
+    $filename - output file name
+    $content  - HTML content to be saved
+ 
+=item * readDir ($dirname): @list</pre>
+<p>Finds the files in a directory and returns the list</p>
+<pre>
+    $dirname - Directory name</pre>
+</li>
+<li><strong><a name="item_traversedir">traverseDir ($dirname): @list</a></strong>
+
+<p>Finds the files in a directory recursively and returns the list of files</p>
+<pre>
+    $dirname - Directory name</pre>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: Util.pm,v1.0 2008/06/17 00:03:19 sarkar Exp $</p>
+
+</body>
+
+</html>

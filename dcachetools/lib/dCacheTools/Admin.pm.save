@@ -1,0 +1,92 @@
+package dCacheTools::Admin;
+
+use IO::File;
+use File::Basename;
+
+use dCacheTools::ConfigReader;
+use dCacheTools::Util qw/trim getCommandOutput/;
+
+sub new 
+{
+  my ($this, $attr) = @_;
+  my $class = ref($this) || $this;
+
+  my $reader = dCacheTools::ConfigReader->instance();
+  $attr->{node}          = $reader->{config}{admin}{node} unless (defined $attr && exists $attr->{node});
+  $attr->{timeout}       = $reader->{config}{admin}{timeout} unless exists $attr->{timeout};
+  $attr->{sleepInterval} = $reader->{config}{admin}{sleepInterval} unless exists $attr->{sleepInterval};
+  $attr->{debug}         = $reader->{config}{admin}{debug} unless exists $attr->{debug};
+  $attr->{discard_error} = $reader->{config}{admin}{discard_error} unless exists $attr->{discard_error};
+
+  my $self = bless $attr, $class;
+}
+
+sub exec
+{
+  my ($self, $param) = @_;
+  die qq|must specify a valid command in the dictionary! stopped| 
+     unless (defined $param && exists $param->{command});
+
+  my $script = qq|ssh -c blowfish -p 22223 admin\@$self->{node} |; # the trailing space is important
+  $script .= qq|2>/dev/null| if $self->{discard_error};
+  $script .= qq|<<EOF\nset timeout $self->{timeout}\n|;
+  $script .= (exists $param->{cell}) 
+       ? qq|cd $param->{cell}\n$param->{command}|
+       : qq|$param->{command}|;
+  $script .= qq|\n..\nlogoff\nEOF|;
+
+  print $script, "\n" if $self->{debug};
+  sleep $self->{sleepInterval} if $self->{sleepInterval}; # seconds
+
+  my @result = getCommandOutput($script);
+  my @output = ();
+  for (@result) { 
+    next if (/^$/ || length($_)<3 || /Timeout/ || /dmg/ || /admin >/ || /user=admin/);
+    push @output, trim($_);
+  }
+  print join ("\n", @output), "\n" if $self->{debug};
+  @output;
+}
+
+sub exec2
+{
+   my ($self, $param) = @_;
+   my @output = ();
+   my $natt = 0;
+   until (scalar @output) {
+     @output = $self->exec($param);
+     last if ++$natt > 2;
+   }
+   @output;
+}
+
+sub node {
+  my ($self, $value) = @_;
+  $self->{node} = $node if defined $value;
+  return $self->{node};
+}
+
+sub debug {
+  my ($self, $value) = @_;
+  $self->{debug} = $value if defined $value;
+  return $self->{debug};
+}
+
+sub timeout {
+  my ($self, $value) = @_;
+  $self->{timeout} = $value if defined $value;
+  return $self->{timeout};
+}
+
+sub sleepInterval {
+  my ($self, $value) = @_;
+  $self->{sleepInterval} = $value if defined $value;
+  return $self->{sleepInterval};
+}
+
+1;
+__END__
+package main;
+my $admin = new dCacheTools::Admin({ node=> qq|cmsdcache|, timeout => 300, sleep_interval => 1, debug => 0 });
+my @output = $admin->exec({ cell => qq|PoolManager|, command => qq|psu ls pool -l\npsu ls pgroup| });
+print join ("\n", @output);

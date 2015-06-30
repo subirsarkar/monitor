@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::GridftpTransfer - A wrapper for individual Gridftp transfer door</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::GridftpTransfer - A wrapper for individual Gridftp transfer door</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  my $door = shift || q|GFTP-cmsdcache1-Unknown-2368|;
+  my $obj = dCacheTools::GridftpTransfer-&gt;new({ name =&gt; $door });
+  dCacheTools::GridftpTransfer-&gt;header();
+  $obj-&gt;show;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  BaseTools::ConfigReader;
+  BaseTools::Util
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<pre>
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>dCacheTools::GridftpTransfer is a simple wrapper over an single Gridftp transfer door
+which parses and combines the door <code>info</code> and <code>get door info</code> command output.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new ($attr): object reference</a></strong>
+
+<p>Class constructor.</p>
+<pre>
+    $attr-&gt;{name} - the Gridftp door name [obligatory]</pre>
+</li>
+<li><strong><a name="item_show">show (None): None</a></strong>
+
+<p>Display the door information.</p>
+</li>
+<li><strong><a name="item_certificate">certificate (None): $certificate</a></strong>
+
+<li><strong><a name="item_remote_host">remote_host (None): $remote_host</a></strong>
+
+<li><strong><a name="item_local_host">local_host  (None): $local_host</a></strong>
+
+<li><strong><a name="item_method">method (None): $method</a></strong>
+
+<li><strong><a name="item_filename">filename (None): $filename</a></strong>
+
+<li><strong><a name="item_queue">queue (None): $queue</a></strong>
+
+<li><strong><a name="item_seqid">seqid (None): $seqid</a></strong>
+
+<li><strong><a name="item_pnfsid">pnfsid (None): $pnfsid</a></strong>
+
+<li><strong><a name="item_pool">pool (None): $pool</a></strong>
+
+<li><strong><a name="item_status">status (None): $status</a></strong>
+
+<li><strong><a name="item_moverid">moverid (None): $moverid</a></strong>
+
+<li><strong><a name="item_duration">duration (None): $duration</a></strong>
+
+<li><strong><a name="item_dump">dump (None): None</a></strong>
+
+<p>Dump the underlying data structure with</p>
+<pre>
+    print Data::Dumper-&gt;Dump([$info], [qw/info/]);</pre>
+<pre>
+    $info = {
+          'local_host' =&gt; 'cmsdcache5',
+          'remote_host' =&gt; 'lcgfts01.gridpp.rl.ac.uk',
+          'status' =&gt; 'receiving',
+          'certificate' =&gt; '/C=IT/O=INFN/OU=Personal Certificate/L=Sns/CN=Federico Calzolari',
+          'duration' =&gt; '683.261',
+          'pnfsid' =&gt; '00080000000000000208B030',
+          'seqid' =&gt; '11434',
+          'moverid' =&gt; '11571',
+          'filename' =&gt; '/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_RAL/Pisa/140/LoadTest07_RAL_1B_GIXxuSqPenUyer4A_140',
+          'pool' =&gt; 'cmsdcache9_4',
+          'method' =&gt; 'STOR',
+          'queue' =&gt; 'wan'
+          };</pre>
+</li>
+<li><strong><a name="item_header">header (None): None</a></strong>
+
+<p>A static method that provides a header for <em>show</em></p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::GridftpCell</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<pre>
+  Sonia Taneja (sonia.taneja@pi.infn.it)
+  Subir Sarkar (subir.sarkar@cern.ch)</pre>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: GridftpTransfer.pm,v 1.3 2008/12/11 14:00:00 sarkar Exp $</p>
+
+</body>
+
+</html>

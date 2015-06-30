@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::PnfsManager - An OO interface over the PnfsManager cell</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+		<li><a href="#public_static_methods">Public static methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::PnfsManager - An OO interface over the PnfsManager cell</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+  use dCacheTools::PnfsManager;</pre>
+<pre>
+  my $obj = dCacheTools::PnfsManager-&gt;instance();</pre>
+<pre>
+  my $filesize = $obj-&gt;stored_filesize($pnfsid);
+  print join(' ', &quot;Stored Size: &quot;, $filesize), &quot;\n&quot;;</pre>
+<pre>
+  $filesize = $obj-&gt;pnfs_filesize({ pnfsid =&gt; $pnfsid });
+  print join(' ', &quot;Pnfs size: &quot;, $filesize), &quot;\n&quot;;</pre>
+<pre>
+  my @pools = $obj-&gt;pools($pnfsid);
+  print join (' ', &quot;Pools: &quot;, @pools), &quot;\n&quot;;</pre>
+<pre>
+  for my $pool (@pools) {
+    $filesize = $obj-&gt;replica_filesize({ pool =&gt; $pool, pnfsid =&gt; $pnfsid });
+    print join(' ', $pool, &quot; Size: &quot;, $filesize), &quot;\n&quot;;
+  }</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  Class::Singleton
+  dCacheTools::Cell
+  dCacheTools::Pool</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<pre>
+  Class::Singleton
+  dCacheTools::Cell</pre>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><code>dCacheTools::PnfsManager</code> is a straight-forward wrapper over the PnfsManager cell implemented
+as a Singleton. It also provides ways to execute global pnfs commands from Perl.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_new">new (): object reference</a></strong>
+
+<p>Class constructor.</p>
+</li>
+<li><strong><a name="item_pathfinder">pathfinder (pnfsid): (pfn)</a></strong>
+
+<p>Given a pnfsid find the fully qualified Physical File name. $pfn is available if and only if
+the status is valid. If the pnfsid is not known to the PnfsManager a CacheException is thrown.</p>
+</li>
+<li><strong><a name="item_pnfsidof">pnfsidof (pfn): (pnfsid)</a></strong>
+
+<p>Given a fully qualified Physical File name returns the pnfsid currently associated to it. If the pfn is
+not available on pnfs, an exception is thrown from the Admin Console and we return an invalid status
+which must be checked before looking at the output.</p>
+</li>
+<li><strong><a name="item_stored_filesize">stored_filesize (arg): (size)</a></strong>
+
+<p>Returns the size of a pfn or pnfsid. If the pfn or the pnfsid is not available returns an invalid
+status which must be checked before using the value.</p>
+</li>
+<li><strong><a name="item_replica_filesize">replica_filesize (params): (size)</a></strong>
+
+<p>Returns the pool replica size of a pfn or pnfsid. If the pfn or the pnfsid is not available on the pool
+returns an invalid status which must be checked before using the value.</p>
+</li>
+<li><strong><a name="item_pnfs_filesize">pnfs_filesize (params): (size)</a></strong>
+
+<p>Returns the size of a pfn or pnfsid that is known to pnfs. If the pfn/pnfsid does not exists returns an invalid
+status which must be checked before using the value.</p>
+</li>
+<li><strong><a name="item_pools">pools (arg): string array</a></strong>
+
+<p>Returns a list of pools that hold replica copies of a pfn/pnfsid.</p>
+</li>
+</ul>
+<p>
+</p>
+<h2><a name="public_static_methods">Public static methods</a></h2>
+<ul>
+<li><strong><a name="item_pfn2id">pfn2id (class, pfn): pnfsid</a></strong>
+
+<p>Find the pnfsid associated with a Physical File Name (pfn). Call as</p>
+<pre>
+    my $pnfsid = dCacheTools::PnfsManager-&gt;pfn2id(&quot;/pnfs/pi.infn.it/data/cms/user/test/oneEvt.root&quot;);</pre>
+</li>
+<li><strong><a name="item_id2pfn">id2pfn (class, pnfsid): pfn</a></strong>
+
+<p>Find the Physical File Name (pfn) for a given pnfsid. Call as</p>
+<pre>
+    my $pfn = dCacheTools::PnfsManager-&gt;id2pfn(&quot;000800000000000001FC2F60&quot;);</pre>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::Admin</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: PnfsManager.pm,v1.3 2008/12/11 14:00:00 sarkar Exp $</p>
+
+</body>
+
+</html>

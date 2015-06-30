@@ -1,0 +1,172 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>dCacheTools::AdminSSH - An OO wrapper over the dCache Admin Console, a singleton</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#requires">REQUIRES</a></li>
+	<li><a href="#inheritance">INHERITANCE</a></li>
+	<li><a href="#exports">EXPORTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<ul>
+
+		<li><a href="#public_methods">Public methods</a></li>
+	</ul>
+
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#version">VERSION</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>dCacheTools::AdminSSH - An OO wrapper over the dCache Admin Console, a singleton</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+    use dCacheTools::AdminSSH; 
+    my $admin = dCacheTools::AdminSSH-&gt;instance();
+    my @output = $admin-&gt;exec({ cell =&gt; &quot;PoolManager&quot;, command =&gt; &quot;psu ls pool -l&quot; });
+    print join (&quot;\n&quot;, @output);</pre>
+<p>One can also form a long command string and use it as follows,</p>
+<pre>
+    use dCacheTools::AdminSSH; 
+    my $admin = dCacheTools::AdminSSH-&gt;instance(); 
+    my $command = qq|cd cmsdcache1_1\nrep ls\n..\ncd cmsdcache2_1\nrep ls|;
+    my @output = $admin-&gt;exec({ command =&gt; $command });
+    print join (&quot;\n&quot;, @output);</pre>
+<p>
+</p>
+<hr />
+<h1><a name="requires">REQUIRES</a></h1>
+<pre>
+  Carp
+  Time::HiRes
+  Class::Singleton
+  BaseTools::ConfigReader
+  BaseTools::Util</pre>
+<p>
+</p>
+<hr />
+<h1><a name="inheritance">INHERITANCE</a></h1>
+<pre>
+  Class::Singleton</pre>
+<p>
+</p>
+<hr />
+<h1><a name="exports">EXPORTS</a></h1>
+<p>none.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>dCacheTools::AdminSSH is an OO interface over the dCache Admin Console which helps automate 
+administrative tasks. The interface has been implemented following a Singleton pattern.</p>
+<p>As the Admin Console supports only the SSH-v1 protocol each command execution has to connect 
+to and disconnect from the admin console. Implementation of <code>dCacheTools::AdminSSH</code> is therefore 
+very straight-forward. An implementaiton based on <code>Net::SSH::Perl</code> will be ready for any 
+future improvement of the underlying Admin Console. An alternative implementation may try 
+to use the Java API via the <code>Inline::Java</code> interface.</p>
+<p>
+</p>
+<h2><a name="public_methods">Public methods</a></h2>
+<ul>
+<li><strong><a name="item_instance">instance ($attr): object reference</a></strong>
+
+<p>Class constructor. Does not connect to the dCache Admin Console but just sets up the environment</p>
+<pre>
+    $attr-&gt;{node}            - dCache Admin host name
+    $attr-&gt;{timeout}         - Specify timeout value on the Console
+    $attr-&gt;{delay}           - when the Admin Console is accessed from within a loop, might be 
+                               useful to introduce a delay
+    $attr-&gt;{debug}           - debug flag
+    $attr-&gt;{discard_error}   - if enabled redirect stderr to /dev/null</pre>
+<p>The application wide config file specifies the default value for all the above attributes
+which is used in case a attribute is not specified when constructing the Admin object. The default
+values are specified in the config file as follows,</p>
+<pre>
+    admin =&gt; {
+                 node =&gt; q|cmsdcache|,
+              timeout =&gt; 300,
+                debug =&gt; 0,
+                delay =&gt; 2000, # microseconds
+        discard_error =&gt; 1
+    };</pre>
+</li>
+<li><strong><a name="item_exec">exec ($params): @list</a></strong>
+
+<p>Execute an Admin console command and return the output as a list</p>
+<pre>
+    $params-&gt;{cell}   - The dCache cell
+    $param-&gt;{command} - The command to execute</pre>
+</li>
+<li><strong><a name="item_cell_alive">cell_alive (None): boolean</a></strong>
+
+<p>Check if the cell for the last command is alive. Clears the error on look-up.</p>
+</li>
+<li><strong><a name="item_hasexception">hasException (None): boolean</a></strong>
+
+<p>Check if the last command succeeded. check for general Exceptions only.
+Clears the error on look-up.</p>
+</li>
+<li><strong><a name="item_node">node ($node): $node</a></strong>
+
+<p>Set/get the Admin node name</p>
+</li>
+<li><strong><a name="item_debug">debug ($debug): $debug</a></strong>
+
+<p>Set/get the debug flag</p>
+</li>
+<li><strong><a name="item_timeout">timeout ($timeout): $timeout</a></strong>
+
+<p>Set/get the Admin console command response timeout interval</p>
+</li>
+<li><strong><a name="item_delay">delay ($interval): $interval</a></strong>
+
+<p>Set/get the delay before execution of a command</p>
+</li>
+</ul>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>dCacheTools::PoolManager etc.</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Subir Sarkar (<a href="mailto:subir.sarkar@cern.ch">subir.sarkar@cern.ch</a>)</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>This software comes with absolutely no warranty whatsoever.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>$Id: Admin.pm,v 1.3 2008/12/11 14:00:00 sarkar Exp $</p>
+
+</body>
+
+</html>

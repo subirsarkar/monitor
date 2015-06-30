@@ -1,0 +1,123 @@
+[% BLOCK header ~%]
+<html>
+<head>
+<meta http-equiv="refresh" content="600" />
+<title>[% site %] [% GridFTP %] Door Information</title>
+<style>
+body,th,caption,td,div,p,a,font,span,input,select {
+  font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+}
+body {
+  font-size: 10pt;
+  font-weight: normal;
+}
+h2 {
+  color: #000;
+  background-color: #fff;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border: solid #bdbdd5;
+  border-width: 1px 2px 1px 6px;
+  border-top-style: dotted;
+  border-bottom-style: dotted;
+  width: 40%;
+  font-size: 10pt;
+}
+table {
+  border: 0px solid #aaa;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #607b8b;
+}
+tr {
+  text-align: right;
+  font-size: 9pt;
+}
+th {
+  color: #fff;
+  background-color: #9191c1;
+  padding: 2px 8px;
+  text-align: center;
+  font-weight: normal;
+}
+td {
+  background-color: #fff;
+  border: solid #000;
+  border-width: 0px;
+  padding: 2px 8px;
+  text-align: right;
+}
+td.default {
+  background-color: #fff;
+}
+td.green {
+  background-color: #00cd00;
+}
+td.yellow {
+  color: #999999;
+  background-color: #fff1a8;
+}
+td.red {
+  color: #fff;
+  background-color: #b22222;
+}
+p.timestamp {
+  border: dotted #000;
+  border-width: 1px 0px;
+  padding: 1px 0px;
+  font-size: 8pt;
+  font-weight: normal;
+}
+</style>
+</head>
+<body>
+  <div>
+    <div style="float:right;">
+      <p class="timestamp">Last updated at [% timestamp %]</p>
+    </div>
+  </div>
+  <br />
+[%~ END %]
+
+[% BLOCK table_start %]
+  <div style="clear:both; margin-top:20px;">
+    <h2 align="center">GridFTP Door Login Statistics</h2>
+    <table style="width:auto;">
+      <tr>
+        <th>Domain</th>
+        <th>Created</th>
+        <th>Failed</th>
+        <th>Denied</th>
+        <th>Active</th>
+        <th>Max</th>
+      </tr>
+[%~ END %]
+
+[% BLOCK table_row %]
+      <tr>
+        <td>[% domain %]</td>
+        <td>[% created %]</td>
+        <td>[% failed %]</td>
+        <td>[% denied %]</td>
+        <td>[% active %]</td>
+        <td>[% max %]</td>
+      </tr>
+[%~ END %]
+[% BLOCK table_end %]
+      <tr>
+        <td>[% domain %]</td>
+        <td>[% created %]</td>
+        <td>[% failed %]</td>
+        <td>[% denied %]</td>
+        <td>[% active %]</td>
+        <td>[% max %]</td>
+      </tr>
+    </table>
+    <p style="margin-top:6px;width:60%;" class="timestamp">GridFTP doors: Installed = <[% installed %]>, Online = <[% online %]></p>
+  </div>
+[%~ END %]
+[% BLOCK footer %]
+</body>
+</html>
+[% END %]
