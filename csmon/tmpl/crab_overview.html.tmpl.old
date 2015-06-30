@@ -1,0 +1,194 @@
+[% BLOCK page_header ~%]
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="900" />
+    <link rel="stylesheet" href="jquery/css/cupertino/jquery-ui-1.8.10.custom.css" type="text/css"></link>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="jquery/js/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/decor.js"></script>
+    <title>CRAB Overview Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <div>
+        <div class="timestamp">
+          <label>Last updated at [% date %]</label>
+        </div>
+        <div>
+          <h2>CRAB Overview</h2>
+        </div>
+      </div>
+[%~ END %]
+[% BLOCK servers_header %]
+      <div style="clear:both;"> 
+        <div class="news-panel">
+          <fieldset>
+            <legend>News</legend>
+            <div id="news"></div>
+          </fieldset>
+        </div>
+        <div class="server-panel">
+          <fieldset>
+            <legend>AnalysisOperations Servers</legend>
+            <div id="tabpanel-a"> 
+              <ul>
+                <li><a href="#tab-a1"><span>Status</span></a></li>
+                <li><a href="#tab-a2"><span>TaskList (all servers)</span></a></li>
+                <li><a href="#tab-a3"><span>TaskList (prod servers)</span></a></li>
+              </ul>
+[%~ END %]
+[% BLOCK servers_status_header %]
+              <div id="tab-a1">
+                <table class="sortable">
+                  <thead>
+                    <tr>
+                      <th>Server</th>
+                      <th>JobTracking</th>
+                      <th>Output Requested</th>
+                      <th>In Progress</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+[%~ END %]
+[% BLOCK servers_status_row %]
+                    <tr>
+                      <td><a href="http://[%web_server%]:8888">[%server_name%]</a></td>
+                      <td>[%a%]</td>
+                      <td>[%b%]</td>
+                      <td>[%c%]</td>
+                    </tr>
+[%~ END %]
+[% BLOCK servers_status_footer %]
+                  </tbody>
+                </table>
+              </div>
+[%~ END %]
+[% BLOCK all_servers_task_header %]
+              <div id="tab-a2">
+                <h4>Task List (Last Day)</h4>
+                <table class="sortable">
+                  <thead>
+                    <tr>
+                      <th>Server</th>
+                      <th>Submitted</th>
+                      <th>Finished</th>
+                      <th>Submitting</th>
+                      <th>Not Submitted</th>
+                      <th>Partially Killed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+[%~ END %]
+[% BLOCK all_servers_task_row %]
+                    <tr>
+                      <td><a href="http://[%web_server%]:8888">[%server_name%]</a></td>
+                      <td>[%submitted%]</td>
+                      <td>[%ended%]</td>
+                      <td class="[%color_code%]">[%submitting%]</td>
+                      <td>[%not_submitted%]</td>
+                      <td>[%partially_killed%]</td>
+                    </tr>
+[%~ END %]
+[% BLOCK all_servers_task_footer %]
+                  </tbody>
+                </table>
+              </div>
+[%~ END %]
+[% BLOCK servers_task_header %]
+              <div id="tab-a3">
+                <h4>Task List (Last Day)</h4>
+                <table class="sortable">
+                  <thead>
+                    <tr>
+                      <th>Server</th>
+                      <th>Submitted</th>
+                      <th>Finished</th>
+                      <th>Submitting</th>
+                      <th>Not Submitted</th>
+                      <th>Partially Killed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+[%~ END %]
+[% BLOCK servers_task_row %]
+                    <tr>
+                      <td><a href="http://[%web_server%]:8888">[%server_name%]</a></td>
+                      <td>[%submitted%]</td>
+                      <td>[%ended%]</td>
+                      <td class="[%color_code%]">[%submitting%]</td>
+                      <td>[%not_submitted%]</td>
+                      <td>[%partially_killed%]</td>
+                    </tr>
+[%~ END %]
+[% BLOCK servers_task_footer %]
+                  </tbody>
+                </table>
+              </div>
+[%~ END %]
+[% BLOCK servers_footer %]
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <br/>
+      <fieldset>
+        <legend>Useful Links</legend>
+        <div style="width:49%;float:left;">
+          <fieldset class="links">
+            <ul>
+              <li>CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab">info</a></li> 
+              <li>Getting CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab#Getting_Support">Support</a></li>
+              <li>CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrabFaq">FAQ</a></li>
+              <li>Status <a href="http://dashb-ssb.cern.ch/ssb.html"> of Sites</a></li> 
+            </ul>
+          </fieldset> 
+        </div>
+        <div style="width:49%;float:right;"> 
+          <fieldset class="links">
+            <ul>
+              <li>CMS CRAB Server <a href="http://glidein-mon.t2.ucsd.edu:8080">Dashboard</a></li>     
+              <li>Tasks in <a href="http://glidein-mon.t2.ucsd.edu/csmon/tasks_submitting.txt"><I>submitting</I></a> state</li>
+              <li>A Crab server <a href="http://glidein-mon.t2.ucsd.edu/csmon/monitor.html">monitoring page</a> - Historical View</li>     
+            </ul>
+          </fieldset> 
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Server Plots</legend>
+[%~ END %]
+[% BLOCK serverinfo_block %]
+        <div id="tabpanel-b"> 
+          <ul>
+            <li><a href="#tab-b1"><span>Server Jobs</span></a></li>
+            <li><a href="#tab-b2"><span>Message Queue</span></a></li>
+          </ul>
+          <div id="tab-b1">
+            <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide [% server_name %]</p>
+            <div class="msg_body">
+              <img src="http://glidein-mon.t2.ucsd.edu/csmon/images/lweek_statuswtime_[%server_name%].png" 
+                   alt="History plots" width="48%"/>
+              <img src="[%image_path%]" 
+                   alt="Cumulative jobs" width="48%"/> 
+            </div>
+          </div>
+          <div id="tab-b2">
+            <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide [% server_name %]</p>
+            <div class="msg_body">
+              <img src="[%image_path%]" 
+                   alt="Message Queue" width="48%"/> 
+            </div>
+          </div>
+        </div>
+[%~ END %]
+[% BLOCK page_footer %]
+      </fieldset>
+    </div>
+  </body>
+</html>
+[% END %]

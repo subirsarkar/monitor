@@ -1,0 +1,35 @@
+-- Started at Fri Sep 5 09:21:40 CEST 2014 --
+>>> processing CRAB Server <ucsd_glidein-2>, URL=<http://glidein-2.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://glidein-2.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to glidein-2.t2.ucsd.edu:8888 (connect: Connection timed out) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <ucsd_submit-3>, URL=<http://submit-3.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://submit-3.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to submit-3.t2.ucsd.edu:8888 (connect: No route to host) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <ucsd_submit-2>, URL=<http://submit-2.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://submit-2.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to submit-2.t2.ucsd.edu:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <ucsd_submit-4>, URL=<http://submit-4.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://submit-4.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to submit-4.t2.ucsd.edu:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <cern_vocms83>, URL=<http://vocms83.cern.ch:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://vocms83.cern.ch:8888/compstatus -- 500 Can't connect to vocms83.cern.ch:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <ucsd_submit-6>, URL=<http://submit-6.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://submit-6.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to submit-6.t2.ucsd.edu:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <cern_vocms20>, URL=<http://vocms20.cern.ch:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://vocms20.cern.ch:8888/compstatus -- 500 Can't connect to vocms20.cern.ch:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <ucsd_submit-5>, URL=<http://submit-5.t2.ucsd.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://submit-5.t2.ucsd.edu:8888/compstatus -- 500 Can't connect to submit-5.t2.ucsd.edu:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <cern_vocms22>, URL=<http://vocms22.cern.ch:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://vocms22.cern.ch:8888/compstatus -- 500 Can't connect to vocms22.cern.ch:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <unl_hcc-crabserver>, URL=<http://hcc-crabserver.unl.edu:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://hcc-crabserver.unl.edu:8888/compstatus -- 500 Can't connect to hcc-crabserver.unl.edu:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+>>> processing CRAB Server <cern_vocms21>, URL=<http://vocms21.cern.ch:8888/compstatus>
+WebTools::Page::Content. Failed to fetch http://vocms21.cern.ch:8888/compstatus -- 500 Can't connect to vocms21.cern.ch:8888 (connect: Connection refused) at /afs/cern.ch/cms/LCG/crab/csmon/lib/CompStatusParser.pm line 36
+$table = {};
+-- Finished at Fri Sep 5 09:22:49 CEST 2014 with status=0 --

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="120" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="jquery/js/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/decor.js"></script>
+    <title>CRAB Overview Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <div>
+        <div class="timestamp">
+          <label>Last updated at 2011-03-10 03:21:49 GMT</label>
+        </div>
+        <div>
+          <h2>CRAB Overview</h2>
+        </div>
+      </div>
+      <div style="clear:both;"> 
+        <div class="news-panel">
+          <fieldset>
+            <legend>News</legend>
+            <div id="news"></div>
+          </fieldset>
+        </div>
+        <div class="server-panel">
+          <fieldset>
+            <legend>Available Servers</legend>
+            <table id="server-table">
+              <thead>
+                <tr>
+                  <th>Server</th>
+                  <th>JobTracking</th>
+                  <th>Output Requested</th>
+                  <th>In Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="http://crab1.ba.infn.it:8888">bari</a></td>
+                  <td>7762</td>
+                  <td>182</td>
+                  <td>2863</td>
+                </tr>
+                <tr>
+                  <td><a href="http://glidein-2.t2.ucsd.edu:8888">slc5ucsd</a></td>
+                  <td>683</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td><a href="http://vocms21.cern.ch:8888">slc5cern</a></td>
+                  <td>14045</td>
+                  <td>0</td>
+                  <td>73</td>
+                </tr>
+                <tr>
+                  <td><a href="http://vocms58.cern.ch:8888">cern</a></td>
+                  <td>44611</td>
+                  <td>0</td>
+                  <td>54</td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
+        </div>
+      </div>
+      <br/>
+      <fieldset>
+        <legend>Useful Links</legend>
+        <div style="width:49%;float:left;">
+          <fieldset class="links">
+            <ul>
+              <li>CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab">info</a></li> 
+              <li>Getting CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab#Getting_Support">Support</a></li>
+              <li>CRAB <a href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrabFaq">FAQ</a></li>
+              <li>Status <a href="http://dashb-ssb.cern.ch/ssb.html"> of Sites</a></li> 
+            </ul>
+          </fieldset> 
+        </div>
+        <div style="width:49%;float:right;"> 
+          <fieldset class="links">
+            <ul>
+              <li>CMS CRAB Server <a href="http://glidein-mon.t2.ucsd.edu:8080">Dashboard</a></li>     
+              <li>Tasks in <a href="http://glidein-mon.t2.ucsd.edu/csmon/tasks_submitting.txt"><I>submitting</I></a> state</li>
+              <li>A Crab server <a href="http://glidein-mon.t2.ucsd.edu/csmon/monitor.html">monitoring page</a> - Historical View</li>     
+            </ul>
+          </fieldset> 
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Server Plots</legend>
+        <div>
+          <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide bari</p>
+          <div class="msg_body">
+            <img src="http://glidein-mon.t2.ucsd.edu/csmon/images/lweek_statuswtime_bari.png" 
+                 alt="History plots" width="48%" />
+            <img id="crab1.ba.infn.it" 
+                src="http://crab1.ba.infn.it:8888/images/?filepath=/home/crab/work/HTTPFrontend/static/12-JobCumulative.png" 
+                alt="Cumulative jobs" width="48%"/>
+          </div>
+        </div>
+        <div>
+          <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide slc5ucsd</p>
+          <div class="msg_body">
+            <img src="http://glidein-mon.t2.ucsd.edu/csmon/images/lweek_statuswtime_slc5ucsd.png" 
+                 alt="History plots" width="48%" />
+            <img id="glidein-2.t2.ucsd.edu" 
+                src="http://glidein-2.t2.ucsd.edu:8888/images/?filepath=/home/crab/work/HTTPFrontend/static/12-JobCumulative.png" 
+                alt="Cumulative jobs" width="48%"/>
+          </div>
+        </div>
+        <div>
+          <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide slc5cern</p>
+          <div class="msg_body">
+            <img src="http://glidein-mon.t2.ucsd.edu/csmon/images/lweek_statuswtime_slc5cern.png" 
+                 alt="History plots" width="48%" />
+            <img id="vocms21.cern.ch" 
+                src="http://vocms21.cern.ch:8888/images/?filepath=/home/crab/work/HTTPFrontend/static/12-JobCumulative.png" 
+                alt="Cumulative jobs" width="48%"/>
+          </div>
+        </div>
+        <div>
+          <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern</p>
+          <div class="msg_body">
+            <img src="http://glidein-mon.t2.ucsd.edu/csmon/images/lweek_statuswtime_cern.png" 
+                 alt="History plots" width="48%" />
+            <img id="vocms58.cern.ch" 
+                src="http://vocms58.cern.ch:8888/images/?filepath=/home/crab/work/HTTPFrontend/static/12-JobCumulative.png" 
+                alt="Cumulative jobs" width="48%"/>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </body>
+</html>

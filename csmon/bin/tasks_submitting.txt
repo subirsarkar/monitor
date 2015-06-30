@@ -1,0 +1,26 @@
+>>> Tasks registered in the last 7 days and still in <submitting> state
+
+>>> CRAB Server <ucsd_glidein-2>
+
+>>> CRAB Server <ucsd_submit-3>
+
+>>> CRAB Server <ucsd_submit-2>
+
+>>> CRAB Server <ucsd_submit-4>
+
+>>> CRAB Server <cern_vocms83>
+
+>>> CRAB Server <ucsd_submit-6>
+
+>>> CRAB Server <cern_vocms20>
+
+>>> CRAB Server <ucsd_submit-5>
+
+>>> CRAB Server <cern_vocms22>
+
+>>> CRAB Server <unl_hcc-crabserver>
+
+>>> CRAB Server <cern_vocms21>
+
+
+Updated at Fri Sep  5 07:16:42 UTC 2014 (next update in 10 mins)

@@ -1,0 +1,11 @@
+#
+#   check  the schedule with  'acrontab -l'
+#   update schedule from file with  'acrontab < acrontab.dat'
+#
+# format: minute hour day month day-of-the-week host command
+# see man acrontab
+#  also man -S 5 crontab
+#
+01,11,21,31,41,51 * * * * lxplus.cern.ch /afs/cern.ch/cms/LCG/crab/csmon/bin/launch_crab_overview.sh > /afs/cern.ch/cms/LCG/crab/csmon/log/acron_crab_overview.log 2>&1
+05,15,25,35,45,55 * * * * lxplus.cern.ch /afs/cern.ch/cms/LCG/crab/csmon/bin/launch_submitting.sh > /afs/cern.ch/cms/LCG/crab/csmon/log/acron_submitting.log 2>&1
+00-59/3 * * * * lxplus.cern.ch /afs/cern.ch/cms/LCG/crab/csmon/bin/launch_monitor.sh > /afs/cern.ch/cms/LCG/crab/csmon/log/acron_monitor.log 2>&1

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="refresh" content="300" />
+    <link rel="stylesheet" href="jquery/css/cupertino/jquery-ui-1.8.10.custom.css" type="text/css"></link>
+    <link rel="stylesheet" href="jquery/cluetip/jquery.cluetip.css" type="text/css"></link>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script type="text/javascript" src="jquery/js/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.dimensions.min.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.getUrlParam.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="jquery/js/jquery.hoverIntent.js"></script> 
+    <script type="text/javascript" src="jquery/js/jquery.cluetip.js"></script> 
+    <script type="text/javascript" src="js/sorttable.js"></script>
+    <script type="text/javascript" src="js/decor.js"></script>
+    <title>CRAB Overview Page</title>
+  </head>
+  <body>
+    <form method="GET" name="Form1" action="javascript:void%200;">
+      <div id="content">
+        <div class="h-panel" style="margin-bottom:2px;height:26px;">
+          <div style="float:left">
+            <label>CRAB Overview</label>
+          </div>
+          <div style="float:right" class="timestamp">
+            <label>Last updated at 2014-09-05 07:11:50 GMT</label>
+          </div>
+        </div>
+        <div style="clear:both;"> 
+          <div class="news-panel">
+            <fieldset>
+              <legend>News</legend>
+              <div id="news"></div>
+            </fieldset>
+          </div>
+          <div class="server-panel">
+            <fieldset>
+              <legend>AnalysisOperations Servers</legend>
+              <div id="tabpanel-a"> 
+                <ul>
+                  <li><a href="#tab-a1"><span>Status</span></a></li>
+                  <li><a href="#tab-a2"><span>TaskList (Daily, All Servers)</span></a></li>
+                  <li><a href="#tab-a3"><span>TaskList (Daily, Prod Servers)</span></a></li>
+                </ul>
+                <div id="tab-a1">
+                  <table class="sortable">
+                    <thead>
+                      <tr>
+                        <th>Server</th>
+                        <th>JobTracking</th>
+                        <th>Output Requested</th>
+                        <th>In Progress</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><a class="link" href="http://glidein-2.t2.ucsd.edu:8888">ucsd_glidein-2</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-3.t2.ucsd.edu:8888">ucsd_submit-3</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-2.t2.ucsd.edu:8888">ucsd_submit-2</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-4.t2.ucsd.edu:8888">ucsd_submit-4</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms83.cern.ch:8888">cern_vocms83</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-6.t2.ucsd.edu:8888">ucsd_submit-6</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms20.cern.ch:8888">cern_vocms20</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-5.t2.ucsd.edu:8888">ucsd_submit-5</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms22.cern.ch:8888">cern_vocms22</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://hcc-crabserver.unl.edu:8888">unl_hcc-crabserver</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms21.cern.ch:8888">cern_vocms21</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div id="tab-a2">
+                  <table class="sortable">
+                    <thead>
+                      <tr>
+                        <th>Server</th>
+                        <th>Submitted</th>
+                        <th>Finished</th>
+                        <th>Submitting</th>
+                        <th>Not Submitted</th>
+                        <th>Partially Killed</th>
+                        <th>MsgQueue</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><a class="link" href="http://glidein-2.t2.ucsd.edu:8888">ucsd_glidein-2</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-3.t2.ucsd.edu:8888">ucsd_submit-3</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-2.t2.ucsd.edu:8888">ucsd_submit-2</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-4.t2.ucsd.edu:8888">ucsd_submit-4</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms83.cern.ch:8888">cern_vocms83</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-6.t2.ucsd.edu:8888">ucsd_submit-6</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms20.cern.ch:8888">cern_vocms20</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-5.t2.ucsd.edu:8888">ucsd_submit-5</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms22.cern.ch:8888">cern_vocms22</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://hcc-crabserver.unl.edu:8888">unl_hcc-crabserver</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms21.cern.ch:8888">cern_vocms21</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div id="tab-a3">
+                  <table class="sortable">
+                    <thead>
+                      <tr>
+                        <th>Server</th>
+                        <th>Submitted</th>
+                        <th>Finished</th>
+                        <th>Submitting</th>
+                        <th>Not Submitted</th>
+                        <th>Partially Killed</th>
+                        <th>MsgQueue</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><a class="link" href="http://vocms83.cern.ch:8888">cern_vocms83</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-6.t2.ucsd.edu:8888">ucsd_submit-6</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://vocms20.cern.ch:8888">cern_vocms20</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://hcc-crabserver.unl.edu:8888">unl_hcc-crabserver</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                      <tr>
+                        <td><a class="link" href="http://submit-4.t2.ucsd.edu:8888">ucsd_submit-4</a></td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td class="ok">0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <br/>
+        <fieldset>
+          <legend>Useful Links</legend>
+          <div style="width:49%;float:left;">
+            <fieldset>
+              <ul>
+                <li>CRAB <a class="link" href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab">Guide</a></li> 
+                <li>Getting CRAB <a class="link" href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrab?redirectedfrom=CMS.SWGuideCrab#Getting_Support">Support</a></li>
+                <li>CRAB <a class="link" href="https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideCrabFaq">FAQ</a></li>
+                <li><a class="link" href="http://dashb-ssb.cern.ch/ssb.html">Status</a> of Sites</li> 
+              </ul>
+            </fieldset> 
+          </div>
+          <div style="width:49%;float:right;"> 
+            <fieldset>
+              <ul>
+                <li>CMS CRAB Server <a class="link" href="http://glidein-mon.t2.ucsd.edu:8080">Dashboard</a></li>     
+                <li>Tasks in <a class="link" href="https://cmsdoc.cern.ch/cms/LCG/crab/overview/tasks_submitting.txt"><I>submitting</I></a> state</li>
+                <li>A Crab server <a class="link" href="https://cmsdoc.cern.ch/cms/LCG/crab/server/monitor.html">monitoring page</a> - Historical View</li>     
+              </ul>
+            </fieldset> 
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Server Plots</legend>
+          <div id="tabpanel-b"> 
+            <ul>
+              <li><a href="#tab-b1"><span>Server Jobs</span></a></li>
+              <li><a href="#tab-b2"><span>Message Queue</span></a></li>
+            </ul>
+            <div id="tab-b1">
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_glidein-2</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_glidein-2.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_glidein-2-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-3</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_submit-3.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_submit-3-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-2</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_submit-2.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_submit-2-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-4</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_submit-4.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_submit-4-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms83</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_cern_vocms83.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/cern_vocms83-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-6</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_submit-6.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_submit-6-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms20</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_cern_vocms20.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/cern_vocms20-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-5</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_ucsd_submit-5.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/ucsd_submit-5-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms22</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_cern_vocms22.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/cern_vocms22-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide unl_hcc-crabserver</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_unl_hcc-crabserver.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/unl_hcc-crabserver-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms21</p>
+              <div class="msg_body">
+                <img src="https://cmsdoc.cern.ch/cms/LCG/crab/server/images/lday_statuswtime_cern_vocms21.png" 
+                     alt="History plots" width="48%"/>
+                <img src="images/server/cern_vocms21-./" 
+                     alt="Cumulative jobs" width="48%"/> 
+              </div>
+            </div>
+            <div id="tab-b2">
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_glidein-2</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_glidein-2-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-3</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_submit-3-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-2</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_submit-2-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-4</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_submit-4-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms83</p>
+              <div class="msg_body">
+                <img src="images/server/cern_vocms83-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-6</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_submit-6-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms20</p>
+              <div class="msg_body">
+                <img src="images/server/cern_vocms20-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide ucsd_submit-5</p>
+              <div class="msg_body">
+                <img src="images/server/ucsd_submit-5-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms22</p>
+              <div class="msg_body">
+                <img src="images/server/cern_vocms22-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide unl_hcc-crabserver</p>
+              <div class="msg_body">
+                <img src="images/server/unl_hcc-crabserver-./" alt="Message Queue" /> 
+              </div>
+              <p class="msg_head"><img  src="" alt="arrow_head" />Show/Hide cern_vocms21</p>
+              <div class="msg_body">
+                <img src="images/server/cern_vocms21-./" alt="Message Queue" /> 
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="h-panel" style="margin-top:6px;height:26px;">    
+          <div style="float:left;">
+            Explanation of <a class="htips link" 
+                               href="https://cmsdoc.cern.ch/cms/LCG/crab/instructions.html" 
+                               rel="instructions.html" title="Explanation of Color Code">Color Code</a>
+             <img class="elink" src="icons/external.png" alt="external link" />
+          </div>
+          <div style="float:right;">
+            <label title="subir.sarkar@SPAMNOTcern.ch">Developer: Subir Sarkar, SINP, Kolkata</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
