@@ -1,0 +1,71 @@
+body {
+  font-family:Arial,Verdana,Geneva,sans-serif;
+  font-size:.9em;
+  padding:0 5em;
+}
+div label {font-size: 3.1em;}
+p {padding: 0 0;margin: .3em 0;}
+p.expand,p.msg_head {margin: .6em 0;}
+ul li {margin: .1em 0; padding: 0 0;}
+ul {list-style-type:circle;margin: .03em 0;}
+ul ul {list-style-type:square;}
+ul.a {list-style-type:none;}
+ul.b {list-style-type:none;}
+br {clear: both;}
+code {color: #5d2005;}
+pre {
+  color:#5d2005;
+  background-color:#fcfcfc;
+  border:solid #ccd2d5;
+  border-width:0 0 0 .3em;
+  border-top-style:dotted;
+  border-bottom-style:dotted;
+  border-top-style:dashed;
+  border-bottom-style:dashed;
+  padding:.5em .5em;
+  margin: .5em 1em;
+  font-size:.7em;
+}
+a {color: #001080; text-decoration: none; decoration: none}
+a:hover {color: #008000; text-decoration: underline; decoration: underline}
+a.r3 {color: #000000; text-decoration: none; decoration: none}
+a.r3:hover {color: #008000; text-decoration: none; decoration: none}
+a.link {color: #0010c5;text-decoration: none; !important}
+a.link:hover {color: #008000;text-decoration: underline; !important}
+.msg_head {color:#00f;cursor:pointer;position:relative;border:dotted #a7a7a7;border-width:0 0 .03em 0;}
+.msg_body {margin:.1em 0;padding:.2em .4em;background-color: #ffffff;}
+p#showhide {color: #00f;cursor: pointer;}
+img {margin-bottom:-.15em;margin-right:.3em;}
+table {
+  border:0 solid #aaa;
+  border-collapse:separate;
+  border-spacing:1px;
+  background-color:#92a4d2;
+  margin-left:.2em;
+  width:100%;
+}
+tr {text-align:right;}
+td {
+  background-color:#fff;
+  border:solid #000;
+  border-width:0;
+  padding:.3em .1em;
+  font-size:.9em;
+}
+td.ok {background-color: #FFFFFF;}
+td.warn {background-color: #FF8000;color:#ffffff;}
+td.ko {background-color: #CE0000;color:#ffffff;}
+th {
+  color:#fff;
+  padding:.25em .1em;
+  text-align:center;
+  font-weight:normal;
+  background-image:url('../icons/bg_th.png');
+  background-repeat:repeat-x;
+}
+div.news-panel {float: left; width: 50%;}
+div.server-panel {float: right; width: 50%;}
+div#news {padding-left:.3em;background-color:#fff;height:210px;overflow:auto;border: 0.1em solid #ccc;}
+/* Sortable tables */
+table.sortable th {font-weight: normal;cursor: pointer;}
+div.h-panel {width: 98%;padding:6px 10px 0px 10px;clear: both;}
