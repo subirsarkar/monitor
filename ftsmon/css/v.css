@@ -1,0 +1,53 @@
+/* ------------------- Headings ------------------- */
+h1, h2, h3, h4 {font:bold 1.8em arial,helvetica,sans-serif}
+h1 {
+  color: #fff;
+  background:#d7b9c9; 
+  padding:0px 10px; 
+  border:solid #781351; 
+  border-width:2px 0; 
+  margin:0 0 0.2em; 
+  font-weight:normal; 
+  letter-spacing:1px;
+}
+h2 {
+  font-size:1.3em; 
+  background:#fee3ad; 
+  padding:2px 4px; 
+  border:solid #ffa20f; 
+  border-width:2px 0; 
+  margin-top:1.7em; 
+  clear:both;
+}
+#serv h2 {clear:left}
+h2.off {
+  background:none; 
+  border:0;
+}
+h2.seealso, h3.seealso {
+  background:none; 
+  border:0; 
+  padding:0; 
+  margin-bottom:0.2em; 
+  font:bold 1em verdana,"trebuchet MS",helvetica,sans-serif;
+}
+h2.seealso span, h3.seealso span {
+   background/**/:url(i/colon2.gif) no-repeat 100% 0.5em; 
+   padding-right:3px;
+}
+h3 {
+  font-size:1.15em; 
+  background:#fee9bd; 
+  padding:1px 4px; 
+  border:solid #ffb53f; 
+  border-width:1px 0; 
+  margin-top:1.7em; 
+  clear:left;
+}
+h4 {
+  font-size:1.1em; 
+  border-bottom:1px solid #ffa20f;
+}
+#content h2 a {
+  text-decoration:none
+}
