@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="Storage Information" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/dcachemon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Pools, Space, Precious, dCache" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="refresh" type="text" label="Refresh (mins)" defaultValue="5" />
+    </widget:preferences>
+    <title>T2_IT_Pisa dCache Storage Information</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .StorageInfo img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .StorageInfo a, .StorageInfo a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+    // Global functions
+    function getFooter() 
+    {
+      var thedate = new Date();
+      var txtday = '' + thedate.getDate();
+      if (txtday < 10) 
+        txtday = '0' + txtday;
+      var month = thedate.getMonth() + 1;
+      var txtmonth = '' + month;
+      if (txtmonth < 10) 
+        txtmonth = '0' + month;
+      var txtdate = '<div align="right"><small><i>Last refresh on: <b>'
+                  + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                  + '</b> at <b>'
+                  + thedate.toLocaleTimeString()
+                  + '</b></i></small></div>';
+      return txtdate;
+    }
+    
+    // StorageInfo object to hold all the info
+    var StorageInfo = {};
+    StorageInfo.Site = 'T2_IT_Pisa';
+    StorageInfo.url  = 'http://farmsmon.pi.infn.it/dcachemon/storage.html';
+    function loadPreferences() 
+    {
+      widget.addBody('Getting Preferences ...');
+      
+      // Autorefresh is a body property
+      widget.setAutoRefresh(widget.getInt('refresh'));
+    }
+    // Get the widget Title
+    StorageInfo.getTitle = function() 
+    {
+      widget.addBody("Building widget title ...");
+      var title = "dCache storage at <em>" + this.Site + "</em>";
+      return title;
+    }
+    // Get the legend depending on the type of plot
+    StorageInfo.getLegend = function() 
+    {
+      widget.addBody("Building legend ...");
+      
+      var legend = '<span style="color: green;">Storage';
+      legend += ' @ ' + this.Site + ' (<i>last ' + widget.getInt('refresh') + ' mins</i> )</span>';
+      
+      return legend;
+    }
+    StorageInfo.dataInit = function() 
+    {
+      UWA.Data.getText(
+        StorageInfo.url,
+        StorageInfo.dataProcessor
+      );
+    }
+    StorageInfo.dataProcessor = function(data) 
+    {
+      var b = '<div align="center" style="margin:10px 0px;">' + data + '</div>' 
+            + '<div style="height:50px;background-color:#eee;">' 
+            + StorageInfo.getLegend() + getFooter() + '</div>';
+      widget.setBody(b);
+    }
+    // Defines a function fired everytime that the widget is launched
+    // or that the preferences are modified 
+    widget.onLoad = function() 
+    {
+      // Find preferences and set them
+      widget.addBody('Finding out preferences ...');
+      loadPreferences();
+      
+      // Suppress widget internal padding
+      widget.body.style.padding = "0px 2px";
+      widget.body.addClassName('StorageInfo');
+      
+      // Set the title
+      widget.setTitle(StorageInfo.getTitle());
+      
+      StorageInfo.dataInit();
+    }
+    widget.onRefresh = function()
+    {
+      widget.addBody('Refreshing ...');
+
+      // Find preferences and set them
+      loadPreferences();
+      
+      // Set the title
+      widget.setTitle(StorageInfo.getTitle());
+      
+      StorageInfo.dataInit();
+    }
+    </script>
+  </head>
+  <body>
+    <p>Loading ...</p>
+  </body>
+</html>
+

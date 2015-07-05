@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="CMS Site Readiness Metric" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://lhcweb.pic.es/cms/SiteReadinessReports_new/style-css-reports.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="site"     type="text" label="CMS Site"       defaultValue="T2_IT_Pisa" />
+      <preference name="refresh"  type="text" label="Refresh (mins)" defaultValue="60" />
+    </widget:preferences>
+    <title>CMS Site Status</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .SiteMetric img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .SiteMetric a, .SiteMetric a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+      // Global functions
+      function getFooter() 
+      {
+        var thedate = new Date();
+        var txtday = '' + thedate.getDate();
+        if (txtday < 10) 
+          txtday = '0' + txtday;
+        var month = thedate.getMonth() + 1;
+        var txtmonth = '' + month;
+        if (txtmonth < 10) 
+          txtmonth = '0' + month;
+        var txtdate = '<span><i>Last refresh on:</i> <b>'
+                    + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                    + '</b> at <b>'
+                    + thedate.toLocaleTimeString()
+                    + '</b></span>';
+        return txtdate;
+      }
+      function addRandom(url) {
+        return (url + '?t='+Math.random());
+      }
+      // SiteMetric object to hold all the info
+      var SiteMetric = {};
+      SiteMetric.url = 'http://lhcweb.pic.es/cms/SiteReadinessReports_new/SiteReadinessReport.html';
+      function loadPreferences() 
+      {
+        widget.addBody('Getting Preferences ...');
+        
+        // Autorefresh is a body property
+        widget.setAutoRefresh(widget.getInt('refresh'));
+      }    
+      // Get the widget Title
+      SiteMetric.getTitle = function() 
+      {
+        widget.addBody("Building widget title ...");
+        var site = widget.getValue('site');
+        var title = "CMS Site Readiness Metric for <em>" + site + "</em>";
+        return title;
+      }
+      // Get the legend depending on the type of plot
+      SiteMetric.getLegend = function() 
+      {
+        widget.addBody("Building legend ...");
+        
+        var site = widget.getValue('site');
+        var legend = '<span style="color: green;">Site Readiness Metric for ' + site
+            + ' (<i>update interval: ' + widget.getInt('refresh') + ' mins</i> )</span>';
+        
+        return legend;
+      }
+      SiteMetric.dataInit = function() 
+      {
+        widget.addBody('Fetching data, url: ' + SiteMetric.url + '...');
+        UWA.Data.getText(
+          SiteMetric.url,
+          SiteMetric.dataProcessor
+        );
+      }
+      SiteMetric.dataProcessor = function(data) 
+      {
+        var adiv = document.createElement('div');
+        adiv.setHTML(data);
+
+        var content = '';
+        var site = widget.getValue('site');
+        var rid = 'para-' + site;
+        var pList = adiv.getElementsByTagName('div');
+        for (var i = 0; i < pList.length; ++i) {
+          var p = pList[i];
+          var id = p.getAttribute('id');
+          if (id == rid) {
+            content += p.getHTML();
+            break;
+          }
+        }
+        var b = '<div align="center" style="margin:2px 0px;">' 
+              + '<div style="float:right"><a class="link" style="padding-right:6px;" href="' 
+              + SiteMetric.url + '">Find More &gt;&gt;</a></div>'
+              + '<br/>'
+              + '<div style="margin:10px 0px;" align="center">' + content + '</div>'
+              + '<div style="height:auto;padding-bottom:4px;" align="left">' 
+              + SiteMetric.getLegend() + '<br/>' + getFooter() + '</div></div>';
+        widget.setBody(b);
+      } 
+      // Defines a function fired everytime that the widget is launched
+      // or that the preferences are modified 
+      widget.onLoad = function() 
+      {
+        // Find preferences and set them
+        widget.addBody('Finding out preferences...');
+        loadPreferences();
+        
+        widget.addBody('Building plot urls...');
+      
+        // Suppress widget internal padding
+        widget.body.style.padding = "0px 2px";
+        widget.body.addClassName('SiteMetric');
+        
+        // Set the title
+        widget.setTitle(SiteMetric.getTitle());
+        
+        SiteMetric.dataInit();
+      }    
+      widget.onRefresh = function() 
+      {
+        widget.addBody('Refreshing...');
+
+        // Find preferences and set them
+        loadPreferences();
+        
+        // Set the title
+        widget.setTitle(SiteMetric.getTitle());
+        
+        SiteMetric.dataInit();
+      }
+    </script>
+  </head>
+  <body>
+    <p>Loading...</p>
+  </body>
+</html>
+

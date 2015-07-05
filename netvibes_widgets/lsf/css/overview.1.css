@@ -1,0 +1,57 @@
+body,td,div,p,a,font,span,input,select {
+  font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+  font-size: 10pt;
+}
+h2 {
+  color: #000;
+  background-color: #fff;
+  padding: 4px 0px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: solid #bdbdd5;
+  font-size: 10pt;
+  width: 40%;
+  border-width: 1px 1px 1px 5px;
+  border-top-style: dotted;
+  border-bottom-style: dotted;
+}
+table {
+  border: 0px solid #aaa;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #607b8b;
+}
+caption {
+  color: #000;
+  background-color: #bdbdd5;
+  text-align: center;
+  clear: both;
+  border: 1px solid #a7a7bc;
+  font-weight: normal;
+}
+tr {
+  text-align: right;
+  font-size: 9pt;
+}
+th {
+  color: #fff;
+  background-color: #9191c1;
+  padding: 3px 4px;
+  text-align: center;
+  font-weight: normal;
+}
+td {
+  background-color: #fff;
+  border: solid #000;
+  border-width: 0px;
+  padding: 3px 4px; 
+}
+a.link {
+  color: #0010c5;
+  text-decoration: none; !important *
+  font-size: 8pt;
+}
+a.link:hover {
+  color: #008000;
+  text-decoration: underline; !important
+}

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="Monitor your network" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring, Network, I/O" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://farmsmon.pi.infn.it/lsfmon/css/garr.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="site" type="list" label="Site" defaultValue="T2_IT_Pisa">
+        <option label="T2_IT_Bari" value="T2_IT_Bari" />
+        <option label="T2_IT_LNL"  value="T2_IT_Legnaro" />
+        <option label="T2_IT_Pisa" value="T2_IT_Pisa" />
+        <option label="T2_IT_Rome" value="T2_IT_Rome" />
+      </preference>
+      <preference name="span" type="list" label="Time Span" defaultValue="day">
+        <option label="Daily"   value="day" />
+        <option label="Weekly"  value="week" />
+        <option label="Monthly" value="month" />
+        <option label="Yearly"  value="year" />
+      </preference>
+      <preference name="refresh" type="text" label="Refresh (mins)" defaultValue="10" />
+    </widget:preferences>
+    <title>INFN-T2 Network Monitoring</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .GARRMonitoring img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .GARRMonitoring a, .GARRMonitoring a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+    // Global functions
+    function getFooter() {
+      var thedate = new Date();
+      var txtday = '' + thedate.getDate();
+      if (txtday < 10) 
+        txtday = '0' + txtday;
+      var month = thedate.getMonth() + 1;
+      var txtmonth = '' + month;
+      if (txtmonth < 10) 
+        txtmonth = '0' + month;
+      var txtdate = '<div align="right"><small><i>Last update on: <b>'
+                  + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                  + '</b> at <b>'
+                  + thedate.toLocaleTimeString()
+                  + '</b></i></small></div>';
+      return txtdate;
+    }
+    function addRandom(url) {
+      return (url + '?t='+Math.random());
+    }
+    
+    // A way to convert from squid names to CMS names
+    // RTG_ROMA.garr.net/rtg-infnrmi.rm.garr.net.html
+    var servermap = {
+          'T2_IT_Bari': ['RT.BA1',   'infnba'],
+       'T2_IT_Legnaro': ['RT.PI1',   'infnpi-grid'],
+          'T2_IT_Pisa': ['RT.PI1',   'infnpi-grid'],
+          'T2_IT_Rome': ['RTG_ROMA', 'rtg-infnrmi.rm']       
+    };
+    var imagemap = {
+        'day': 0,
+       'week': 1,
+      'month': 2,
+       'year': 3
+    };
+    // GARRMonitoring object to hold all the info
+    var GARRMonitoring = {};
+    GARRMonitoring.Site     = 'T2_IT_Pisa';
+    GARRMonitoring.TimeSpan = 'day';
+    GARRMonitoring.BaseURL  = 'http://www.noc.garr.it/mrtg/';
+    
+    function loadPreferences() {
+      widget.addBody('Getting Preferences ...');
+      GARRMonitoring.Site     = widget.getValue('site');
+      GARRMonitoring.TimeSpan = widget.getValue('span');
+      
+      // Autorefresh is a body property
+      widget.setAutoRefresh(widget.getInt('refresh'));
+    }
+    
+    // Get the widget Title
+    GARRMonitoring.getTitle = function() {
+      widget.addBody("Building widget title ...");
+      var title = "GARR Network Monitoring for <em>" + this.Site + "</em>";
+      return title;
+    }
+    // Get the legend depending on the type of plot
+    GARRMonitoring.getLegend = function() {
+      widget.addBody("Building legend ...");
+      
+      var legend = '<span><font style="color: green;">Bits/second</font>';
+      legend += ' @ ' + this.Site + ' (<i>last</i> ' + this.TimeSpan + ')';
+      
+      return legend;
+    }
+    GARRMonitoring.dataInit = function() {
+      GARRMonitoring.url = this.BaseURL + servermap[this.Site][0] + '.garr.net/' 
+                                        + servermap[this.Site][1] + '.garr.net'
+                                        + '.html';
+      UWA.Data.getText(
+        GARRMonitoring.url,
+        GARRMonitoring.dataProcessor
+      );
+    }
+    GARRMonitoring.dataProcessor = function(text) {
+      var img_name = servermap[GARRMonitoring.Site][1] + '.garr.net-' + GARRMonitoring.TimeSpan + '.png';
+      var img_url  = GARRMonitoring.BaseURL + servermap[GARRMonitoring.Site][0] + '.garr.net/' + img_name;
+
+      var ndiv = document.createElement('div');
+      ndiv.innerHTML = text;
+
+      var index = imagemap[GARRMonitoring.TimeSpan];      
+      var div = ndiv.getElementsByClassName('graph')[index];
+      var img = div.getElementsByTagName('img')[0];
+      img.src = addRandom(img_url);
+      img.setAttribute('width', '98%');
+
+      var b = '<div class="plot" align="center">' + div.innerHTML + '</div>' 
+            + '<div style="height:40px;background-color:#eee;">' 
+            + GARRMonitoring.getLegend() + getFooter() + '</div>';
+
+      widget.setBody(b);
+    } 
+    // Defines a function fired everytime that the widget is launched
+    // or that the preferences are modified 
+    widget.onLoad = function() {
+      // Find preferences and set them
+      widget.addBody('Finding out preferences...');
+      loadPreferences();
+      
+      widget.addBody('Building plot urls...');
+
+      // Suppress widget internal padding
+      widget.body.style.padding = "0";
+      widget.body.addClassName('GARRMonitoring');
+      
+      // Set the title
+      widget.setTitle(GARRMonitoring.getTitle());
+      
+      GARRMonitoring.dataInit();
+    }
+    widget.onRefresh = function() {
+      widget.addBody('Refreshing...');
+      // Find preferences and set them
+      loadPreferences();
+      
+      // Set the title
+      widget.setTitle(GARRMonitoring.getTitle());
+      
+      GARRMonitoring.dataInit();
+    }
+    </script>
+  </head>
+
+  <body>
+    <p>
+      Loading...
+    </p>
+  </body>
+</html>
+

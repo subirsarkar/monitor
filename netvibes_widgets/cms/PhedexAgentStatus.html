@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="PhEDEx Agent Status" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://farmsmon.pi.infn.it/lsfmon/css/phedex.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+
+    <widget:preferences>
+      <preference name="site"     type="text" label="CMS Site" defaultValue="T2_IT_Pisa" />
+      <preference name="instance" type="list" label="Instance" defaultValue="prod">
+        <option label="Prod"  value="prod" />
+        <option label="Debug" value="debug" />
+        <option label="Dev"   value="test" />
+      </preference>
+      <preference name="refresh"  type="text" label="Refresh (mins)" defaultValue="10" />
+    </widget:preferences>
+    <title>Site PhEDEx Agent Status Status</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .PhEDExAgentStatus img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .PhEDExAgentStatus a, .PhEDExAgentStatus a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+      // Global functions
+      function getFooter() 
+      {
+        var thedate = new Date();
+        var txtday = '' + thedate.getDate();
+        if (txtday < 10) 
+          txtday = '0' + txtday;
+        var month = thedate.getMonth() + 1;
+        var txtmonth = '' + month;
+        if (txtmonth < 10) 
+          txtmonth = '0' + month;
+        var txtdate = '<span><i>Last refresh on:</i> <b>'
+                    + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                    + '</b> at <b>'
+                    + thedate.toLocaleTimeString()
+                    + '</b></span>';
+        return txtdate;
+      }
+      // PhEDExAgentStatus object to hold all the info
+      var PhEDExAgentStatus = {};
+      PhEDExAgentStatus.Site = 'T2_IT_Pisa';
+
+      var PROXY_URL = 'http://nvmodules.netvibes.com/proxy/ajax';
+      var BASE_URL = 'https://cmsweb.cern.ch/phedex';
+      function loadPreferences() 
+      {
+        widget.addBody('Getting Preferences ...');
+        
+        PhEDExAgentStatus.Site = widget.getValue('site');
+        PhEDExAgentStatus.url = BASE_URL + '/' +  widget.getValue('instance') + '/Components::Status';
+      
+        // Autorefresh is a body property
+        widget.setAutoRefresh(widget.getInt('refresh'));
+      }    
+      // Get the widget Title
+      PhEDExAgentStatus.getTitle = function() 
+      {
+        widget.addBody("Building widget title ...");
+        var title = 'PhEDEx Agent Status for <em>'
+                  + this.Site + '</em> in ' + widget.getValue('instance') + ' instance';
+        return title;
+      }
+      // Get the legend depending on the type of plot
+      PhEDExAgentStatus.getLegend = function() 
+      {
+        widget.addBody("Building legend ...");
+        
+        var legend = '<span style="color: green;">Site Status';
+        legend += ' @ ' + this.Site + ' (<i>last ' + widget.getInt('refresh') + ' mins</i> )</span>';
+        
+        return legend;
+      }
+      PhEDExAgentStatus.dataInit = function() 
+      {
+        var url = PROXY_URL + '?url=' + encodeURIComponent(PhEDExAgentStatus.url);
+        widget.addBody('Fetching data, url: ' + url + '...');
+        UWA.Data.getText(
+          url,
+          PhEDExAgentStatus.dataProcessor
+        );
+      }
+      PhEDExAgentStatus.dataProcessor = function(data) 
+      {
+        var adiv = document.createElement('div');
+        adiv.innerHTML = data;
+        var rows = adiv.getElementsByTagName('table')[3]
+                       .getElementsByTagName('tbody')[0]
+                       .getElementsByTagName('tr');
+        var content = '<table><tbody>';
+        for (var i = 0; i < rows.length; ++i) {
+          var row = rows[i];
+          if (i == 1) {
+            var html = row.innerHTML;
+            html = html.replace(/File/g, '');
+            content += '<tr>' + html + '</tr>';
+            continue;
+          }
+
+          var el = row.getElementsByTagName('td')[0];
+          if (el == undefined) continue;
+          var sitename = el.innerHTML;
+          if (sitename.indexOf(PhEDExAgentStatus.Site) > -1) {
+            var items = row.getElementsByTagName('td');
+            for (var j = 1; j < items.length; ++j) {
+              var item = items[j];
+              var message = item.innerHTML.trim();
+              var style = '#ccffcc';
+              if (message.indexOf('&nbsp;') == 0) 
+                style = '#f0f0f0';
+              else if (message.indexOf('UP') != 0) 
+                style = '#ff9e9e';
+              item.setStyle('background-color', style);
+            }
+            content += '<tr>' + row.innerHTML + '</tr>';
+            break; 
+          }
+        }
+        content += '</tbody></table>';
+        var body = '<div align="center" style="margin:2px 0px;">' 
+              + '<div style="float:right"><a class="link" href="' 
+              + PhEDExAgentStatus.url + '">Find More &gt;&gt;</a></div>'
+              + '<br/>'
+              + '<div class="content">' + content + '</div>' 
+              + '<div align="left" class="footer">' 
+              + PhEDExAgentStatus.getLegend() + '<br/>' + getFooter() + '</div></div>';
+        widget.setBody(body);
+      } 
+      // Defines a function fired everytime that the widget is launched
+      // or that the preferences are modified 
+      widget.onLoad = function() 
+      {
+        // Find preferences and set them
+        widget.addBody('Finding out preferences...');
+        loadPreferences();
+        
+        widget.addBody('Building plot urls...');
+      
+        // Suppress widget internal padding
+        widget.body.style.padding = "0px 2px";
+        widget.body.addClassName('PhEDExAgentStatus');
+        
+        // Set the title
+        widget.setTitle(PhEDExAgentStatus.getTitle());
+        
+        PhEDExAgentStatus.dataInit();
+      }    
+      widget.onRefresh = function() 
+      {
+        widget.addBody('Refreshing...');
+
+        // Find preferences and set them
+        loadPreferences();
+        
+        // Set the title
+        widget.setTitle(PhEDExAgentStatus.getTitle());
+        
+        PhEDExAgentStatus.dataInit();
+      }
+    </script>
+  </head>
+  <body>
+    <p>Loading...</p>
+  </body>
+</html>
+

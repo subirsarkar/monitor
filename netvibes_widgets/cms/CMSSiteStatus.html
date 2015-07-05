@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="CMS Site Status" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="site"     type="text" label="CMS Site"       defaultValue="T2_IT_Pisa" />
+      <preference name="refresh"  type="text" label="Refresh (mins)" defaultValue="20" />
+    </widget:preferences>
+    <title>CMS Site Status</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .CMSSiteStatus img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .CMSSiteStatus a, .CMSSiteStatus a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+      // Global functions
+      function getFooter() 
+      {
+        var thedate = new Date();
+        var txtday = '' + thedate.getDate();
+        if (txtday < 10) 
+          txtday = '0' + txtday;
+        var month = thedate.getMonth() + 1;
+        var txtmonth = '' + month;
+        if (txtmonth < 10) 
+          txtmonth = '0' + month;
+        var txtdate = '<div align="right"><small><i>Last update on: <b>'
+                    + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                    + '</b> at <b>'
+                    + thedate.toLocaleTimeString()
+                    + '</b></i></small></div>';
+        return txtdate;
+      }
+      function addRandom(url) {
+        return (url + '?t='+Math.random());
+      }
+      // CMSSiteStatus object to hold all the info
+      var CMSSiteStatus = {};
+      CMSSiteStatus.Site = 'T2_IT_Pisa';
+      var BASE_URL = 'http://lxarda16.cern.ch/dashboard/request.py';
+      function loadPreferences() 
+      {
+        widget.addBody('Getting Preferences ...');
+        
+        CMSSiteStatus.Site = widget.getValue('site');
+        CMSSiteStatus.url = BASE_URL + '/historicalserviceavailability?sites='
+             + CMSSiteStatus.Site 
+             + '&services=all&timeRange=last24';
+      
+        // Autorefresh is a body property
+        widget.setAutoRefresh(widget.getInt('refresh'));
+      }    
+      // Get the widget Title
+      CMSSiteStatus.getTitle = function() 
+      {
+        widget.addBody("Building widget title ...");
+        var title = "CMS Site Status for <em>" + this.Site + "</em>";
+        return title;
+      }
+      // Get the legend depending on the type of plot
+      CMSSiteStatus.getLegend = function() 
+      {
+        widget.addBody("Building legend ...");
+        
+        var legend = '<span style="color: green;">Site Status';
+        legend += ' @ ' + this.Site + ' (<i>last ' + widget.getInt('refresh') + ' mins</i> )</span>';
+        
+        return legend;
+      }
+      CMSSiteStatus.dataInit = function() 
+      {
+        widget.addBody('Fetching data, url: ' + CMSSiteStatus.url + '...');
+        UWA.Data.getText(
+          CMSSiteStatus.url,
+          CMSSiteStatus.dataProcessor
+        );
+      }
+      CMSSiteStatus.dataProcessor = function(data) 
+      {
+        var adiv = document.createElement('div');
+        adiv.innerHTML = data;
+        var src = adiv.getElementsByTagName('img')[4].getAttribute('src');
+        src = BASE_URL + '/' + src;
+        var b = '<div style="margin:20px 0px;" align="center"><a href="' + CMSSiteStatus.url + '">'
+              + '<img width="100%" src="' + addRandom(src) + '"></img></a></div>' 
+              + '<div style="height:60px;">' + CMSSiteStatus.getLegend() + getFooter() + '</div>';
+        widget.setBody(b);
+      } 
+      // Defines a function fired everytime that the widget is launched
+      // or that the preferences are modified 
+      widget.onLoad = function() 
+      {
+        // Find preferences and set them
+        widget.addBody('Finding out preferences...');
+        loadPreferences();
+        
+        widget.addBody('Building plot urls...');
+      
+        // Suppress widget internal padding
+        widget.body.style.padding = "0px 2px";
+        widget.body.addClassName('CMSSiteStatus');
+        
+        // Set the title
+        widget.setTitle(CMSSiteStatus.getTitle());
+        
+        CMSSiteStatus.dataInit();
+      }    
+      widget.onRefresh = function() 
+      {
+        widget.addBody('Refreshing...');
+
+        // Find preferences and set them
+        loadPreferences();
+        
+        // Set the title
+        widget.setTitle(CMSSiteStatus.getTitle());
+        
+        CMSSiteStatus.dataInit();
+      }
+    </script>
+  </head>
+  <body>
+    <p>Loading...</p>
+  </body>
+</html>
+

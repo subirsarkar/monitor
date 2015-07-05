@@ -1,0 +1,73 @@
+body,td,div,p,a,font,span,input,select {
+  font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+}
+body {
+  background-color: #fff;
+  font-size: 7pt;
+}
+table {
+  border: 0px solid #aaa;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #607b8b;
+  margin-left: 2px;
+  width: 60%;
+}
+caption {
+  color: #000;
+  background-color: #bdbdd5;
+  text-align: center;
+  clear: both;
+  border: 1px solid #a7a7bc;
+  font-weight: bold;
+}
+tr {
+  text-align: right;
+}
+th {
+  color: #fff;
+  background-color: #9191c1;
+  padding: 4px 2px;
+  text-align: center;
+}
+td {
+  background-color: #fff;
+  border: solid #000;
+  border-width: 0px;
+  padding: 4px 2px;
+}
+a {
+  color: #0010c5; 
+  text-decoration: underline; !important *
+  padding: 2px 0;
+}
+a:hover {
+  color: #008000; 
+  text-decoration: underline; !important
+}
+a.link {
+  color: #0010c5;
+  text-decoration: none; !important *
+}
+a.link:hover {
+  color: #008000;
+  text-decoration: underline; !important
+}
+label.instance {
+  margin-left: 5%;
+  width: 130px;
+  background-color: #c3b5da;
+  padding: 2px 0;
+}
+div.header {
+  margin-top: 10px;
+}
+div.content {
+  margin-top: 10px;
+}
+div.footer {
+  margin-top: 10px;
+  background-color:#eee;
+  height:auto;
+  padding-bottom: 4px;
+}

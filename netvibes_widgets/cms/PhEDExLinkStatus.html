@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="PhEDEx Agent Status" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://farmsmon.pi.infn.it/lsfmon/css/phedex.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="site"     type="text" label="CMS Site" defaultValue="T2_IT_Pisa" />
+      <preference name="linktype" type="list" label="List Type" defaultValue="down">
+        <option label="Upload" value="up" />
+        <option label="Download"  value="down" />
+      </preference>
+      <preference name="refresh"  type="text" label="Refresh (mins)" defaultValue="10" />
+    </widget:preferences>
+    <title>Site PhEDEx Agent Status Status</title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .PhEDExLinkStatus img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .PhEDExLinkStatus a, .PhEDExLinkStatus a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+      // Global functions
+      function getFooter() 
+      {
+        var thedate = new Date();
+        var txtday = '' + thedate.getDate();
+        if (txtday < 10) 
+          txtday = '0' + txtday;
+        var month = thedate.getMonth() + 1;
+        var txtmonth = '' + month;
+        if (txtmonth < 10) 
+          txtmonth = '0' + month;
+        var txtdate = '<div align="left"><small><i>Last refresh on: <b>'
+                    + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                    + '</b> at <b>'
+                    + thedate.toLocaleTimeString()
+                    + '</b></i></small></div>';
+        return txtdate;
+      }
+      // PhEDExLinkStatus object to hold all the info
+      var PhEDExLinkStatus = {};
+      PhEDExLinkStatus.Site = '';
+      PhEDExLinkStatus.pdata = '';
+      var PROXY_URL = 'http://nvmodules.netvibes.com/proxy/ajax';
+      PhEDExLinkStatus.BASE_URL = 'https://cmsweb.cern.ch/phedex/prod/Components::Links?';
+      function loadPreferences() 
+      {
+        widget.addBody('Getting Preferences ...');
+        
+        // Autorefresh is a body property
+        widget.setAutoRefresh(widget.getInt('refresh'));
+      }    
+      // Get the widget Title
+      PhEDExLinkStatus.getTitle = function() 
+      {
+        widget.addBody("Building widget title ...");
+        var site = widget.getValue('site');
+        var linktype = (widget.getValue('linktype') == 'down') ? 'Download' : 'Upload';
+        var title = site + ' ' + linktype + ' Link Status';
+        return title;
+      }
+      // Get the legend depending on the type of plot
+      PhEDExLinkStatus.getLegend = function() 
+      {
+        widget.addBody("Building legend ...");
+        
+        var legend = '<span style="color: green;">Site Status';
+        var site = widget.getValue('site');
+        legend += ' @ ' + site + ' (<i>last ' + widget.getInt('refresh') + ' mins</i> )</span>';
+        
+        return legend;
+      }
+      PhEDExLinkStatus.dataInit = function() 
+      {
+        var site = widget.getValue('site');
+        var linktype = widget.getValue('linktype');
+        var from_filter = (linktype == 'down') ? 'T*' : site;
+        var to_filter   = (linktype == 'down') ? site : 'T*';
+        
+        var url = PhEDExLinkStatus.BASE_URL 
+                        + 'from_filter=' + from_filter 
+                        + '&andor=and&' 
+                        + 'to_filter=' + to_filter
+                        + '&Update=Update#';
+        var furl = PROXY_URL + '?url=' + encodeURIComponent(url);
+        widget.addBody('Fetching data, url: ' + furl + '...');
+        UWA.Data.getText(furl, PhEDExLinkStatus.dataProcessor);
+      }
+      PhEDExLinkStatus.dataProcessor = function(data) 
+      {
+        var linktype = widget.getValue('linktype');
+        (linktype == 'down') ? PhEDExLinkStatus.processDownLink(data)
+                             : PhEDExLinkStatus.processUpLink(data);
+      } 
+      PhEDExLinkStatus.processDownLink = function(data)
+      {
+        var adiv = document.createElement('div');
+        adiv.innerHTML = data;
+
+        var rows = adiv.getElementsByTagName('table')[1]
+                       .getElementsByTagName('tbody')[0]
+                       .getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; ++i) {
+          var row = rows[i];
+          var el = row.getElementsByTagName('td')[1];
+          if (el == undefined) continue;
+ 
+          var odiv = el.getElementsByTagName('div')[0];
+          var pList = odiv.getElementsByTagName('p');
+          var message = '';
+          for (var j = 0; j < pList.length; ++j) 
+            message += pList[j].getText() + " / ";
+          el.setStyle('background-color', odiv.getStyle('background-color'));
+          el.setAttribute('title', message);
+          el.setHTML('');
+        }
+        var table = adiv.getElementsByTagName('table')[1];
+        var content = '<table>' + table.innerHTML + '</table>';
+        var body = '<div align="center" style="height:300px;margin-top:5px;overflow:auto;">' 
+              + '<div style="float:right"><a class="link" href="'
+              + PhEDExLinkStatus.BASE_URL + '">Find More &gt;&gt;</a></div>'
+              + '<br/>'
+              + '<div>' + content + '</div>' 
+              + '<div align="left" class="footer">' 
+              + PhEDExLinkStatus.getLegend() + getFooter() + '</div>';
+        widget.setBody(body);
+      }
+      PhEDExLinkStatus.processUpLink = function(data)
+      {
+        var adiv = document.createElement('div');
+        adiv.innerHTML = data;
+
+        var thList = adiv.getElementsByTagName('table')[1]
+                         .getElementsByTagName('thead')[0]
+                         .getElementsByTagName('tr')[0]
+                         .getElementsByTagName('th');
+        thList[0].setHTML("To Node &darr From Node &rarr");
+        var tdList = adiv.getElementsByTagName('table')[1]
+                         .getElementsByTagName('tbody')[0]
+                         .getElementsByTagName('tr')[0]
+                         .getElementsByTagName('td');
+        var aTable = document.createElement('table');
+
+        var thead = document.createElement('thead');
+        var row = document.createElement('tr');       
+        var cell1  = document.createElement('th');
+        var tnode1 = document.createTextNode(thList[0].getHTML());
+        cell1.appendChild(tnode1);
+        row.appendChild(cell1);        
+
+        var cell2  = document.createElement('th');
+        var tnode2 = document.createTextNode(tdList[0].getHTML());
+        cell2.appendChild(tnode2);
+        row.appendChild(cell2);
+        thead.appendChild(row);
+        aTable.appendChild(thead);    
+        
+        var tbody = document.createElement('tbody');
+        for (var i = 1; i < thList.length; ++i) {
+          var row = document.createElement('tr');      
+
+          var cell1  = document.createElement('td');
+          var tnode1 = document.createTextNode(thList[i].getHTML());
+          cell1.appendChild(tnode1);
+          row.appendChild(cell1);
+
+          var cell2  = document.createElement('td');
+          var tnode2 = document.createTextNode('');
+          cell2.appendChild(tnode2);
+          var el = tdList[i];
+          if (el != null) {
+            var odiv = el.getElementsByTagName('div')[0];
+            var message = '';
+            if (odiv != null) {
+              cell2.setStyle('background-color', odiv.getStyle('background-color'));
+              var pList = odiv.getElementsByTagName('p');
+              for (var j = 0; j < pList.length; ++j) 
+                 message += pList[j].getText() + " / ";
+            }
+            cell2.setAttribute('title', message);
+          }
+
+          row.appendChild(cell2);
+          tbody.appendChild(row);
+        }
+        aTable.appendChild(tbody);    
+
+        var content = '<table>' + aTable.getHTML() + '</table>';
+        var body = '<div align="center" style="height:300px;margin-top:5px;overflow:auto;">' 
+              + '<div style="float:right"><a class="link" href="'
+              + PhEDExLinkStatus.BASE_URL + '">Find More &gt;&gt;</a></div>'
+              + '<br/>'
+              + '<div>' + content + '</div>' 
+              + '<div align="left" class="footer">' 
+              + PhEDExLinkStatus.getLegend() + getFooter() + '</div>';
+        widget.setBody(body);
+      }
+      // Defines a function fired everytime that the widget is launched
+      // or that the preferences are modified 
+      widget.onLoad = function() 
+      {
+        // Find preferences and set them
+        widget.addBody('Finding out preferences...');
+        loadPreferences();
+        
+        widget.addBody('Building plot urls...');
+      
+        // Suppress widget internal padding
+        widget.body.style.padding = "0px 2px";
+        widget.body.addClassName('PhEDExLinkStatus');
+        
+        // Set the title
+        widget.setTitle(PhEDExLinkStatus.getTitle());
+        
+        PhEDExLinkStatus.dataInit();
+      }    
+      widget.onRefresh = function() 
+      {
+        widget.addBody('Refreshing...');
+
+        // Find preferences and set them
+        loadPreferences();
+        
+        // Set the title
+        widget.setTitle(PhEDExLinkStatus.getTitle());
+        
+        PhEDExLinkStatus.dataInit();
+      }
+    </script>
+  </head>
+  <body>
+    <p>Loading...</p>
+  </body>
+</html>
+

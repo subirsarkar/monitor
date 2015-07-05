@@ -1,0 +1,43 @@
+body {
+  background-color: #ffffff;
+  font-size: 9pt;
+}
+div.plot {
+  margin-bottom: 20px;
+}
+div.plot h2 {
+  font-size: 9pt;
+  color: #000;
+  background-color: #fff;
+  padding: 4px 0px;
+  margin: 5px auto;
+  text-align: center;
+  border: solid #bdbdd5;
+  border-width: 1px 6px 1px 16px;
+  width: 200px;
+}
+div.plot img {
+  margin-bottom: 7px;
+  height: 100px;
+}
+div.plot table {
+  border: 0px solid #000;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #bdbdd5;
+  width: 95%;
+}
+div.plot table td {
+  font-size: 7pt;
+  text-align: center;
+  background-color: #fff;
+  border: solid #000;
+  border-width: 0px;
+  padding: 1px 1px;
+}
+div.plot table .in th {
+  color: #00cc00;
+}
+div.plot table .out th {
+  color: #0000ff;
+}

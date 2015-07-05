@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <head>
+    <meta name="author" content="Subir Sarkar" />
+    <meta name="description" content="Batch System Monitor" />
+    <meta name="website" content="http://farmsmon.pi.infn.it/lsfmon" />
+    <meta name="version" content="0.1" />
+    <meta name="keywords" content="Monitoring, LSF" />
+    <meta name="thumbnail" content="http://cern.ch/iglezh/widgets/CMSSquidMonitoring.png" />
+    <meta name="apiVersion" content="1.0" />
+    <meta name="debugMode" content="false" />
+    <link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://farmsmon.pi.infn.it/lsfmon/css/overview.1.css" />
+    <script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
+    <widget:preferences>
+      <preference name="SiteName" type="text" label="CMS Site Name"  defaultValue="T2_IT_Pisa" />
+      <preference name="refresh"  type="text" label="Refresh (mins)" defaultValue="20" />
+    </widget:preferences>
+    <title>CMS Physics Group Space Usage </title>
+    <link rel="icon" type="image/x-icon" href="http://cms.cern.ch/favicon.ico" />
+    <style type="text/css" media="screen">
+      .GroupUsage img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+      }
+      .GroupUsage a, .GroupUsage a:hover {
+        border: none;
+      }
+    </style>
+    <script type="text/javascript">
+    // Global functions
+    function getFooter() {
+      var thedate = new Date();
+      var txtday = '' + thedate.getDate();
+      if (txtday < 10) 
+        txtday = '0' + txtday;
+      var month = thedate.getMonth() + 1;
+      var txtmonth = '' + month;
+      if (txtmonth < 10) 
+        txtmonth = '0' + month;
+      var txtdate = '<span><i>Last refresh on:</i> <b>'
+                  + txtday + '/' + txtmonth + '/' + thedate.getFullYear()
+                  + '</b> at <b>'
+                  + thedate.toLocaleTimeString()
+                  + '</b></span>';
+      return txtdate;
+    }   
+    // GroupUsage object to hold all the info
+    var GroupUsage = {};
+    GroupUsage.Site = 'T2_IT_Pisa';
+    var PROXY_URL = 'http://nvmodules.netvibes.com/proxy/ajax';
+    GroupUsage.baseUrl = 'https://cmsweb.cern.ch/phedex/prod/Reports::SiteUsage?';
+    function loadPreferences() {
+      widget.addBody('Getting Preferences ...');
+      GroupUsage.Site = widget.getValue('SiteName');
+
+      // Autorefresh is a body property
+      widget.setAutoRefresh(widget.getInt('refresh'));
+    }    
+    // Get the widget Title
+    GroupUsage.getTitle = function() {
+      widget.addBody("Building widget title ...");
+      var title = "Group Space Usage at <em>" + this.Site + "</em>";
+      return title;
+    }
+    // Get the legend depending on the type of plot
+    GroupUsage.getLegend = function() {
+      widget.addBody("Building legend ...");
+      
+      var legend = '<span style="color: green;">CMS Group Space';
+      legend += '@' + this.Site + ' (<i>updated every ' + widget.getInt('refresh') + ' mins</i> )</span>';
+      
+      return legend;
+    }
+    GroupUsage.dataInit = function() {
+      var url = PROXY_URL + '?url=' 
+              + encodeURIComponent(GroupUsage.baseUrl + 'node=' + GroupUsage.Site + '#');
+      widget.addBody('Fetching data, url: ' + url + '...');
+      UWA.Data.getText(
+        url,
+        GroupUsage.dataProcessor
+      );
+    }
+    GroupUsage.dataProcessor = function(text) {
+      var adiv = document.createElement('div');
+      adiv.innerHTML = text;
+
+      var subscribedData = adiv.getElementsByClassName('data')[0].innerHTML;
+      var sourceData = adiv.getElementsByClassName('data')[2].innerHTML;
+      var b = '<div style="margin:20px 0px;" align="center"><table width="auto">'+ subscribedData + '</table></div>' 
+            + '<div style="margin:20px 0px;" align="center"><table width="auto">'+ sourceData + '</table></div>' 
+            + '<div style="background-color:#eee;height:60px;">' 
+            + GroupUsage.getLegend() 
+            + '<br/>' + getFooter() + '</div>';
+      widget.setBody(b);
+    } 
+    // Defines a function fired everytime that the widget is launched
+    // or that the preferences are modified 
+    widget.onLoad = function() {
+      // Find preferences and set them
+      widget.addBody('Finding out preferences...');
+      loadPreferences();
+      
+      widget.addBody('Building plot urls...');
+
+      // Suppress widget internal padding
+      widget.body.style.padding = "0px 2px";
+      widget.body.addClassName('GroupUsage');
+      
+      // Set the title
+      widget.setTitle(GroupUsage.getTitle());
+      
+      GroupUsage.dataInit();
+    }    
+    widget.onRefresh = function() {
+      widget.addBody('Refreshing...');
+
+      // Find preferences and set them
+      loadPreferences();
+      
+      // Set the title
+      widget.setTitle(GroupUsage.getTitle());
+      
+      GroupUsage.dataInit();
+    }
+    </script>
+  </head>
+
+  <body>
+    <p>
+      Loading...
+    </p>
+  </body>
+</html>
