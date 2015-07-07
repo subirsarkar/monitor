@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+   "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head>
+<title>TAC Monitor</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="css, stylesheets, form" />
+<link rel="stylesheet" type="text/css" href="/tacmon/css/v.css" />
+<link rel="stylesheet" type="text/css" href="/tacmon/css/tab-view.css" />
+<script type="text/javascript" src="/tacmon/js/tab-view.js"></script>
+<script type="text/javascript" src="/tacmon/js/http_request.js"></script> 
+<link rel="stylesheet" type="text/css" href="/tacmon/css/tooltip.css" />
+<style type="text/css">
+
+body {
+  background-color: #afd0ed;
+  font-family: sans-serif;
+}
+form { 
+  color: #000; 
+  font-family: sans-serif;
+  font-size: 10pt; 
+  font-weight: normal;
+}
+
+div {
+  overflow: hidden;
+}
+img {
+  margin: 0px 0px 5px 5px;
+}
+label {
+  font-weight: normal;
+  padding-top: 1%;
+  margin-right: 0.5%;
+}
+fieldset {
+  border: 1px solid #919b9c;
+  padding: 3px 5px;
+}
+legend {
+  color: #000;
+  padding: 0px 1px;
+  font-weight: normal;
+}
+select {
+  border: 1px solid #000;
+  scrollable: yes;
+  overflow: auto;
+}
+button {
+  background-image: url('/tacmon/images/marble.png');
+  border: 1px outset;
+  color: #000;
+}
+input[type="checkbox"] {
+  border: 1px inset;
+}
+input[type="radio"] {
+  border: 10px inset;
+  font-size: 11pt; 
+  font-weight: bold;
+  padding: 1% 1%;
+}
+input[type="text"] {
+  font-weight: normal;
+  font-size: 11pt; 
+}
+input[type="image"] {
+  background-image: url('/tacmon/images/lmarble.png');
+  padding: 0.5%;
+  border: 1px outset;
+  color: #000;
+  padding-left: 0.5%;
+  margin-top: 1.0%;
+  margin-bottom: -1%;
+}
+input[type="submit"] {
+  background-image: url('/tacmon/images/lmarble.png');
+  border: 1px outset;
+  color: #000;
+}
+br {
+  clear: left;
+}
+table {
+  border: 0px solid #bdbdd5;
+  border-collapse: separate;
+  border-spacing: 1px 
+}
+caption {
+  font-size: 11pt;
+  color: #000;
+  background-color: #bdbdd5;
+  text-align: center;
+  clear: both;
+  border: 1px solid #a7a7bc;
+  font-weight: bold;
+}
+tr {
+  background-color: #eee;
+ text-align: right;
+}
+th {
+  background-color: #bdbdd5;
+  padding: 3px 3px;
+}
+td {
+  background-color: #eee;
+  border: solid #000;
+  border-width: 0px;
+  padding: 3px 3px;
+}
+.tdl {
+  width: 15%;
+  text-align: right;
+  padding: 4px 3px;
+}
+.tdr {
+  width: 85%;
+  text-align: left;
+  background-color: #fff;
+}
+
+P.textarea {
+  background-color: #fff;
+  color: #000;
+  border: 1px inset;
+  width: 100%;
+  scrollable: yes;
+  overflow: auto;
+  font-family: monospace;
+}
+P.numberfield {
+  color: #000;
+  border: 0px inset;
+  width: 100%;
+  scrollable: yes;
+  overflow: auto;
+}
+P#commentid 
+{
+  height: 135px;
+}
+PRE.textarea {
+  background-color: #fff;
+  color: #000;
+  border: 1px inset;
+  width: 100%;
+  scrollable: yes;
+  overflow: auto;
+}
+P#localrawid,P#localedmid,P#castorrawid,P#castoredmid
+{
+  height: 438px;
+  margin-top:0%;
+  margin-bottom:0%;
+  white-space:pre;
+}
+P#dbsrawid,P#dbsrecoid 
+{
+  height: 460px;
+  margin-top:0%;
+  margin-bottom:0%;
+  white-space:pre;
+}
+</style>
+</head>
+
+<body>
+<div id="dhtmltooltip"></div>
+<script type="text/javascript" src="/tacmon/js/tooltip.js"></script>
+<form class="form" name="Form1" method="GET" action="javascript:void%200">
+  <div style="width:13%;height=100%;float:left;">
+     <fieldset>
+       <legend>Run</legend>
+       <select style="width:80%;margin-top:-1.0;margin-bottom:1%;"
+               name="dettag"
+               id="dettagid"
+               onchange="RequestRunList();">
+          <option value="all">All Detectors</option>
+       </select>
+       <input name="refreshrunbutton"
+              id="refreshruns"
+              value="reload"
+              style="height:2%;padding:0.2% 0.2%;
+                     margin-top:1%; margin-left:0%;margin-bottom:-2.4%;margin-right:0%;"
+              onclick="RequestRunList();"
+              type="image"
+              src="/tacmon/images/reload.png">
+       </input>
+       <select size=30
+               style="width:100%;font-size:9pt;"
+               name="runlist"
+               id="runlistid"
+               onDblClick="RequestRunInfo();">
+       </select>
+       <label class="label"
+              id="entries"
+              style="text-align:right;padding-right:1%;">
+           0
+       </label>
+       <label class="label"
+              style="text-align:right;margin-right:1%;">
+           Entries
+       </label>
+     </fieldset>
+  </div>
+  <div style="width:87%;height=100%;float:right;">
+    <fieldset style="padding: 2px 5px;">
+    <legend style="padding-bottom:-1%;">Info</legend>
+    <div id="progressbar" style="float:right;margin-bottom:-0.4%;margin-left:2%;margin-right:2%;visibility:hidden">
+      <img id="loadingid"
+           src="/tacmon/images/loading.gif"
+           style="height:15px;margin-bottom:-3px;">
+      </img>
+      <label class="label"
+             style="text-align:left;margin-top:-2%;margin-left:0%;">
+          Retrieving
+      </label>
+      <label class="label" id="datatypeid"
+             style="text-align:left;margin-top:-2%;margin-left:0%;">
+      </label>
+    </div> 
+    <div id="dhtmlgoodies_tabView1" style="float:left;margin-top:-1.3%;padding-top:0%;">
+      <!-- 
+      <div class="dhtmlgoodies_aTab">
+        <P id="shiftid"></P>
+      </div>
+      -->
+      <div class="dhtmlgoodies_aTab">
+        <table id="table1" class="mytable" style="width:100%;">
+          <tr>
+            <td class="tdl">Run</td><td id="runid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Partition</td><td id="partitionid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Run Mode</td><td id="runmodeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Start Time</td><td id="starttimeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Stop Time</td><td id="stoptimeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Nevents</td><td id="neventsid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Statename</td><td id="statenameid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">APV Mode</td><td id="apvmodeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">FED Mode</td><td id="fedmodeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">Super Mode</td><td id="supermodeid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">FED Version</td><td id="fedvid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">FEC Version</td><td id="fecvid" class="tdr"></td>
+          </tr>
+          <tr>
+            <td class="tdl">System</td><td id="systemid" class="tdr"></td>
+          </tr>
+        </table>
+        <div style="width:100%;height=100%;margin-top:-1.0%;margin-bottom:-1.5%">
+          <P class="textarea" id="commentid" style="font-family:serif;">
+             1. Information for the 3 latest runs are updated every 5 minutes.<br/> 
+             2. The next 20 runs are updated every 2 hours or so.<br/> 
+             3. One can see that converting and copying to Castor take place in real time.
+                However, full migration to Castor tape, DBS registration for the EDM files 
+                and in particulatr the same for the Reconstructed runs take longer. <br/>
+             4. For the older runs, we plan to update the information every week and/or 
+                as necessary for specific runs.<br/>
+          </P>
+        </div>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="localrawid"></P>
+        <div style="width:100%;height=100%;margin-top:-0.5%;margin-bottom:-1.4%">
+          <P class="numberfield" id="nfillrid"></P>
+        </div>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="localedmid"></P>
+        <div style="width:100%;height=100%;margin-top:-0.5%;margin-bottom:-1.4%">
+          <P class="numberfield" id="nfilleid"></P>
+        </div>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="castorrawid"></P>
+        <div style="width:100%;height=100%;margin-top:-0.5%;margin-bottom:-1.4%">
+          <P class="numberfield" id="nfilcrid"></P>
+        </div>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="castoredmid"></P>
+        <div style="width:100%;height=100%;margin-top:-0.5%;margin-bottom:-1.4%">
+          <P class="numberfield" id="nfilceid"></P>
+        </div>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="dbsrawid"></P>
+      </div>
+      <div class="dhtmlgoodies_aTab">
+        <P class="textarea" id="dbsrecoid"></P>
+      </div>
+    </div>
+    </fieldset>
+    <div style="float=bottom;">
+      <div id="tsdivid" style="float:left;margin-top:0.4%;visibility:hidden;">
+       <label class="label"
+              style="text-align:left;margin-right:1%;font-weight:bold;">
+           Last Updated:
+       </label>
+       <label class="label"
+              id="tslabelid"
+              style="text-align:left;">
+       </label>
+      </div>
+      <div style="float:right;margin-top:-1.0%;margin-right:8%;">
+        <P><B>Developed by</B>: Subir Sarkar</P>
+      </div>
+    </div>
+  </div>
+</form>
+</body>
+</html>
