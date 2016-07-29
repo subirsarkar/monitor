@@ -274,10 +274,12 @@ sub main
   my $nrun  = $jobinfo->{nrun};
   my $npend = $jobinfo->{npend};
   my $nheld = $jobinfo->{nheld};
-  my $cputime_t  = $jobinfo->{cputime};
-  my $walltime_t = $jobinfo->{walltime};
-  my $cpueff = ($walltime_t > 0)
-       ? sprintf ("%-6.2f", max(0.0, $cputime_t*100.0/$walltime_t))
+  my $ncore = $jobinfo->{ncore};
+  my $cputime = $jobinfo->{cputime};
+  my $cputime_core = $jobinfo->{cputime_core};
+  my $walltime_t = $jobinfo->{walltime};  # total walltime, used for walltime share calculation
+  my $cpueff = ($walltime_t > 0)  
+       ? sprintf ("%-6.2f", max(0.0, 100*$cputime_core/$walltime_t))
        : (($nrun>0) ? '0.0' : '-');
   my $jobs_leff = $jobinfo->{ratio10};
   $row = 
@@ -286,7 +288,8 @@ sub main
      running => $nrun,
      pending => $npend,
         held => $nheld,
-     cputime => $cputime_t,
+       ncore => $ncore,
+     cputime => $cputime,
     walltime => $walltime_t,
       cpueff => trim($cpueff),
      ratio10 => $jobs_leff
@@ -354,10 +357,12 @@ sub main
       my $nrun  = $groupinfo->{$group}{nrun};
       my $npend = $groupinfo->{$group}{npend};
       my $nheld = $groupinfo->{$group}{nheld};
+      my $ncore = $groupinfo->{$group}{ncore};
       my $cputime  = $groupinfo->{$group}{cputime};
+      my $cputime_core  = $groupinfo->{$group}{cputime_core};
       my $walltime = $groupinfo->{$group}{walltime};
       my $cpueff = ($walltime > 0)
-         ? sprintf ("%-6.2f", max(0.0, $cputime*100.0/$walltime))
+         ? sprintf ("%-6.2f", max(0.0, 100*$cputime_core/$walltime))
          : (($nrun>0) ? '0.0' : '-');
       my $walltime_share = ($walltime_t > 0 and $walltime > 0)
          ? sprintf ("%-6.2f", $walltime*100.0/$walltime_t)
@@ -391,6 +396,7 @@ sub main
                 running => $nrun,
                 pending => $npend,
                    held => $nheld,
+                  ncore => $ncore,
                 cputime => $cputime,
                walltime => $walltime,
                  cpueff => trim($cpueff),
@@ -417,10 +423,12 @@ sub main
         my $nrun     = $ceinfo->{$ce}{nrun};
         my $npend    = $ceinfo->{$ce}{npend};
         my $nheld    = $ceinfo->{$ce}{nheld};
+        my $ncore    = $ceinfo->{$ce}{ncore};
         my $cputime  = $ceinfo->{$ce}{cputime};
+        my $cputime_core  = $ceinfo->{$ce}{cputime_core};
         my $walltime = $ceinfo->{$ce}{walltime};
         my $cpueff = ($walltime > 0)
-           ? sprintf ("%-6.2f", max(0.0, $cputime*100.0/$walltime))
+           ? sprintf ("%-6.2f", max(0.0, 100*$cputime_core/$walltime))
            : (($nrun>0) ? '0.0' : '-');
         my $jobs_leff = $ceinfo->{$ce}{ratio10};
 
@@ -452,6 +460,7 @@ sub main
             running => $nrun,
             pending => $npend,
                held => $nheld,
+              ncore => $ncore,
             cputime => $cputime,
            walltime => $walltime,
              cpueff => trim($cpueff),
@@ -490,10 +499,11 @@ sub main
         my $group = $userinfo->{$dn}{group};
         next if ($privacy_enforced and not grep { $_ eq $group } @$groups_dnshown);
         my $nrun = $userinfo->{$dn}{nrun};
-        my $cputime  = $userinfo->{$dn}{cputime};
+        my $cputime = $userinfo->{$dn}{cputime};
+        my $cputime_core = $userinfo->{$dn}{cputime_core};
         my $walltime = $userinfo->{$dn}{walltime};
         my $cpueff = ($walltime > 0)
-           ? sprintf ("%-6.2f", max(0.0, $cputime*100.0/$walltime))
+           ? sprintf ("%-6.2f", max(0.0, 100*$cputime_core/$walltime))
            : (($nrun>0) ? '0.0' : '-');
         my $jobs_leff = $userinfo->{$dn}{ratio10};
         my $row = 
@@ -504,6 +514,7 @@ sub main
             running => $nrun,
             pending => $userinfo->{$dn}{npend},
                held => $userinfo->{$dn}{nheld},
+              ncore => $userinfo->{$dn}{ncore},
             cputime => $cputime,
            walltime => $walltime,
              cpueff => trim($cpueff),

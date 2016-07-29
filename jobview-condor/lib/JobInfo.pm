@@ -31,7 +31,8 @@ my $keymap =
       x509UserProxyFQAN => q|FQAN|,
              ExitStatus => q|EX_ST|,
                     Cmd => q|JOBDESC|,
-   EnteredCurrentStatus => q|TIMELEFT|
+   EnteredCurrentStatus => q|TIMELEFT|,
+            RequestCpus => q|NCORE|
 };
 our $AUTOLOAD;
 my %fields = map { $_ => 1 } 
@@ -58,7 +59,8 @@ my %fields = map { $_ => 1 }
          GRID_CE
          FQAN
          SUBJECT
-         TIMELEFT/;
+         TIMELEFT
+         NCORE/;
 
 use constant SCALE => 1024;
 our $conv =
@@ -69,11 +71,11 @@ our $conv =
 };
 our $statusAttr = 
 {
-  2 => [q|R|, q|running|],
-  1 => [q|Q|, q|pending|],
-  4 => [q|E|, q|exited|],
-  3 => [q|E|, q|exited|],
-  5 => [q|H|, q|held|]
+   2 => [q|R|, q|running|],
+   1 => [q|Q|, q|pending|],
+   4 => [q|E|, q|exited|],
+   3 => [q|E|, q|exited|],
+   5 => [q|H|, q|held|]
 };
 sub new
 {
@@ -101,7 +103,7 @@ sub parse
   my $parse_running = $attr->{parse_running};
   unless (defined $attr->{text}) { 
     croak q|Must specify a valid JOBID| unless defined $attr->{jobid};
-    my $user = (defined $attr->{user} && $attr->{user} !~ /^all$/) ? "-submitter $attr->{user}" : q||;
+    my $user = (defined $attr->{user} && $attr->{user} !~ /^all$/) ? qq|-submitter $attr->{user}| : q||;
 
     my $command = ($parse_running) ? __PACKAGE__->runningJobs : __PACKAGE__->pendingJobs;
     $command .= qq| $user -l $attr->{jobid}|;
@@ -117,7 +119,7 @@ sub parse
   for my $item (split /!/, trim $line) {
     my ($key, $value) = (split /:=/, $item);
     next unless exists $keymap->{$key};
-    $info->{$keymap->{$key}} = ($value ne 'undefined') ? $value : undef;
+    $info->{$keymap->{$key}} = ($value ne q|undefined|) ? $value : undef;
   }
 
   # Normalise 
@@ -147,21 +149,23 @@ sub parse
     # crude, truncate very long SUBJECT, the trailing fields make the same SUBJECT look different 
     $info->{SUBJECT} = (split m#(?:/CN=\d+){2}#, $info->{SUBJECT})[0];
   }
-  $info->{SUBJECT} = qq|localjob| unless defined $info->{SUBJECT};
+  $info->{SUBJECT} = q|localjob-|.$info->{USER} unless defined $info->{SUBJECT};
 
   $info->{GRID_ID} = $info->{JID}; 
   my $ceid = (split /_/, $info->{GRID_ID})[0];
   $info->{GRID_CE} = $ceid.q|/jobmanager-condor-|.$info->{QUEUE};
 
+  $info->{NCORE} = 1 if not defined $info->{NCORE};
+
   # patch walltime
   my $timenow = time();
-  if ((defined $info->{STATUS} and $info->{STATUS} eq 'R') 
+  if ((defined $info->{STATUS} and $info->{STATUS} eq q|R|) 
         and (not defined $info->{WALLTIME} or $info->{WALLTIME} <= 0)) {
     if (defined $info->{START}) {
       my $startTime = $info->{START};
       $info->{WALLTIME} = $timenow - $startTime;
       my $cpuload = (defined $info->{CPUTIME} && $info->{WALLTIME}>0) 
-         ? $info->{CPUTIME}*1.0/$info->{WALLTIME} : undef;
+         ? $info->{CPUTIME}*1.0/$info->{WALLTIME}/$info->{NCORE} : undef;
       $info->{CPULOAD} = (defined $cpuload) ? sprintf ("%.3f", $cpuload) : undef;
     }
   }
@@ -178,6 +182,9 @@ sub correctGroup
 
   my $user  = $attr->{user};
   my $group = $attr->{group};
+
+  print join(", ", $user, $group), "\n" if $verbose > 1;
+
   if (defined $group and length $group) {
     $group = (split /\@/, $group)[0];
     my @fields = (split /\./, $group);
@@ -189,13 +196,13 @@ sub correctGroup
     $group = $attr->{ugdict}{$user}; 
   }
   elsif (scalar keys (%$group_map)) {
-    print STDERR qq|INFO. Group for $user undefined, use group_map\n| if $verbose;
+    print "INFO. Group for $user undefined, use group_map\n" if $verbose;
     my @userp = sort keys %$group_map;
     for my $patt (@userp) {
       if ($user =~ m/$patt/) {
         $group = $group_map->{$patt};
         $attr->{ugdict}{$user} = $group; 
-        print qq|>>> group=$group\n| if $verbose;
+        print ">>> group=$group\n" if $verbose;
         last;
       }
     } 
@@ -211,9 +218,9 @@ sub pendingJobs
   my $reader = ConfigReader->instance();
   my $config = $reader->config;
   my $collector = $config->{collector};
-  my $slist = '';
+  my $slist = q||;
   my $scheddList = $config->{schedd_list} || [];
-  $slist .= qq| -name $_| for (@$scheddList);
+  $slist = qq| -name $_| for (@$scheddList);
   my $verbose = $config->{verbose} || 0;
 
   my $command = <<"END";
@@ -244,9 +251,9 @@ sub runningJobs
   my $reader = ConfigReader->instance();
   my $config = $reader->config;
   my $collector = $config->{collector};
-  my $slist = '';
+  my $slist = q||;
   my $scheddList = $config->{schedd_list} || [];
-  $slist .= qq| -name $_| for (@$scheddList);
+  $slist = qq| -name $_| for (@$scheddList);
   my $verbose = $config->{verbose} || 0;
 
   my $command = <<"END";
@@ -269,7 +276,8 @@ condor_q -pool $collector \\
       -format "x509UserProxyFQAN:=%V!" x509UserProxyFQAN \\
       -format "ExitStatus:=%d!" ExitStatus \\
       -format "Cmd:=%V!" Cmd \\
-      -format "EnteredCurrentStatus:=%d\\n" EnteredCurrentStatus \\
+      -format "EnteredCurrentStatus:=%d!" EnteredCurrentStatus \\
+      -format "RequestCpus:=%d\\n" RequestCpus \\
       -constraint 'jobstatus == 2' \\
 END
   # query only the listed schedds

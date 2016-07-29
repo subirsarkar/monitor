@@ -56,14 +56,15 @@
                   <th>Running</th>
                   <th>Pending</th>
                   <th>Held</th>
-                  <th>CPU Eff(%)</th>
+                  <th>nCore</th>
+                  <th>CPUCore Eff(%)</th>
                   <th>Jobs(Eff&lt;10%)</th>
                 </tr> 
               </thead>
               <tbody>
 [%~ END %]
 [% BLOCK jobs_row %]
-                <tr><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
+                <tr><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% ncore %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
 [%~ END %]
 [% BLOCK jobs_footer %]
               </tbody>
@@ -81,7 +82,8 @@
                   <th>Running</th>
                   <th>Pending</th>
                   <th>Held</th>
-                  <th>CPU Eff(%)</th>
+                  <th>nCore</th>
+                  <th>CPUCore Eff(%)</th>
                   <th>Jobs<br/>(Eff&lt;10%)</th>
                   <th>Walltime Share(%)</th>
                 </tr> 
@@ -89,7 +91,7 @@
               <tbody>
 [%~ END %]
 [% BLOCK group_row %]
-                <tr><td>[% group %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td>[% walltime_share %]</td></tr>
+                <tr><td>[% group %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% ncore %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td>[% walltime_share %]</td></tr>
 [%~ END %]
 [% BLOCK group_footer %]
               </tbody>
@@ -107,14 +109,15 @@
                   <th>Running</th>
                   <th>Pending</th>
                   <th>Held</th>
-                  <th>CPU Eff(%)</th>
+                  <th>nCore</th>
+                  <th>CPUCore Eff(%)</th>
                   <th>Jobs(Eff&lt;10%)</th>
                 </tr> 
               </thead>
               <tbody>
 [%~ END %]
 [% BLOCK ce_row %]
-                <tr><td>[% ce %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
+                <tr><td>[% ce %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% ncore %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td></tr>
 [%~ END %]
 [% BLOCK ce_footer %]
               </tbody>
@@ -200,7 +203,8 @@
               <th>Running</th>
               <th>Pending</th>
               <th>Held</th>
-              <th>CPU Eff(%)</th>
+              <th>nCore</th>
+              <th>CPUCore Eff(%)</th>
               <th>Jobs<br/>(Eff&lt;10%)</th>
               <th>DN</th>
             </tr>
@@ -208,7 +212,7 @@
           <tbody>
 [%~ END %]
 [% BLOCK dn_row %]
-            <tr><td>[% localuser %]</td><td>[% group %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td class="dn">[% dn %]</td></tr>
+            <tr><td>[% localuser %]</td><td>[% group %]</td><td>[% jobs %]</td><td>[% running %]</td><td>[% pending %]</td><td>[% held %]</td><td>[% ncore %]</td><td>[% cpueff %]</td><td>[% ratio10 %]</td><td class="dn">[% dn %]</td></tr>
 [%~ END %]
 [% BLOCK dn_footer %]
           </tbody>

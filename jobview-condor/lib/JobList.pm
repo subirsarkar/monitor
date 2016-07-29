@@ -110,6 +110,7 @@ sub _initialize
     while (my $line = $fh->getline) {
       my $job = JobInfo->new;
       $job->parse({ text => $line, parse_running => 1, ugdict => $ugDict });
+
       $dict->{$job->JID} = $job;
       ++$nRun;
     }
@@ -147,13 +148,18 @@ END
       next unless defined $dict->{$jid};
 
       my $job = $dict->{$jid};
+
       $walltime eq 'undefined' and $walltime = 0;
-      my $cputime = min $walltime, ($job->CPUTIME || 0);
-      $job->CPUTIME($cputime);
+      if ($job->NCORE == 1) {
+        my $cputime = min $walltime, ($job->CPUTIME || 0);
+        $job->CPUTIME($cputime);
+      }
       my $cpuload = ($walltime > 0) ? $job->CPUTIME*1.0/$walltime : 0.0;
+      $cpuload /= $job->NCORE;
       $cpuload = sprintf "%.3f", $cpuload;
-      printf qq|JID=%s,status=%s,cputime=%d,walltime=%d,cpuload=%.3f\n|,
+      printf qq|JID=%s,status=%s,ncore=%d,cputime=%d,walltime=%d,cpuload=%.3f\n|,
          $jid, $job->STATUS, 
+               $job->NCORE,
                $job->CPUTIME,
                $walltime,
                $cpuload if $verbose>1;
